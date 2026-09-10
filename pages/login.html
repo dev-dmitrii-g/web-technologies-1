@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sign in or register for a customer account at DAMDYM store.">
+    <meta name="author" content="Dmitriy Gagarin">
+    <title>DAMDYM — Account Access</title>
+    <!-- Author: Dmitriy Gagarin -->
+</head>
+<body>
+<header>
+    <p>DAMDYM</p>
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalog.html">Catalog</a></li>
+        <li><a href="bin.html">Cart</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="forum.html">Forum</a></li>
+        <li><a href="qa.html">Q&amp;A</a></li>
+        <li><a href="login.html">Account</a></li>
+        <li><a href="colophon.html">Colophon</a></li>
+    </ul>
+</nav>
+<main>
+    <h1>Customer Account Access</h1>
+
+    <section id="login-section">
+        <h2>Sign In</h2>
+        <p>Log in to access your saved order history, active discounts, and community forum posting privileges.</p>
+
+        <!-- Form submits locally via browser request -->
+        <form action="#" method="post">
+            <fieldset>
+                <legend>Login Credentials</legend>
+                <p>
+                    <label for="login-email">Email Address:</label><br>
+                    <input type="email" id="login-email" name="login-email" placeholder="user@example.com" required>
+                </p>
+                <p>
+                    <label for="login-password">Password:</label><br>
+                    <input type="password" id="login-password" name="login-password" placeholder="Enter password" required>
+                </p>
+                <p>
+                    <input type="checkbox" id="remember" name="remember" value="yes">
+                    <label for="remember">Remember me on this browser</label>
+                </p>
+            </fieldset>
+            <p>
+                <input type="submit" value="Sign In">
+            </p>
+        </form>
+    </section>
+
+    <hr>
+
+    <section id="register-section">
+        <h2>Create New Account</h2>
+        <p>Register a free customer account to receive store stock alerts and streamline online orders.</p>
+
+        <form action="#" method="post">
+            <fieldset>
+                <legend>Account Information</legend>
+                <p>
+                    <label for="reg-username">Username:</label><br>
+                    <input type="text" id="reg-username" name="reg-username" placeholder="Choose username" required>
+                </p>
+                <p>
+                    <label for="reg-email">Email Address:</label><br>
+                    <input type="email" id="reg-email" name="reg-email" placeholder="example@domain.com" required>
+                </p>
+                <p>
+                    <label for="reg-password">Password:</label><br>
+                    <input type="password" id="reg-password" name="reg-password" placeholder="Minimum 8 characters" minlength="8" required>
+                </p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Customer Profile &amp; Preferences</legend>
+                <p>Account Type:</p>
+                <p>
+                    <input type="radio" id="role-customer" name="account-type" value="customer" required>
+                    <label for="role-customer">Regular Customer</label><br>
+                    <input type="radio" id="role-visitor" name="account-type" value="visitor">
+                    <label for="role-visitor">General Visitor</label>
+                </p>
+                <p>
+                    <label for="preferred-store">Preferred Service Method:</label><br>
+                    <select id="preferred-store" name="preferred-store" required>
+                        <option value="">Choose preference</option>
+                        <option value="turkestan-32">Store Pickup — Turkestan 32</option>
+                        <option value="online">Online Delivery</option>
+                    </select>
+                </p>
+                <p>
+                    <input type="checkbox" id="terms" name="terms" value="accepted" required>
+                    <label for="terms">I confirm I am 21 years of age or older and accept store policies.</label>
+                </p>
+            </fieldset>
+
+            <p>
+                <input type="submit" value="Register Account">
+                <input type="reset" value="Clear Form">
+            </p>
+        </form>
+    </section>
+
+    <aside>
+        <h2>Customer Note</h2>
+        <p>For account assistance or physical age verification inquiries, contact store support at <a href="mailto:info@damdym.kz">info@damdym.kz</a>.</p>
+    </aside>
+</main>
+<footer>
+    <p>DAMDYM</p>
+    <p>Phone: <a href="tel:+77071865022">+7-707-186-50-22</a></p>
+    <p>Email: <a href="mailto:info@damdym.kz">info@damdym.kz</a></p>
+    <p>Address: Turkestan 32 street</p>
+    <p>&copy; 2026 DAMDYM. All rights reserved.</p>
+</footer>
+</body>
+</html>
