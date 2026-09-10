@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="View items in your shopping cart and complete your order at DAMDYM store.">
+    <meta name="author" content="Abylay Opayev">
+    <title>DAMDYM — Shopping Cart</title>
+    <!-- Author: Abylay Opayev -->
+</head>
+<body>
+<header>
+    <p>DAMDYM</p>
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalog.html">Catalog</a></li>
+        <li><a href="bin.html">Cart</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="forum.html">Forum</a></li>
+        <li><a href="qa.html">Q&amp;A</a></li>
+        <li><a href="login.html">Account</a></li>
+        <li><a href="colophon.html">Colophon</a></li>
+    </ul>
+</nav>
+<main>
+    <h1>Your Shopping Cart</h1>
+
+    <section id="cart-items">
+        <h2>Items Selected</h2>
+        <table>
+            <caption>Items currently in your shopping cart</caption>
+            <thead>
+            <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price per item</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">MustHave Tobacco — Pineapple Rings (25g)</th>
+                <td>1,750 ₸</td>
+                <td>
+                    <label for="qty-1">Qty:</label>
+                    <input type="number" id="qty-1" name="qty-1" value="2" min="1" max="99" required>
+                </td>
+                <td>3,500 ₸</td>
+                <td>
+                    <button type="button">Remove</button>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Crown Coconut Charcoal — 72 pcs</th>
+                <td>2,250 ₸</td>
+                <td>
+                    <label for="qty-2">Qty:</label>
+                    <input type="number" id="qty-2" name="qty-2" value="1" min="1" max="99" required>
+                </td>
+                <td>2,250 ₸</td>
+                <td>
+                    <button type="button">Remove</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- div used here because cart-summary is a layout wrapper for price totals, not a semantic section -->
+    <div class="cart-summary">
+        <p><strong>Subtotal:</strong> 5,750 ₸</p>
+        <p><strong>Discount:</strong> 0 ₸</p>
+        <p><strong>Total to pay:</strong> 5,750 ₸</p>
+    </div>
+
+    <section id="checkout">
+        <h2>Order Details</h2>
+        <!-- Form data processing is handled after submission via local browser request -->
+        <form action="#" method="post">
+            <fieldset>
+                <legend>Contact &amp; Delivery</legend>
+                <p>
+                    <label for="cust-name">Full Name:</label><br>
+                    <input type="text" id="cust-name" name="name" placeholder="Enter full name" required>
+                </p>
+                <p>
+                    <label for="cust-phone">Phone Number:</label><br>
+                    <input type="tel" id="cust-phone" name="phone" placeholder="+7 707 000 0000" required>
+                </p>
+                <p>
+                    <label for="cust-address">Delivery Address:</label><br>
+                    <input type="text" id="cust-address" name="address" placeholder="Street name, building, apartment" required>
+                </p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Age Verification</legend>
+                <p>
+                    <input type="checkbox" id="adult-confirm" name="adult_confirm" value="yes" required>
+                    <label for="adult-confirm">I confirm that I am 21 years of age or older and will show physical ID upon delivery.</label>
+                </p>
+            </fieldset>
+
+            <p>
+                <input type="submit" value="Place Order">
+                <input type="reset" value="Reset Form">
+            </p>
+        </form>
+    </section>
+
+    <aside>
+        <h2>Pickup Info</h2>
+        <p>Prefer picking up in person? Stop by our location at Turkestan 32 street. Bring physical ID verifying <strong>21+ age</strong>.</p>
+    </aside>
+</main>
+<footer>
+    <p>DAMDYM</p>
+    <p>Phone: <a href="tel:+77071865022">+7-707-186-50-22</a></p>
+    <p>Email: <a href="mailto:info@damdym.kz">info@damdym.kz</a></p>
+    <p>Address: Turkestan 32 street</p>
+    <p>&copy; 2026 DAMDYM. All rights reserved.</p>
+</footer>
+</body>
+</html>
