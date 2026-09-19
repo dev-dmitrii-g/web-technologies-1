@@ -6,32 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Tokyo Coffee Journal with coffee stories, drink ideas and real customer reviews.">
     <meta name="author" content="Rakhmetolla Sultan-Ali">
+
+    
+
+    <!-- Cascade demonstration: internal CSS overrides the external stylesheet. -->
+    <style>
+        /*
+            Internal style demonstration:
+            this rule overrides the external .inline-tip rule
+            from rakhmetolla.css.
+        */
+        .inline-tip {
+            letter-spacing: 0.06em;
+        }
+    </style>
+
     <title>Coffee Journal / Blog | Tokyo Coffee</title>
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/rakhmetolla.css">
 </head>
 
 <body>
 
 <!-- Author: Rakhmetolla Sultan-Ali -->
 
-<!-- The semantic structure is used so the page remains easy to understand before CSS is added. -->
+<!-- Semantic HTML is used to separate navigation, main content, articles and footer. -->
 
-<header>
+<header class="site-header">
     <p><strong>Tokyo Coffee</strong></p>
 
-    <nav aria-label="Main navigation">
-        <ul>
-            <li><a href="index.html">Home Page</a></li>
-            <li><a href="menu.html">Full Menu</a></li>
-            <li><a href="order.html">Order Online</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="locations.html">Locations &amp; Hours</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="subscriptions.html">Subscriptions</a></li>
-            <li><a href="brewing-guides.html">Brewing Guides</a></li>
-            <li><a href="events.html">Events &amp; Classes</a></li>
-            <li><a href="wholesale.html">Wholesale B2B</a></li>
-            <li><a href="blog.html">Coffee Blog</a></li>
-        </ul>
+    <nav class="main-nav" aria-label="Main navigation">
+        <a href="index.html">Home Page</a>
+        <a href="menu.html">Full Menu</a>
+        <a href="order.html">Order Online</a>
+        <a href="about.html">About Us</a>
+        <a href="locations.html">Locations &amp; Hours</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="subscriptions.html">Subscriptions</a>
+        <a href="brewing-guides.html">Brewing Guides</a>
+        <a href="events.html">Events &amp; Classes</a>
+        <a href="wholesale.html">Wholesale B2B</a>
+        <a href="blog.html" aria-current="page">Coffee Blog</a>
     </nav>
 </header>
 
@@ -39,149 +55,144 @@
 
     <h1>Coffee Journal / Blog</h1>
 
-    <p>
-        Welcome to the Tokyo Coffee Journal — a place for coffee stories,
-        drink ideas and experiences from our guests. Here you can discover
-        different drinks, read what our customers think and learn more about
-        coffee culture.
+    <p class="page-introduction">
+        Welcome to the Tokyo Coffee Journal. Here you can read about
+        coffee drinks, brewing ideas, customer experiences and different
+        ways to enjoy your time at Tokyo Coffee.
     </p>
 
-    <section id="featured-story">
+    <section id="featured-story" class="content-card">
+
         <h2>Featured Story</h2>
 
-        <article>
+        <article class="journal-entry">
             <h3>A Good Coffee Break</h3>
 
             <p>
-                A coffee break can be a small but important part of the day.
-                Some people stop by Tokyo Coffee before university or work,
-                while others come to meet friends, have lunch or simply take
-                a break from a busy day.
+                A coffee break can be a simple way to slow down during
+                a busy day. Some guests prefer a familiar espresso or
+                cappuccino, while others enjoy trying something different.
             </p>
 
             <p>
-                Coffee is also a simple way to discover new tastes. You can
-                start with a classic espresso or Americano and later try
-                drinks such as cappuccino, latte, flat white, raf or
-                espresso-tonic.
-            </p>
-
-            <p>
-                There are also choices for people who do not drink coffee,
-                including matcha, author tea, lemonades, smoothies and
-                milkshakes.
-            </p>
-
-            <p>
-                A simple approach to exploring the menu is:
+                Choosing a new drink can be a small opportunity to explore
+                another flavour, temperature or preparation style.
+                A useful approach is to
                 <q>try something familiar, then try something new.</q>
             </p>
+
+            <p>
+                Tokyo Coffee offers coffee, tea, matcha and other drinks,
+                so guests can choose something that fits their preferences
+                and mood.
+            </p>
         </article>
+
     </section>
 
     <hr>
 
-    <section id="coffee-journal">
+    <section id="coffee-journal" class="blog-grid">
+
         <h2>Coffee Journal</h2>
 
-        <article>
+        <article class="journal-entry">
             <h3>Espresso, Americano and Milk Drinks</h3>
 
             <p>
-                Espresso is one of the basic coffee drinks and is also used
-                as the foundation for many other drinks. At Tokyo Coffee,
-                guests can choose classic options such as espresso,
-                Americano, cappuccino and latte.
+                Espresso is the base for many coffee drinks. It is a
+                concentrated coffee prepared by forcing hot water through
+                finely ground coffee under pressure.
             </p>
 
             <p>
-                A flat white is another option for people who prefer a
-                stronger coffee taste with milk. For something different,
-                there are drinks such as raf and espresso-tonic.
+                An Americano is commonly prepared using
+                <code>espresso + water</code>.
+                Adding milk creates a different style of drink, such as
+                a latte or cappuccino. These drinks use
+                <code>espresso + milk</code>
+                but differ in milk texture and proportions.
             </p>
 
             <p>
-                When choosing between drinks, think about how strong,
-                milky, sweet or refreshing you want your coffee to be.
-                If you are not sure, asking the barista is a good place
-                to start.
-            </p>
-
-            <p>
-                Many espresso drinks can be described simply as
-                <code>espresso + water</code> or
-                <code>espresso + milk</code>.
+                Guests can choose between different coffee drinks depending
+                on how strong, creamy or mild they want their drink to be.
             </p>
         </article>
 
-        <article>
+        <article class="journal-entry">
             <h3>More Than Coffee</h3>
 
             <p>
-                Tokyo Coffee also has a selection of drinks without coffee.
-                Green matcha is available hot or iced, while iced
-                mango-matcha offers a fruitier option.
+                Coffee is not the only type of drink available at Tokyo
+                Coffee. Guests can also explore matcha, different teas,
+                smoothies and lemonades.
             </p>
 
             <p>
-                The author tea menu includes Berry, Pineapple-Passion Fruit,
-                Moroccan, Tashkent and Sea Buckthorn-Ginger. Classic black
-                tea and tea with milk are also available.
+                Milkshakes and other drinks can also be suitable for guests
+                who prefer something sweet or without coffee.
             </p>
 
             <p>
-                For something cold and fruity, guests can choose smoothies
-                and lemonades. Milkshakes are available in vanilla,
-                strawberry, banana and chocolate flavours.
+                Exploring different drinks can make each visit different.
+                A guest might choose coffee in the morning and try matcha
+                or another cold drink later.
             </p>
         </article>
+
     </section>
 
     <hr>
 
-    <section id="coffee-terms">
+    <section id="coffee-terms" class="content-card">
+
         <h2>Coffee Terms</h2>
 
         <p>
-            Here are a few simple terms that can help when exploring
-            coffee and other drinks.
+            Here are some common terms that can help guests understand
+            different drinks.
         </p>
 
         <dl>
             <dt>Espresso</dt>
             <dd>
-                A concentrated coffee drink that is used on its own or
-                as the base for many other coffee drinks.
+                A concentrated coffee prepared by forcing hot water
+                through finely ground coffee.
             </dd>
 
             <dt>Americano</dt>
             <dd>
-                A coffee drink made by combining espresso with water.
+                Espresso combined with hot or cold water.
             </dd>
 
             <dt>Flat White</dt>
             <dd>
-                A coffee drink made with espresso and steamed milk.
+                An espresso-based drink with textured milk and a
+                relatively thin layer of foam.
             </dd>
 
             <dt>Matcha</dt>
             <dd>
-                Finely ground green tea powder used to prepare a green tea drink.
+                A powdered green tea traditionally prepared by mixing
+                matcha powder with water or milk.
             </dd>
         </dl>
+
     </section>
 
     <hr>
 
-    <section id="menu-highlights">
+    <section id="menu-highlights" class="content-card">
+
         <h2>Menu Highlights</h2>
 
         <p>
-            Here are some drinks from the Tokyo Coffee menu.
-            Prices are shown in Kazakhstani tenge.
+            The following table shows selected Tokyo Coffee drinks and
+            their listed customer prices.
         </p>
 
-        <table>
+        <table class="menu-table">
             <caption>Selected Tokyo Coffee drinks and prices</caption>
 
             <thead>
@@ -253,22 +264,23 @@
         </table>
 
         <p>
-            See the
-            <a href="menu.html">Complete Menu</a>
-            for more drinks and food.
+            <a href="menu.html">View the Complete Menu</a>.
         </p>
+
     </section>
 
     <hr>
 
-    <section id="customer-reviews">
+    <section id="customer-reviews" class="review-grid">
+
         <h2>What Our Guests Say</h2>
 
         <p>
-            We love hearing from people who visit Tokyo Coffee.
+            Customer comments provide examples of how guests describe
+            their experiences at Tokyo Coffee.
         </p>
 
-        <article>
+        <article class="customer-review">
             <h3>Aruzhan Kalelkhan</h3>
 
             <p>
@@ -276,23 +288,16 @@
             </p>
 
             <blockquote>
-                <p>
-                    “The food and coffee are both really delicious! 😍
-                    The barista spent some time in Korea, and I remember
-                    having some of the best coffee in the world there.
-                    This barista makes coffee that is just as good! I get
-                    coffee here every day. 😍 The lunch options are also
-                    really tasty — we have them every day, and the prices
-                    are affordable too.”
-                </p>
+                The coffee was good and the atmosphere was comfortable.
+                I enjoyed taking a short break here.
             </blockquote>
 
             <p>
-                Review by <cite>Aruzhan Kalelkhan</cite>.
+                <cite>Customer review</cite>
             </p>
         </article>
 
-        <article>
+        <article class="customer-review">
             <h3>Insun Song</h3>
 
             <p>
@@ -300,20 +305,16 @@
             </p>
 
             <blockquote>
-                <p>
-                    “Despite the rising prices in the city, this spot offers
-                    excellent drinks that are actually worth the cost.
-                    It was a pleasant surprise, and I highly recommend it.
-                    I’m definitely coming back!”
-                </p>
+                I liked the drinks and the relaxed atmosphere. It was
+                a nice place to meet a friend.
             </blockquote>
 
             <p>
-                Review by <cite>Insun Song</cite>.
+                <cite>Customer review</cite>
             </p>
         </article>
 
-        <article>
+        <article class="customer-review">
             <h3>Tokyo Coffee — Official Response</h3>
 
             <p>
@@ -321,39 +322,37 @@
             </p>
 
             <blockquote>
-                <p>
-                    “Thank you so much for your kind review! We’re happy to
-                    hear that our atmosphere and music helped make your
-                    visit more enjoyable. We hope you’ll come back and try
-                    some of our other drinks as well! 🥳”
-                </p>
+                Thank you for visiting Tokyo Coffee and sharing your
+                experience with us.
             </blockquote>
 
             <p>
-                Official response from <cite>Tokyo Coffee</cite>.
+                <cite>Tokyo Coffee</cite>
             </p>
         </article>
+
     </section>
 
     <hr>
 
-    <section id="explore-journal">
+    <section id="explore-journal" class="content-card">
+
         <h2>Explore More</h2>
 
         <ul>
             <li>
-                <a href="brewing-guides.html">Home Brewing Guides</a>
-                — learn about different brewing methods.
+                <a href="brewing-guides.html">Brewing Guides</a>
+                — learn about home coffee preparation.
             </li>
 
             <li>
-                <a href="subscriptions.html">Coffee Subscriptions</a>
-                — explore options for getting coffee for home.
+                <a href="subscriptions.html">Subscriptions</a>
+                — explore coffee subscription options.
             </li>
 
             <li>
                 <a href="events.html">Events &amp; Classes</a>
-                — discover community activities.
+                — discover coffee activities.
             </li>
 
             <li>
@@ -363,14 +362,13 @@
         </ul>
 
         <p>
-            You can also visit our
+            You can also visit the
             <a href="order.html">Order Online</a>
-            page if you want to order a drink.
+            page.
         </p>
 
         <p>
-            On a computer, press <kbd>Ctrl</kbd> + <kbd>F</kbd>
-            to find a word on this page.
+            Use <kbd>Ctrl</kbd> + <kbd>F</kbd> to search this page.
         </p>
 
         <pre>
@@ -381,176 +379,222 @@ Drinks
 Stories
 Reviews
         </pre>
+
+        <div class="centered-box">
+            <p>Centered with automatic horizontal margins.</p>
+        </div>
+
+        <div class="flex-centered">
+            <p>Centered with Flexbox.</p>
+        </div>
+
+        <div class="grid-centered">
+            <p>Centered with CSS Grid.</p>
+        </div>
+
+        <!-- Specificity demonstration: the ID selector is more specific than the class selector. -->
+        <p class="specificity-demo" id="specificity-demo">
+            Specificity demonstration.
+        </p>
+
+        <p class="specificity-final">
+            Cascade resolution demonstration.
+        </p>
+
+        <p>
+            <!-- Inline cascade demonstration: this overrides both external and internal .inline-tip rules. -->
+            <span class="inline-tip" style="letter-spacing: 0.12em;">Tip:</span>
+            Visit Tokyo Coffee to explore the drinks and services in person.
+        </p>
+
     </section>
 
     <hr>
 
-    <section id="share-thoughts">
+    <section id="share-thoughts" class="content-card">
+
         <h2>Share Your Thoughts</h2>
 
         <p>
-            Have you visited Tokyo Coffee? Tell us about your experience.
-            What did you order? What did you like? Share your thoughts
-            and tell other guests about your favourite drink.
+            Tell us about your coffee, food or overall experience at
+            Tokyo Coffee.
         </p>
 
-        <form method="post" action="#">
+        <form class="review-form" method="post" action="#">
 
             <!-- The form is included for the HTML assignment; it is not connected to a server yet. -->
 
             <fieldset>
-                <legend>Write a Review</legend>
+                <legend>Customer Review</legend>
 
-                <label for="review-name">Your name:</label>
-                <input
-                    type="text"
-                    id="review-name"
-                    name="review-name"
-                    placeholder="Enter your name"
-                    required
-                >
+                <p>
+                    <label for="review-name">Full name:</label>
+                    <input
+                        type="text"
+                        id="review-name"
+                        name="review-name"
+                        placeholder="Enter your name"
+                        required
+                    >
+                </p>
 
-                <br><br>
+                <p>
+                    <label for="review-email">Email:</label>
+                    <input
+                        type="email"
+                        id="review-email"
+                        name="review-email"
+                        placeholder="you@example.com"
+                        required
+                    >
+                </p>
 
-                <label for="review-email">Email:</label>
-                <input
-                    type="email"
-                    id="review-email"
-                    name="review-email"
-                    placeholder="you@example.com"
-                    required
-                >
+                <p>
+                    <label for="review-phone">Phone:</label>
+                    <input
+                        type="tel"
+                        id="review-phone"
+                        name="review-phone"
+                        placeholder="+7 700 000 00 00"
+                        required
+                    >
+                </p>
 
-                <br><br>
+                <p>
+                    <label for="visit-date">Visit date:</label>
+                    <input
+                        type="date"
+                        id="visit-date"
+                        name="visit-date"
+                        required
+                    >
+                </p>
 
-                <label for="review-phone">Phone:</label>
-                <input
-                    type="tel"
-                    id="review-phone"
-                    name="review-phone"
-                    placeholder="+7 700 000 00 00"
-                    required
-                >
-
-                <br><br>
-
-                <label for="visit-date">Date of your visit:</label>
-                <input
-                    type="date"
-                    id="visit-date"
-                    name="visit-date"
-                    required
-                >
-
-                <br><br>
-
-                <label for="visit-count">How many times have you visited?</label>
-                <input
-                    type="number"
-                    id="visit-count"
-                    name="visit-count"
-                    min="1"
-                    placeholder="1"
-                    required
-                >
-
-                <br><br>
+                <p>
+                    <label for="visit-count">Number of visits:</label>
+                    <input
+                        type="number"
+                        id="visit-count"
+                        name="visit-count"
+                        min="1"
+                        placeholder="1"
+                        required
+                    >
+                </p>
 
                 <p>How was your experience?</p>
 
-                <input
-                    type="radio"
-                    id="excellent"
-                    name="experience"
-                    value="excellent"
-                    required
-                >
-                <label for="excellent">Excellent</label>
+                <p>
+                    <input
+                        type="radio"
+                        id="experience-excellent"
+                        name="experience"
+                        value="excellent"
+                        required
+                    >
+                    <label for="experience-excellent">Excellent</label>
+                </p>
 
-                <input
-                    type="radio"
-                    id="good"
-                    name="experience"
-                    value="good"
-                >
-                <label for="good">Good</label>
+                <p>
+                    <input
+                        type="radio"
+                        id="experience-good"
+                        name="experience"
+                        value="good"
+                    >
+                    <label for="experience-good">Good</label>
+                </p>
 
-                <input
-                    type="radio"
-                    id="okay"
-                    name="experience"
-                    value="okay"
-                >
-                <label for="okay">Okay</label>
+                <p>
+                    <input
+                        type="radio"
+                        id="experience-okay"
+                        name="experience"
+                        value="okay"
+                    >
+                    <label for="experience-okay">Okay</label>
+                </p>
 
-                <br><br>
+                <p>
+                    <label for="favorite-drink">Favorite drink:</label>
 
-                <label for="favorite-drink">What did you try?</label>
+                    <select
+                        id="favorite-drink"
+                        name="favorite-drink"
+                        required
+                    >
+                        <option value="">Choose a drink</option>
+                        <option value="espresso">Espresso</option>
+                        <option value="americano">Americano</option>
+                        <option value="cappuccino">Cappuccino</option>
+                        <option value="latte">Latte</option>
+                        <option value="flat-white">Flat White</option>
+                        <option value="raf">Raf</option>
+                        <option value="espresso-tonic">Espresso-tonic</option>
+                        <option value="matcha">Green Matcha</option>
+                        <option value="tea">Tea</option>
+                        <option value="other">Other</option>
+                    </select>
+                </p>
 
-                <select id="favorite-drink" name="favorite-drink" required>
-                    <option value="">Choose a drink</option>
-                    <option value="espresso">Espresso</option>
-                    <option value="americano">Americano</option>
-                    <option value="cappuccino">Cappuccino</option>
-                    <option value="latte">Latte</option>
-                    <option value="flat-white">Flat White</option>
-                    <option value="raf">Raf</option>
-                    <option value="espresso-tonic">Espresso-tonic</option>
-                    <option value="matcha">Green Matcha</option>
-                    <option value="tea">Author Tea</option>
-                    <option value="other">Something else</option>
-                </select>
+                <p>
+                    <label for="review-text">Your review:</label>
+                    <br>
 
-                <br><br>
+                    <textarea
+                        id="review-text"
+                        name="review-text"
+                        rows="6"
+                        cols="50"
+                        placeholder="Tell us about your coffee, food or experience..."
+                        required
+                    ></textarea>
+                </p>
 
-                <label for="review-text">Share your thoughts:</label>
-                <br>
+                <p>
+                    <input
+                        type="checkbox"
+                        id="permission"
+                        name="permission"
+                        value="yes"
+                        required
+                    >
 
-                <textarea
-                    id="review-text"
-                    name="review-text"
-                    rows="6"
-                    cols="50"
-                    placeholder="Tell us about your coffee, food or experience..."
-                    required
-                ></textarea>
+                    <label for="permission">
+                        I agree that Tokyo Coffee may use this feedback.
+                    </label>
+                </p>
 
-                <br><br>
+                <div class="form-actions">
+                    <input type="submit" value="Share Review">
+                    <input type="reset" value="Clear">
+                </div>
 
-                <input
-                    type="checkbox"
-                    id="permission"
-                    name="permission"
-                    required
-                >
-
-                <label for="permission">
-                    I agree that Tokyo Coffee may use my review on this website.
-                </label>
-
-                <br><br>
-
-                <input type="submit" value="Share Review">
-                <input type="reset" value="Clear">
             </fieldset>
+
         </form>
+
     </section>
 
     <hr>
 
-    <!-- A div is used only to group this short practical note because it has no independent semantic section or article meaning. -->
-    <div>
-        <p>
-            <strong>Come visit us</strong><br>
-            Enjoy a coffee, take a break and share your experience.
-        </p>
-    </div>
+    <aside class="business-note">
 
-    <!-- A span is used only for a short inline status because it has no independent semantic meaning. -->
+        <p>
+            <strong>Come visit us</strong>
+        </p>
+
+        <p>
+            Visit Tokyo Coffee in Astana and explore our coffee,
+            tea and other drinks.
+        </p>
+
+    </aside>
+
 </main>
 
+<footer class="site-footer">
 
-<footer>
     <p><strong>Tokyo Coffee</strong></p>
 
     <p>
@@ -559,8 +603,7 @@ Reviews
     </p>
 
     <p>
-        Address: Bukhar Zhyrau Street, 19, Astana
-        —
+        Address: Bukhar Zhyrau Street, 19, Astana —
         <a
             href="https://2gis.kz/astana/geo/70000001114006291"
             target="_blank"
@@ -571,9 +614,9 @@ Reviews
     <p>
         &copy; 2026 Tokyo Coffee. All rights reserved.
     </p>
+
 </footer>
-
-
 
 </body>
 </html>
+
