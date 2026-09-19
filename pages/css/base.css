@@ -1,0 +1,424 @@
+
+/*
+    Tokyo Coffee - Shared Team Styles
+    Author: Rakhmetolla Sultan-Ali
+*/
+
+/*
+    COLOR PALETTE
+    #2F241F - dark coffee brown: main text and strong contrast
+    #F5EFE6 - warm cream: main page background
+    #FFFFFF - white: cards and readable content areas
+    #C8A27A - coffee beige: accents and borders
+    #6B4F3A - medium brown: links and secondary accents
+
+    The palette uses five colors to keep all Tokyo Coffee pages visually consistent.
+*/
+
+/* Universal selector: applies box-sizing to every element. */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Base document styles. */
+html {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #F5EFE6;
+    color: #2F241F;
+
+    /*
+        Primary font: Georgia.
+        Fallbacks provide readable serif fonts if Georgia is unavailable.
+    */
+    font-family: Georgia, "Times New Roman", Times, serif;
+
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+}
+
+/*
+    Shared headings use a second font family.
+    Full fallback stack is provided.
+*/
+h1,
+h2,
+h3 {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #2F241F;
+}
+
+h1 {
+    margin: 0 0 1rem;
+    font-size: 2.3rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+}
+
+h2 {
+    margin: 2rem 0 0.8rem;
+    font-size: 1.7rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.015em;
+}
+
+h3 {
+    margin: 1.4rem 0 0.6rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+p {
+    margin: 0 0 1rem;
+}
+
+a {
+    color: #6B4F3A;
+    font-weight: 600;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:focus {
+    outline: 3px solid #C8A27A;
+    outline-offset: 3px;
+}
+
+/* Shared site header. */
+.site-header {
+    margin: 0;
+    padding: 1rem 2rem;
+    background-color: #2F241F;
+    border-bottom: 4px solid #C8A27A;
+}
+
+/*
+    Navigation is a shared flex row.
+    Individual student styling can extend this rule.
+*/
+.main-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    flex-wrap: wrap;
+}
+
+.main-nav a {
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.main-nav a:hover,
+.main-nav a:focus {
+    color: #2F241F;
+    background-color: #C8A27A;
+    border-color: #FFFFFF;
+}
+
+/* Main content area. */
+main {
+    width: min(1100px, 92%);
+    margin: 0 auto;
+    padding: 2rem 0 3rem;
+}
+
+/* Shared page introduction. */
+.page-introduction {
+    max-width: 850px;
+    margin: 0 auto 1rem;
+}
+
+/* Shared content cards. */
+.content-card {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: #FFFFFF;
+    border: 1px solid #C8A27A;
+    border-radius: 8px;
+}
+
+/*
+    Shared semantic lists.
+*/
+.activity-list,
+.community-list,
+.partnership-list,
+.process-list {
+    margin: 1rem 0 1.5rem;
+    padding-left: 1.8rem;
+}
+
+.activity-list li,
+.community-list li,
+.partnership-list li,
+.process-list li {
+    margin-bottom: 0.5rem;
+}
+
+/* Tables shared by the student's pages. */
+table {
+    width: 100%;
+    margin: 1.5rem 0;
+    border-collapse: collapse;
+    background-color: #FFFFFF;
+}
+
+caption {
+    margin-bottom: 0.7rem;
+    font-weight: 700;
+    text-align: left;
+}
+
+th,
+td {
+    padding: 0.75rem;
+    border: 1px solid #C8A27A;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background-color: #F5EFE6;
+    font-weight: 700;
+}
+
+/*
+    Grouping selector:
+    both event and business tables receive the same basic treatment.
+*/
+.event-table,
+.business-table,
+.menu-table {
+    border-spacing: 0;
+}
+
+/* Forms. */
+form {
+    width: 100%;
+}
+
+fieldset {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    border: 1px solid #C8A27A;
+    border-radius: 8px;
+}
+
+legend {
+    padding: 0 0.5rem;
+    font-weight: 700;
+}
+
+.form-field {
+    margin-bottom: 1rem;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-weight: 700;
+}
+
+input,
+select,
+textarea,
+button {
+    font: inherit;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 0.7rem;
+    color: #2F241F;
+    background-color: #FFFFFF;
+    border: 1px solid #6B4F3A;
+    border-radius: 4px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 3px solid #C8A27A;
+    outline-offset: 2px;
+}
+
+textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.nested-fieldset {
+    margin: 1rem 0;
+}
+
+.nested-fieldset p {
+    margin-bottom: 0.5rem;
+}
+
+.nested-fieldset input {
+    width: auto;
+    margin-right: 0.4rem;
+}
+
+.checkbox-field {
+    margin: 1rem 0;
+}
+
+.checkbox-field input {
+    width: auto;
+    margin-right: 0.4rem;
+}
+
+.form-actions {
+    margin-top: 1.5rem;
+}
+
+button {
+    margin-right: 0.5rem;
+    padding: 0.7rem 1.2rem;
+    color: #FFFFFF;
+    background-color: #6B4F3A;
+    border: 1px solid #2F241F;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover,
+button:focus {
+    background-color: #2F241F;
+}
+
+/* Horizontal rules. */
+hr {
+    margin: 2.5rem 0;
+    border: 0;
+    border-top: 1px solid #C8A27A;
+}
+
+/* Inline helper text. */
+.inline-tip {
+    font-weight: 700;
+    color: #6B4F3A;
+}
+
+/* Shared business/contact note. */
+.business-note {
+    margin: 1.5rem auto;
+    padding: 1rem;
+    background-color: #FFFFFF;
+    border-left: 5px solid #C8A27A;
+}
+
+/* Shared footer. */
+.site-footer {
+    margin-top: 3rem;
+    padding: 2rem;
+    color: #FFFFFF;
+    background-color: #2F241F;
+    text-align: center;
+}
+
+.site-footer a {
+    color: #FFFFFF;
+}
+
+.site-footer address {
+    margin: 0.8rem 0;
+    font-style: normal;
+}
+
+/*
+    Address links and external links use the attribute selector.
+    This is intentionally shared so external links receive a small visual cue.
+*/
+a[target="_blank"]::after {
+    content: " ↗";
+}
+
+/*
+    Child selector:
+    only direct list items of the main navigation receive this spacing rule.
+*/
+.main-nav > a {
+    letter-spacing: 0.02em;
+}
+
+/*
+    Adjacent sibling selector:
+    a heading immediately followed by a paragraph receives reduced top spacing.
+*/
+h2 + p {
+    margin-top: 0;
+}
+
+/*
+    First-child pseudo-class:
+    the first paragraph inside a content card gets no extra top margin.
+*/
+.content-card > p:first-child {
+    margin-top: 0;
+}
+
+/*
+    Named color is deliberately used once as required by the assignment.
+*/
+blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    color: #2F241F;
+    background-color: white;
+    border-left: 5px solid #C8A27A;
+    font-style: italic;
+}
+
+/*
+    Code and keyboard elements.
+*/
+code,
+kbd,
+samp {
+    padding: 0.15rem 0.35rem;
+    background-color: #F5EFE6;
+    border: 1px solid #C8A27A;
+    border-radius: 3px;
+}
+
+pre {
+    padding: 1rem;
+    overflow-x: auto;
+    background-color: #2F241F;
+    color: #FFFFFF;
+    border-radius: 6px;
+}
+
+/*
+    Small screens are intentionally handled without media queries,
+    because media queries are not part of this assignment yet.
+*/
+img {
+    max-width: 100%;
+    height: auto;
+}
+
