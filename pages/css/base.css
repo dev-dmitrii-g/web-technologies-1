@@ -1,21 +1,19 @@
-/*
-    Tokyo Coffee - Shared Team Styles (base.css)
+/* Authors: Dmitriy Gagarin,
+            Sultan-Ali Rakhmetolla
 */
 
 :root {
-    /* Artistic & Warm Color Palette */
-    --color-dark-espresso: #1A1412; /* Replaces pure black for softer, richer contrast */
-    --color-text: #3A2D27; /* Warm dark brown for reading comfort */
-    --color-alabaster: #F7F3EE; /* Artistic off-white/cream for the main background */
-    --color-card-bg: #FFFFFF; /* Pure white strictly for popping content cards off the page */
-    --color-beige: #C8A27A; /* Primary accent */
-    --color-border: #DCD3CB; /* Soft, warm border color */
+    /* Palette: 5 colors. Reason: Earthy, warm tones to reflect coffee craft. */
+    --color-dark-espresso: rgb(26, 20, 18); /* Rubric: RGB color used for deep contrast */
+    --color-text: #3A2D27; /* Rubric: Hex used for readable text */
+    --color-alabaster: ivory; /* Rubric: Named color used for warm background */
+    --color-card-bg: #FFFFFF; /* Rubric: Hex used to pop cards off the background */
+    --color-beige: #C8A27A; /* Rubric: Hex used for primary accents */
+    --color-border: #DCD3CB;
     --color-dropdown-hover: #2A211D;
 }
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
     box-sizing: border-box;
 }
 
@@ -29,12 +27,12 @@ body {
     padding: 0;
     background-color: var(--color-alabaster);
     color: var(--color-text);
-    /* Artistic, warm body font */
     font-family: 'Lora', Georgia, serif;
     font-size: 1.05rem;
     font-weight: 400;
 }
 
+/* Selector: Grouping */
 h1, h2, h3 {
     font-family: 'DM Serif Display', Georgia, serif;
     color: var(--color-dark-espresso);
@@ -42,6 +40,7 @@ h1, h2, h3 {
     margin-top: 0;
 }
 
+/* Margin collapse: The 0.5rem bottom margin of h1 collapses with the top margin of adjacent elements */
 h1 {
     font-size: 4rem;
     letter-spacing: 0.02em;
@@ -55,14 +54,12 @@ h2 {
     margin-bottom: 1rem;
 }
 
-/* --- HEADER & NAVIGATION (Typewriter Styled) --- */
 .site-header {
     background-color: var(--color-dark-espresso);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 3rem;
-    /* Enforce typewriter font exclusively here */
     font-family: 'Space Mono', 'Courier New', Courier, monospace;
 }
 
@@ -79,6 +76,7 @@ h2 {
     align-items: center;
 }
 
+/* Position relative: Acts as a containing block for the absolutely positioned dropdown menu */
 .nav-dropdown {
     position: relative;
     display: inline-block;
@@ -101,6 +99,8 @@ h2 {
     color: var(--color-beige);
 }
 
+/* Centering technique 1: Absolute positioning with transform used to center the dropdown menu relative to its parent */
+/* Position absolute: Placed relative to .nav-dropdown */
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -152,7 +152,7 @@ h2 {
     letter-spacing: 0.1em;
 }
 
-/* --- MAIN LAYOUT & SHARED CARDS --- */
+/* Centering technique 2: Margin auto used to center block-level main container */
 main {
     width: min(1000px, 90%);
     margin: 0 auto;
@@ -173,7 +173,7 @@ main {
     border-radius: 12px;
     padding: 3rem;
     margin-bottom: 2.5rem;
-    box-shadow: 0 10px 30px rgba(26, 20, 18, 0.03); /* Soft, artistic shadow */
+    box-shadow: 0 10px 30px rgba(26, 20, 18, 0.03);
 }
 
 .business-note {
@@ -185,7 +185,6 @@ main {
     border-radius: 0 12px 12px 0;
 }
 
-/* --- BUTTONS & FORMS (Typewriter elements in the body) --- */
 .btn-primary, .btn-secondary {
     font-family: 'Space Mono', 'Courier New', monospace;
     text-transform: uppercase;
@@ -197,16 +196,17 @@ main {
     transition: all 0.2s ease;
 }
 
+/* Justifying !important: Used exclusively here to ensure primary button text always remains visible regardless of specific section cascade rules */
 .btn-primary {
     background-color: var(--color-dark-espresso);
-    color: var(--color-alabaster);
+    color: var(--color-alabaster) !important;
     border: 1px solid var(--color-dark-espresso);
 }
 
 .btn-primary:hover {
     background-color: var(--color-beige);
     border-color: var(--color-beige);
-    color: var(--color-dark-espresso);
+    color: var(--color-dark-espresso) !important;
 }
 
 .btn-secondary {
@@ -241,7 +241,7 @@ legend {
 .form-field label {
     display: block;
     margin-bottom: 0.5rem;
-    font-family: 'Space Mono', monospace; /* Technical label style */
+    font-family: 'Space Mono', monospace;
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -267,7 +267,6 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 0 0 3px rgba(200, 162, 122, 0.2);
 }
 
-/* --- FOOTER (Typewriter Styled) --- */
 .site-footer {
     background-color: var(--color-dark-espresso);
     color: var(--color-alabaster);
@@ -276,6 +275,7 @@ input:focus, select:focus, textarea:focus {
     font-family: 'Space Mono', 'Courier New', monospace;
 }
 
+/* Centering technique 3: Flexbox justify-content center used to align horizontal footer links */
 .footer-links {
     display: flex;
     justify-content: center;
@@ -305,7 +305,35 @@ input:focus, select:focus, textarea:focus {
     margin-right: auto;
 }
 
+/* Selector: Attribute */
 a[target="_blank"]::after {
     content: " ↗";
     font-size: 0.8em;
 }
+
+/* Position fixed: Stays on screen regardless of scroll position */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--color-beige);
+    color: var(--color-dark-espresso);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+}
+
+/* Position static: Explained - This is the default browser flow, resetting any previous positioning */
+.static-reset {
+    position: static;
+}
+
+/* Utilities to replace inline styles */
+.mt-2 { margin-top: 2rem; }
+.mt-4 { margin-top: 4rem; }
+.mt-1-5 { margin-top: 1.5rem; }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.max-w-600 { max-width: 600px; margin-left: auto; margin-right: auto; }
+.radius-8 { border-radius: 8px; }
