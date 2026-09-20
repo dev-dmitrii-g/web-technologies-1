@@ -8,89 +8,103 @@
     <title>Locations &amp; Hours | Tokyo Coffee</title>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/gagarin.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
-
 <header class="site-header">
-    <p><strong>Tokyo Coffee</strong></p>
+    <div class="header-logo">
+        <a href="index.html"><strong>Tokyo Coffee</strong></a>
+    </div>
     <nav class="main-nav" aria-label="Main navigation">
-        <a href="index.html">Home Page</a>
-        <a href="menu.html">Full Menu</a>
-        <a href="order.html">Order Online</a>
-        <a href="about.html">About Us</a>
-        <a href="locations.html" aria-current="page">Locations &amp; Hours</a>
-        <a href="contact.html">Contact Us</a>
-        <a href="subscriptions.html">Subscriptions</a>
-        <a href="brewing-guides.html">Brewing Guides</a>
-        <a href="events.html">Events &amp; Classes</a>
-        <a href="wholesale.html">Wholesale B2B</a>
-        <a href="blog.html">Coffee Blog</a>
+        <div class="nav-dropdown">
+            <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Shop</button>
+            <div class="dropdown-menu">
+                <a href="menu.html">Full Menu</a>
+                <a href="subscriptions.html">Subscriptions</a>
+                <a href="wholesale.html">Wholesale B2B</a>
+            </div>
+        </div>
+        <span class="nav-separator">|</span>
+        <div class="nav-dropdown">
+            <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Explore</button>
+            <div class="dropdown-menu">
+                <a href="brewing-guides.html">Brewing Guides</a>
+                <a href="events.html">Events & Classes</a>
+                <a href="blog.html">Coffee Blog</a>
+            </div>
+        </div>
+        <span class="nav-separator">|</span>
+        <div class="nav-dropdown">
+            <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">About</button>
+            <div class="dropdown-menu">
+                <a href="about.html">Our Story</a>
+                <a href="locations.html">Locations & Hours</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
     </nav>
+    <div class="header-action">
+        <a href="order.html" class="action-btn btn-primary">Order Online</a>
+    </div>
 </header>
-
 <main>
     <h1>Locations &amp; Hours</h1>
-
     <p class="page-introduction">
         Visit our flagship café in Astana. We provide a comfortable atmosphere tailored for both quick takeaways and relaxed afternoon meetings.
     </p>
-
-    <section class="content-card">
-        <h2>Flagship Café</h2>
-        <address>
-            <p><strong>Tokyo Coffee</strong></p>
-            <p>19 Bukhar Zhyrau Street<br>Astana, Kazakhstan</p>
-            <p>
-                <a href="https://2gis.kz/astana/geo/70000001114006291" target="_blank" rel="noopener noreferrer">View on map</a>
-            </p>
-        </address>
-    </section>
-
-    <section class="content-card">
-        <h2>Operating Hours</h2>
-        <table class="business-table">
-            <caption>Standard Weekly Schedule</caption>
-            <thead>
-            <tr>
-                <th scope="col">Day</th>
-                <th scope="col">Opening Time</th>
-                <th scope="col">Closing Time</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row">Monday - Friday</th>
-                <td>9:00 AM</td>
-                <td>9:00 PM</td>
-            </tr>
-            <tr>
-                <th scope="row">Saturday</th>
-                <td>9:00 AM</td>
-                <td>9:00 PM</td>
-            </tr>
-            <tr>
-                <th scope="row">Sunday</th>
-                <td>9:00 AM</td>
-                <td>9:00 PM</td>
-            </tr>
-            </tbody>
-        </table>
-        <p>
-            <span class="inline-tip">Note:</span> We remain open during most public holidays. Check our social media for specific holiday hour updates.
-        </p>
-    </section>
-
-    <aside class="business-note">
-        <h2>Café Amenities</h2>
-        <ul class="activity-list">
-            <li>Complimentary high-speed Wi-Fi for guests.</li>
-            <li>Ample power outlets for laptops and devices.</li>
-            <li>Free street parking and a dedicated lot are located nearby.</li>
-            <li>Wheelchair-accessible entrance and seating.</li>
-        </ul>
-    </aside>
+    <div id="locations-grid">
+        <div>
+            <img src="images/storefront.jpg" alt="The exterior storefront of Tokyo Coffee in Astana" class="location-gallery-img">
+            <aside class="business-note" style="border-radius: 12px; border-left: none;">
+                <h2>Café Amenities</h2>
+                <ul class="activity-list" style="text-align: left;">
+                    <li>Complimentary high-speed Wi-Fi for guests.</li>
+                    <li>Ample power outlets for laptops and devices.</li>
+                    <li>Free street parking and a dedicated lot are located nearby.</li>
+                    <li>Wheelchair-accessible entrance and seating.</li>
+                </ul>
+            </aside>
+        </div>
+        <div>
+            <section class="content-card">
+                <h2>Flagship Café</h2>
+                <address>
+                    <p class="intro-text"><strong>Tokyo Coffee</strong></p>
+                    <p>19 Bukhar Zhyrau Street<br>Astana, Kazakhstan</p>
+                    <p style="margin-top: 1.5rem;">
+                        <a href="https://2gis.kz/astana/geo/70000001114006291" target="_blank" rel="noopener noreferrer" class="btn-secondary">View on 2GIS Map</a>
+                    </p>
+                </address>
+            </section>
+            <section class="content-card">
+                <h2>Operating Hours</h2>
+                <table id="locations-schedule">
+                    <caption>Standard Weekly Schedule</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col">Day</th>
+                        <th scope="col">Hours</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Monday - Friday</th>
+                        <td>9:00 AM — 9:00 PM</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Saturday</th>
+                        <td>9:00 AM — 9:00 PM</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Sunday</th>
+                        <td>9:00 AM — 9:00 PM</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
 </main>
-
 <footer class="site-footer">
     <p><strong>Tokyo Coffee</strong></p>
     <p>Contact: <a href="tel:+77023712782">+7-702-371-27-82</a></p>
@@ -100,6 +114,5 @@
     </p>
     <p>&copy; 2026 Tokyo Coffee. All rights reserved.</p>
 </footer>
-
 </body>
 </html>

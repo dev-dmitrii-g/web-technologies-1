@@ -9,44 +9,64 @@
 	<title>Tokyo Coffee | Home</title>
 	<link rel="stylesheet" href="css/base.css">
 	<link rel="stylesheet" href="css/gagarin.css">
+	<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
-
 <header class="site-header">
-	<p><strong>Tokyo Coffee</strong></p>
-	<nav class="main-nav" aria-label="Main navigation">
-		<a href="index.html" aria-current="page">Home Page</a>
-		<a href="menu.html">Full Menu</a>
-		<a href="order.html">Order Online</a>
-		<a href="about.html">About Us</a>
-		<a href="locations.html">Locations &amp; Hours</a>
-		<a href="contact.html">Contact Us</a>
-		<a href="subscriptions.html">Subscriptions</a>
-		<a href="brewing-guides.html">Brewing Guides</a>
-		<a href="events.html">Events &amp; Classes</a>
-		<a href="wholesale.html">Wholesale B2B</a>
-		<a href="blog.html">Coffee Blog</a>
-	</nav>
-</header>
-
-<main>
-	<h1>Tokyo Coffee. Pure Craft, Every Cup.</h1>
-
-	<div class="page-introduction">
-		<p>
-			We believe great coffee speaks for itself. It starts with ethically sourced beans, precise extraction, and a genuine passion for the craft. Trained in the vibrant specialty coffee hubs of South Korea, our head barista brings meticulous technique and care to every single drink we pour.
-		</p>
-		<p>
-			Whether you need a quick morning espresso to kickstart your day or a quiet space for an afternoon break, we offer a refined yet welcoming coffee experience right in the heart of Astana.
-		</p>
-		<p>
-			<strong>Visit us:</strong> Open daily from 9:00 AM to 9:00 PM at 19 Bukhar Zhyrau Street.
-		</p>
-		<p>
-			<a href="order.html">Order Online for Pickup</a> &nbsp;|&nbsp; <a href="menu.html">Explore Our Menu</a>
-		</p>
+	<div class="header-logo">
+		<a href="index.html"><strong>Tokyo Coffee</strong></a>
 	</div>
-
+	<nav class="main-nav" aria-label="Main navigation">
+		<div class="nav-dropdown">
+			<button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Shop</button>
+			<div class="dropdown-menu">
+				<a href="menu.html">Full Menu</a>
+				<a href="subscriptions.html">Subscriptions</a>
+				<a href="wholesale.html">Wholesale B2B</a>
+			</div>
+		</div>
+		<span class="nav-separator">|</span>
+		<div class="nav-dropdown">
+			<button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Explore</button>
+			<div class="dropdown-menu">
+				<a href="brewing-guides.html">Brewing Guides</a>
+				<a href="events.html">Events & Classes</a>
+				<a href="blog.html">Coffee Blog</a>
+			</div>
+		</div>
+		<span class="nav-separator">|</span>
+		<div class="nav-dropdown">
+			<button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">About</button>
+			<div class="dropdown-menu">
+				<a href="about.html">Our Story</a>
+				<a href="locations.html">Locations & Hours</a>
+				<a href="contact.html">Contact Us</a>
+			</div>
+		</div>
+	</nav>
+	<div class="header-action">
+		<a href="order.html" class="action-btn btn-primary">Order Online</a>
+	</div>
+</header>
+<main>
+	<h1>Tokyo Coffee. Pure Craft.</h1>
+	<div id="hero-split">
+		<div class="hero-text">
+			<p class="intro-text">
+				We believe great coffee speaks for itself. It starts with ethically sourced beans, precise extraction, and a genuine passion for the craft.
+			</p>
+			<p>
+				Trained in the vibrant specialty coffee hubs of South Korea, our head barista brings meticulous technique and care to every single drink we pour. Whether you need a quick morning espresso to kickstart your day or a quiet space for an afternoon break, we offer a refined yet welcoming coffee experience in the heart of Astana.
+			</p>
+			<p style="margin-top: 2rem;">
+				<a href="order.html" class="btn-primary">Order Pickup</a>
+				<a href="menu.html" class="btn-secondary">Explore Menu</a>
+			</p>
+		</div>
+		<div class="hero-image-wrapper">
+			<img src="images/hero-pour.jpg" alt="A barista carefully pouring hot water over a V60 coffee dripper" class="hero-img">
+		</div>
+	</div>
 	<aside class="business-note">
 		<h2>Hours &amp; Current Status</h2>
 		<p>
@@ -59,57 +79,28 @@
 			(Open daily, including holidays)
 		</p>
 	</aside>
-
-	<section class="content-card">
-		<h2>What We're Pouring</h2>
-		<p>
-			Our menu features classic espresso, refreshing cold brews, and comforting caffeine-free options, all crafted with premium local ingredients and specialty teas.
-		</p>
-
+	<h2 style="text-align: center; margin-top: 4rem;">What We're Pouring</h2>
+	<p style="text-align: center; max-width: 600px; margin: 0 auto;">
+		Our menu features classic espresso, refreshing cold brews, and comforting caffeine-free options, all crafted with premium local ingredients.
+	</p>
+	<section id="home-features">
 		<article>
-			<h3>Signature Espresso Bar</h3>
+			<img src="images/espresso-bar.jpg" alt="A perfectly extracted espresso shot with rich crema" class="feature-img">
+			<h3>Signature Espresso</h3>
 			<p>Brewed with our custom single-origin beans. Enjoy a perfectly balanced espresso, a velvety flat white, or our signature creamy raff made with house-crafted syrups.</p>
 		</article>
-
 		<article>
-			<h3>Cold Drinks &amp; Smoothies</h3>
-			<p>Cool down with a crisp iced pour-over or our fresh banana smoothie—frequently called the best in the neighborhood by our regulars.</p>
+			<img src="images/cold-brew.jpg" alt="Iced cold brew coffee in a glass with condensation" class="feature-img">
+			<h3>Cold &amp; Smoothies</h3>
+			<p>Cool down with a crisp iced pour-over or our fresh banana smoothie—frequently called the best in the neighborhood by our regular guests.</p>
 		</article>
-
 		<article>
-			<h3>Teas &amp; Caffeine-Free</h3>
+			<img src="images/hot-chocolate.jpg" alt="Rich hot chocolate topped with a dusting of cocoa powder" class="feature-img">
+			<h3>Teas &amp; Cocoa</h3>
 			<p>Rich hot chocolate, creamy milkshakes, and a carefully curated selection of loose-leaf herbal and black teas for when you want something different.</p>
 		</article>
 	</section>
-
-	<section class="content-card">
-		<h2>Community Reviews</h2>
-		<p>Rated <strong>5.0 ★★★★★</strong> on Google and 2GIS.</p>
-
-		<blockquote>
-			"The coffee here is exceptional. I make it a point to stop by every single morning before heading into the office."<br>
-			<cite>— Local Resident, Google Review</cite>
-		</blockquote>
-
-		<blockquote>
-			"Great quality without the pretentious vibe. The prices are surprisingly fair for how good everything is."<br>
-			<cite>— Regular Guest, 2GIS Review</cite>
-		</blockquote>
-	</section>
-
-	<section class="content-card">
-		<h2>Find Us in Astana</h2>
-		<address>
-			<p>
-				<strong>Address:</strong> 19 Bukhar Zhyrau Street, Astana, Kazakhstan<br>
-				<strong>Nearest Transit:</strong> Bukhar Zhyrau St. Bus Stop (2-minute walk)<br>
-				<strong>Parking:</strong> Free street parking and a dedicated lot nearby.<br>
-				<strong>Phone:</strong> <a href="tel:+77023712782">+7-702-371-27-82</a>
-			</p>
-		</address>
-	</section>
 </main>
-
 <footer class="site-footer">
 	<p><strong>Tokyo Coffee</strong></p>
 	<p>Contact: <a href="tel:+77023712782">+7-702-371-27-82</a></p>
@@ -119,6 +110,5 @@
 	</p>
 	<p>&copy; 2026 Tokyo Coffee. All rights reserved.</p>
 </footer>
-
 </body>
 </html>
