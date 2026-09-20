@@ -20,20 +20,44 @@
     <!-- Semantic HTML is used for the main page structure. -->
 
     <header class="site-header">
+        <div class="header-logo">
+            <a href="index.html"><strong>Tokyo Coffee</strong></a>
+        </div>
         <nav class="main-nav" aria-label="Main navigation">
-            <a href="index.html">Home</a>
-            <a href="menu.html">Full Menu</a>
-            <a href="order.html">Order Online</a>
-            <a href="about.html">About Us</a>
-            <a href="locations.html">Locations &amp; Hours</a>
-            <a href="contact.html">Contact Us</a>
-            <a href="subscriptions.html">Coffee Subscriptions</a>
-            <a href="brewing-guides.html">Brewing Guides</a>
-            <a href="events.html" aria-current="page">Events &amp; Classes</a>
-            <a href="wholesale.html">Wholesale &amp; B2B</a>
-            <a href="blog.html">Coffee Blog</a>
+            <div class="nav-dropdown">
+                <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Shop</button>
+                <div class="dropdown-menu">
+                    <a href="menu.html">Full Menu</a>
+                    <a href="subscriptions.html">Subscriptions</a>
+                    <a href="wholesale.html">Wholesale B2B</a>
+                </div>
+            </div>
+            <span class="nav-separator">|</span>
+            <div class="nav-dropdown">
+                <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Explore</button>
+                <div class="dropdown-menu">
+                    <a href="brewing-guides.html">Brewing Guides</a>
+                    <a href="events.html">Events & Classes</a>
+                    <a href="blog.html">Coffee Blog</a>
+                    <a href="wholesale.html">Wholesale</a>
+                </div>
+            </div>
+            <span class="nav-separator">|</span>
+            <div class="nav-dropdown">
+                <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">About</button>
+                <div class="dropdown-menu">
+                    <a href="about.html">Our Story</a>
+                    <a href="locations.html">Locations & Hours</a>
+                    <a href="contact.html">Contact Us</a>
+                </div>
+            </div>
         </nav>
+        <div class="header-action">
+            <a href="order.html" class="action-btn btn-primary">Order Online</a>
+        </div>
     </header>
+
+
 
     <main>
         <h1>Community Events &amp; Classes</h1>
@@ -343,30 +367,15 @@
     </main>
 
     <footer class="site-footer">
-        <p>Tokyo Coffee</p>
-
+        <p><strong>Tokyo Coffee</strong></p>
+        <p>Contact: <a href="tel:+77023712782">+7-702-371-27-82</a></p>
         <p>
-            Phone:
-            <a href="tel:+77023712782">+7-702-371-27-82</a>
+            Address: Bukhar Zhyrau Street, 19, Astana —
+            <a href="https://2gis.kz/astana/geo/70000001114006291" target="_blank" rel="noopener noreferrer">Find us on 2GIS</a>
         </p>
-
-        <address>
-            Bukhar Zhyrau Street, 19, Astana, Kazakhstan
-        </address>
-
-        <p>
-            <a
-                href="https://2gis.kz/astana"
-                target="_blank"
-                rel="noopener noreferrer">
-                Find us on 2GIS
-            </a>
-        </p>
-
-        <p>
-            &copy; 2026 Tokyo Coffee. All rights reserved.
-        </p>
+        <p>&copy; 2026 Tokyo Coffee. All rights reserved.</p>
     </footer>
+
 </body>
 </html>
 
