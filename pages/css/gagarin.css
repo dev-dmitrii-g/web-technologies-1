@@ -1,4 +1,3 @@
-/* ID Justification: Used an ID here because this specific hero split layout exists exactly once on the homepage */
 #hero-split {
     display: flex;
     flex-wrap: wrap;
@@ -23,15 +22,13 @@
     border: 1px solid var(--color-border);
 }
 
-/* Grid vs Flexbox: Grid is used here because we need strict 2-dimensional alignment of cards; flexbox would misalign the last row if incomplete */
 #home-features {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2.5rem;
     margin-top: 2rem;
 }
 
-/* Selector: Child (>) matches only direct article elements inside home-features */
 #home-features > article {
     border: 1px solid var(--color-border);
     padding: 2rem;
@@ -42,14 +39,10 @@
     flex-direction: column;
 }
 
-/* Selector: :first-child / Grid Item Spanning */
-#home-features > article:first-child {
-    grid-column: span 2;
-}
-
 .feature-img {
     width: 100%;
     height: 220px;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 1.5rem;
@@ -124,25 +117,20 @@
     box-shadow: 0 4px 15px rgba(26, 20, 18, 0.05);
 }
 
-/* Clear purpose: Without clear: both, the floated image would break out of the section container, causing following elements to wrap around it unintentionally */
 .clear-block {
     clear: both;
 }
 
-/* Selector: Adjacent sibling (+) matches a p with class intro-text that immediately follows an h2 */
 h2 + p.intro-text {
     font-weight: 600;
     font-size: 1.15rem;
     color: var(--color-dark-espresso);
 }
 
-/* --- SPECIFICITY EXPERIMENT --- */
-/* Rule 1: Specificity (0,1,0). This rule loses to the one below. */
 .feature-img {
     border-color: red;
 }
 
-/* Rule 2: Specificity (0,1,1). This rule wins because the ID selector adds higher specificity weight. Conflict resolved. */
 #home-features .feature-img {
     border-color: var(--color-border);
 }

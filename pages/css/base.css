@@ -3,12 +3,11 @@
 */
 
 :root {
-    /* Palette: 5 colors. Reason: Earthy, warm tones to reflect coffee craft. */
-    --color-dark-espresso: rgb(26, 20, 18); /* Rubric: RGB color used for deep contrast */
-    --color-text: #3A2D27; /* Rubric: Hex used for readable text */
-    --color-alabaster: ivory; /* Rubric: Named color used for warm background */
-    --color-card-bg: #FFFFFF; /* Rubric: Hex used to pop cards off the background */
-    --color-beige: #C8A27A; /* Rubric: Hex used for primary accents */
+    --color-dark-espresso: rgb(26, 20, 18);
+    --color-text: #3A2D27;
+    --color-alabaster: ivory;
+    --color-card-bg: #FFFFFF;
+    --color-beige: #C8A27A;
     --color-border: #DCD3CB;
     --color-dropdown-hover: #2A211D;
 }
@@ -32,7 +31,6 @@ body {
     font-weight: 400;
 }
 
-/* Selector: Grouping */
 h1, h2, h3 {
     font-family: 'DM Serif Display', Georgia, serif;
     color: var(--color-dark-espresso);
@@ -40,7 +38,6 @@ h1, h2, h3 {
     margin-top: 0;
 }
 
-/* Margin collapse: The 0.5rem bottom margin of h1 collapses with the top margin of adjacent elements */
 h1 {
     font-size: 4rem;
     letter-spacing: 0.02em;
@@ -76,7 +73,6 @@ h2 {
     align-items: center;
 }
 
-/* Position relative: Acts as a containing block for the absolutely positioned dropdown menu */
 .nav-dropdown {
     position: relative;
     display: inline-block;
@@ -99,8 +95,6 @@ h2 {
     color: var(--color-beige);
 }
 
-/* Centering technique 1: Absolute positioning with transform used to center the dropdown menu relative to its parent */
-/* Position absolute: Placed relative to .nav-dropdown */
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -152,7 +146,6 @@ h2 {
     letter-spacing: 0.1em;
 }
 
-/* Centering technique 2: Margin auto used to center block-level main container */
 main {
     width: min(1000px, 90%);
     margin: 0 auto;
@@ -196,7 +189,6 @@ main {
     transition: all 0.2s ease;
 }
 
-/* Justifying !important: Used exclusively here to ensure primary button text always remains visible regardless of specific section cascade rules */
 .btn-primary {
     background-color: var(--color-dark-espresso);
     color: var(--color-alabaster) !important;
@@ -275,7 +267,6 @@ input:focus, select:focus, textarea:focus {
     font-family: 'Space Mono', 'Courier New', monospace;
 }
 
-/* Centering technique 3: Flexbox justify-content center used to align horizontal footer links */
 .footer-links {
     display: flex;
     justify-content: center;
@@ -305,13 +296,11 @@ input:focus, select:focus, textarea:focus {
     margin-right: auto;
 }
 
-/* Selector: Attribute */
 a[target="_blank"]::after {
     content: " ↗";
     font-size: 0.8em;
 }
 
-/* Position fixed: Stays on screen regardless of scroll position */
 .back-to-top {
     position: fixed;
     bottom: 20px;
@@ -324,12 +313,10 @@ a[target="_blank"]::after {
     font-family: 'Space Mono', monospace;
 }
 
-/* Position static: Explained - This is the default browser flow, resetting any previous positioning */
 .static-reset {
     position: static;
 }
 
-/* Utilities to replace inline styles */
 .mt-2 { margin-top: 2rem; }
 .mt-4 { margin-top: 4rem; }
 .mt-1-5 { margin-top: 1.5rem; }
