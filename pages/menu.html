@@ -6,20 +6,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu | Tokyo Coffee</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<header>
-    <h1>Tokyo Coffee</h1>
-
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="menu.html">Menu</a>
-        <a href="order.html">Order Online</a>
-        <a href="subscription.html">Subscriptions</a>
+<header class="site-header">
+    <div class="header-logo">
+        <a href="index.html"><strong>Tokyo Coffee</strong></a>
+    </div>
+    <nav class="main-nav" aria-label="Main navigation">
+        <div class="nav-dropdown">
+            <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Shop</button>
+            <div class="dropdown-menu">
+                <a href="menu.html">Full Menu</a>
+                <a href="subscriptions.html">Subscriptions</a>
+                <a href="wholesale.html">Wholesale B2B</a>
+            </div>
+        </div>
+        <span class="nav-separator">|</span>
+        <div class="nav-dropdown">
+            <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Explore</button>
+            <div class="dropdown-menu">
+                <a href="brewing-guides.html">Brewing Guides</a>
+                <a href="events.html">Events & Classes</a>
+                <a href="blog.html">Coffee Blog</a>
+                <a href="wholesale.html">Wholesale</a>
+            </div>
+        </div>
+        <span class="nav-separator">|</span>
+        <div class="nav-dropdown">
+            <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">About</button>
+            <div class="dropdown-menu">
+                <a href="about.html">Our Story</a>
+                <a href="locations.html">Locations & Hours</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
     </nav>
+    <div class="header-action">
+        <a href="order.html" class="action-btn btn-primary">Order Online</a>
+    </div>
 </header>
+
 
 <main>
 
@@ -398,9 +428,16 @@
 
 </main>
 
-<footer>
-    <p>&copy; 2026 Tokyo Coffee</p>
+<footer class="site-footer">
+    <p><strong>Tokyo Coffee</strong></p>
+    <p>Contact: <a href="tel:+77023712782">+7-702-371-27-82</a></p>
+    <p>
+        Address: Bukhar Zhyrau Street, 19, Astana —
+        <a href="https://2gis.kz/astana/geo/70000001114006291" target="_blank" rel="noopener noreferrer">Find us on 2GIS</a>
+    </p>
+    <p>&copy; 2026 Tokyo Coffee. All rights reserved.</p>
 </footer>
+
 
 </body>
 </html>
