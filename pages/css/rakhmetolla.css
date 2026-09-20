@@ -876,6 +876,29 @@ address {
     gap: 0.4rem;
 }
 
+.fixed-help {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.fixed-help a {
+    display: inline-block;
+    color: #FFFFFF;
+    background-color: #6B4F3A;
+    padding: 0.7rem 1.2rem;
+    border: 1px solid #2F241F;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.fixed-help a:hover,
+.fixed-help a:focus {
+    color: #2F241F;
+    background-color: #C8A27A;
+}
+
 /* =========================================================
    END OF RAKHMETOLLA.CSS
    ========================================================= */
