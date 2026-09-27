@@ -1,382 +1,439 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="description"
-          content="Community events and coffee workshop information for Tokyo Coffee in Astana.">
+    <meta name="description" content="Community events and coffee workshops at Tokyo Coffee in Astana.">
     <meta name="author" content="Rakhmetolla Sultan-Ali">
-
     <title>Events &amp; Classes | Tokyo Coffee</title>
 
-    <link rel="stylesheet" href="css/base.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/rakhmetolla.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Author: Rakhmetolla Sultan-Ali -->
-    <!-- Semantic HTML is used for the main page structure. -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">Tokyo Coffee</a>
 
-    <header class="site-header">
-        <div class="header-logo">
-            <a href="index.html"><strong>Tokyo Coffee</strong></a>
-        </div>
-        <nav class="main-nav" aria-label="Main navigation">
-            <div class="nav-dropdown">
-                <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Shop</button>
-                <div class="dropdown-menu">
-                    <a href="menu.html">Full Menu</a>
-                    <a href="subscriptions.html">Subscriptions</a>
-                    <a href="wholesale.html">Wholesale B2B</a>
-                </div>
-            </div>
-            <span class="nav-separator">|</span>
-            <div class="nav-dropdown">
-                <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Explore</button>
-                <div class="dropdown-menu">
-                    <a href="brewing-guides.html">Brewing Guides</a>
-                    <a href="events.html">Events & Classes</a>
-                    <a href="blog.html">Coffee Blog</a>
-                    <a href="wholesale.html">Wholesale</a>
-                </div>
-            </div>
-            <span class="nav-separator">|</span>
-            <div class="nav-dropdown">
-                <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">About</button>
-                <div class="dropdown-menu">
-                    <a href="about.html">Our Story</a>
-                    <a href="locations.html">Locations & Hours</a>
-                    <a href="contact.html">Contact Us</a>
-                </div>
-            </div>
-        </nav>
-        <div class="header-action">
-            <a href="order.html" class="action-btn btn-primary">Order Online</a>
-        </div>
-    </header>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#mainNavigation" aria-controls="mainNavigation"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
+            <div class="collapse navbar-collapse" id="mainNavigation">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="menu.html">Full Menu</a></li>
+                            <li><a class="dropdown-item" href="subscriptions.html">Subscriptions</a></li>
+                            <li><a class="dropdown-item" href="wholesale.html">Wholesale B2B</a></li>
+                        </ul>
+                    </li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">Explore</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="brewing-guides.html">Brewing Guides</a></li>
+                            <li><a class="dropdown-item active" href="events.html">Events &amp; Classes</a></li>
+                            <li><a class="dropdown-item" href="blog.html">Coffee Blog</a></li>
+                        </ul>
+                    </li>
 
-    <main>
-        <h1>Community Events &amp; Classes</h1>
-
-        <p class="page-introduction">
-            Tokyo Coffee creates simple opportunities for guests to learn more about
-            coffee, practise brewing skills and meet other people who enjoy coffee.
-        </p>
-
-        <p class="page-introduction">
-            Our activities can include public cuppings, latte art practice and
-            community coffee events in Astana.
-        </p>
-
-        <section id="activities" class="content-card">
-            <h2>Coffee Activities</h2>
-
-            <table class="event-table">
-                <caption>
-                    Examples of coffee activities and what participants can explore
-                </caption>
-
-                <thead>
-                    <tr>
-                        <th scope="col">Activity</th>
-                        <th scope="col">What Participants Explore</th>
-                        <th scope="col">Who It Is For</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <th scope="row">Public Cupping</th>
-                        <td>Coffee aroma and flavour comparison</td>
-                        <td>Curious coffee drinkers and beginners</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Latte Art</th>
-                        <td>Milk texture and pouring technique</td>
-                        <td>Guests interested in milk-based coffee</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Community Event</th>
-                        <td>Coffee, conversation and shared interests</td>
-                        <td>Tokyo Coffee guests and local community</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <hr>
-
-        <section id="cupping" class="content-card">
-            <h2>Public Cupping</h2>
-
-            <article class="event-article">
-                <h3>What Is Coffee Cupping?</h3>
-
-                <p>
-                    Coffee cupping is a simple way to compare different coffees by
-                    smelling and tasting them under similar conditions.
-                </p>
-
-                <p>
-                    Participants can notice differences in aroma, acidity, body,
-                    sweetness and aftertaste.
-                </p>
-
-                <p>
-                    A basic cupping session can include the following steps:
-                </p>
-
-                <ol class="activity-list">
-                    <li>Smell the dry coffee grounds.</li>
-                    <li>Observe the aroma after adding hot water.</li>
-                    <li>Taste the brewed coffee.</li>
-                    <li>Compare the characteristics of different coffees.</li>
-                </ol>
-            </article>
-        </section>
-
-        <section id="latte-art" class="content-card">
-            <h2>Latte Art</h2>
-
-            <article class="event-article">
-                <h3>Milk and Pouring Practice</h3>
-
-                <p>
-                    Latte art practice focuses on preparing espresso-based drinks,
-                    creating smooth milk texture and controlling the pouring motion.
-                </p>
-
-                <p>
-                    Participants can practise the following skills:
-                </p>
-
-                <ul class="activity-list">
-                    <li>Prepare an espresso-based drink.</li>
-                    <li>Create smooth and consistent milk texture.</li>
-                    <li>Control pitcher position.</li>
-                    <li>Adjust pouring speed and height.</li>
-                    <li>Practise a simple latte art pattern.</li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">About</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="about.html">Our Story</a></li>
+                            <li><a class="dropdown-item" href="locations.html">Locations &amp; Hours</a></li>
+                            <li><a class="dropdown-item" href="contact.html">Contact Us</a></li>
+                        </ul>
+                    </li>
                 </ul>
 
-                <p>
-                    Home brewers can also review our
-                    <a href="brewing-guides.html">Home Brewing Guides</a>
-                    for additional coffee preparation information.
-                </p>
-            </article>
-        </section>
+                <a href="order.html" class="btn btn-primary btn-lg">Order Online</a>
+            </div>
+        </div>
+    </nav>
+</header>
 
-        <section id="community" class="content-card">
-            <h2>Community Coffee Activities</h2>
+<main class="container py-4">
 
+    <h1 class="display-4 fw-bold mb-4">Community Events &amp; Classes</h1>
+
+    <p class="lead mb-4">
+        Tokyo Coffee creates simple opportunities for guests to learn more about
+        coffee, practise brewing skills and meet other people who enjoy coffee.
+    </p>
+
+    <section id="coffee-events" class="card shadow-sm mb-5">
+        <div class="card-body p-4">
+            <span class="badge text-bg-secondary mb-2">Coffee events</span>
+            <h2 class="card-title">Upcoming Coffee Events</h2>
             <p>
-                Community events give coffee drinkers an opportunity to meet,
-                communicate and share their own coffee experiences.
+                Explore our coffee events and workshops. Each event is designed
+                to help guests enjoy coffee, learn something new and meet other
+                people in the community.
             </p>
 
-            <p>
-                Activities may include informal conversations about drinks,
-                brewing methods and coffee preferences.
-            </p>
+            <!-- Bootstrap Carousel -->
+            <div id="coffeeEventsCarousel" class="carousel slide shadow-sm mb-3"
+                 data-bs-ride="carousel">
 
-            <ul class="community-list">
-                <li>Meet other coffee enthusiasts.</li>
-                <li>Talk about drinks and brewing methods.</li>
-                <li>Share personal coffee experiences.</li>
-                <li>Discover new ways to enjoy coffee.</li>
-            </ul>
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#coffeeEventsCarousel"
+                            data-bs-slide-to="0" class="active"
+                            aria-current="true" aria-label="Coffee Festival"></button>
+                    <button type="button" data-bs-target="#coffeeEventsCarousel"
+                            data-bs-slide-to="1" aria-label="Coffee Tasting"></button>
+                    <button type="button" data-bs-target="#coffeeEventsCarousel"
+                            data-bs-slide-to="2" aria-label="Latte Art Workshop"></button>
+                    <button type="button" data-bs-target="#coffeeEventsCarousel"
+                            data-bs-slide-to="3" aria-label="Coffee Community Night"></button>
+                </div>
 
-            <p>
-                For general questions, visit our
-                <a href="contact.html">Contact Us</a> page.
-            </p>
-        </section>
+                <div class="carousel-inner rounded">
+                    <div class="carousel-item active">
+                        <div class="ratio ratio-16x9">
+                            <img src="images/coffee-festival.png"
+                                 class="w-100 h-100 object-fit-cover"
+                                 alt="Coffee Festival">
+                        </div>
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded">
+                            <h3>Coffee Festival</h3>
+                            <p class="mb-0">Discover new coffee flavors and enjoy a day full of coffee.</p>
+                        </div>
+                    </div>
 
-        <hr>
+                    <div class="carousel-item">
+                        <div class="ratio ratio-16x9">
+                            <img src="images/coffee-tasting.jpg"
+                                 class="w-100 h-100 object-fit-cover"
+                                 alt="Coffee Tasting">
+                        </div>
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded">
+                            <h3>Coffee Tasting</h3>
+                            <p class="mb-0">Try different coffee beans and compare their unique flavors.</p>
+                        </div>
+                    </div>
 
-        <section id="event-registration" class="content-card">
-            <h2>Event Request</h2>
+                    <div class="carousel-item">
+                        <div class="ratio ratio-16x9">
+                            <img src="images/latte-art-workshop.jpg"
+                                 class="w-100 h-100 object-fit-cover"
+                                 alt="Latte Art Workshop">
+                        </div>
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded">
+                            <h3>Latte Art Workshop</h3>
+                            <p class="mb-0">Learn how to create simple designs on your coffee.</p>
+                        </div>
+                    </div>
 
+                    <div class="carousel-item">
+                        <div class="ratio ratio-16x9">
+                            <img src="images/coffee-community-night.jpg"
+                                 class="w-100 h-100 object-fit-cover"
+                                 alt="Coffee Community Night">
+                        </div>
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded">
+                            <h3>Coffee Community Night</h3>
+                            <p class="mb-0">Meet other coffee lovers and spend an evening together.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button"
+                        data-bs-target="#coffeeEventsCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+
+                <button class="carousel-control-next" type="button"
+                        data-bs-target="#coffeeEventsCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2">
+                <a href="#event-registration" class="btn btn-primary">Request an Event</a>
+                <a href="#activities" class="btn btn-outline-primary btn-sm">See Activities</a>
+                <button type="button" class="btn btn-secondary" disabled>Registration Soon</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="activities" class="mb-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+            <h2 class="mb-0">Coffee Activities</h2>
+            <span class="badge text-bg-dark">Community events</span>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <span class="badge text-bg-secondary mb-2">Tasting</span>
+                        <h3 class="h4 card-title">Public Cupping</h3>
+                        <p>
+                            Coffee aroma and flavour comparison under similar
+                            conditions.
+                        </p>
+                        <p class="mb-0">
+                            <small>For curious coffee drinkers and beginners.</small>
+                        </p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <span class="badge text-bg-dark mb-2">Workshop</span>
+                        <h3 class="h4 card-title">Latte Art</h3>
+                        <p>
+                            Practise milk texture and pouring technique for
+                            milk-based coffee.
+                        </p>
+                        <p class="mb-0">
+                            <small>For guests interested in latte art.</small>
+                        </p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <span class="badge text-bg-secondary mb-2">Community</span>
+                        <h3 class="h4 card-title">Community Event</h3>
+                        <p>
+                            Coffee, conversation and shared interests with the
+                            local community.
+                        </p>
+                        <p class="mb-0">
+                            <small>For Tokyo Coffee guests and local coffee lovers.</small>
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="event-details" class="card shadow-sm mb-5">
+        <div class="card-body p-4">
+            <h2 class="card-title">Event Details</h2>
+
+            <div class="row g-4">
+                <div class="col-12 col-lg-6">
+                    <article>
+                        <h3 class="h4">Public Cupping</h3>
+                        <p>
+                            Coffee cupping is a simple way to compare different
+                            coffees by smelling and tasting them under similar
+                            conditions.
+                        </p>
+                        <p>
+                            Participants can notice differences in aroma,
+                            acidity, body, sweetness and aftertaste.
+                        </p>
+                        <h4 class="h5">Basic session</h4>
+                        <ol>
+                            <li>Smell the dry coffee grounds.</li>
+                            <li>Observe the aroma after adding hot water.</li>
+                            <li>Taste the brewed coffee.</li>
+                            <li>Compare the characteristics of different coffees.</li>
+                        </ol>
+                    </article>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <article>
+                        <h3 class="h4">Community Coffee Activities</h3>
+                        <p>
+                            Community events give coffee drinkers an opportunity
+                            to meet, communicate and share their own coffee experiences.
+                        </p>
+                        <ul>
+                            <li>Meet other coffee enthusiasts.</li>
+                            <li>Talk about drinks and brewing methods.</li>
+                            <li>Share personal coffee experiences.</li>
+                            <li>Discover new ways to enjoy coffee.</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-outline-dark">Contact Us</a>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="event-registration" class="card shadow-sm mb-5">
+        <div class="card-body p-4">
+            <h2 class="card-title">Event Request</h2>
             <p>
                 Use the form below to ask about upcoming activities or express
                 interest in a specific type of coffee event.
             </p>
 
-            <form class="review-form" method="post" action="#">
-                <!-- This form is a front-end assignment example and is not connected to a server. -->
-
+            <form method="post" action="#">
                 <fieldset>
-                    <legend>Event Information Request</legend>
+                    <legend class="h4 mb-3">Event Information Request</legend>
 
-                    <p class="form-field">
-                        <label for="event-name">Full Name</label>
-                        <input
-                            type="text"
-                            id="event-name"
-                            name="event-name"
-                            placeholder="Enter your full name"
-                            required>
-                    </p>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <label for="event-name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="event-name"
+                                   name="event-name" placeholder="Enter your full name" required>
+                        </div>
 
-                    <p class="form-field">
-                        <label for="event-email">Email</label>
-                        <input
-                            type="email"
-                            id="event-email"
-                            name="event-email"
-                            placeholder="example@email.com"
-                            required>
-                    </p>
+                        <div class="col-12 col-md-6">
+                            <label for="event-email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="event-email"
+                                   name="event-email" placeholder="example@email.com" required>
+                        </div>
 
-                    <p class="form-field">
-                        <label for="event-phone">Phone</label>
-                        <input
-                            type="tel"
-                            id="event-phone"
-                            name="event-phone"
-                            placeholder="+7 700 000 00 00"
-                            required>
-                    </p>
+                        <div class="col-12 col-md-6">
+                            <label for="event-phone" class="form-label">Phone</label>
+                            <input type="tel" class="form-control" id="event-phone"
+                                   name="event-phone" placeholder="+7 700 000 00 00" required>
+                        </div>
 
-                    <p class="form-field">
-                        <label for="preferred-date">Preferred Date</label>
-                        <input
-                            type="date"
-                            id="preferred-date"
-                            name="preferred-date"
-                            required>
-                    </p>
+                        <div class="col-12 col-md-6">
+                            <label for="preferred-date" class="form-label">Preferred Date</label>
+                            <input type="date" class="form-control" id="preferred-date"
+                                   name="preferred-date" required>
+                        </div>
 
-                    <p class="form-field">
-                        <label for="participants">Number of Participants</label>
-                        <input
-                            type="number"
-                            id="participants"
-                            name="participants"
-                            min="1"
-                            placeholder="1"
-                            required>
-                    </p>
+                        <div class="col-12 col-md-6">
+                            <label for="participants" class="form-label">Number of Participants</label>
+                            <input type="number" class="form-control" id="participants"
+                                   name="participants" min="1" placeholder="1" required>
+                        </div>
 
-                    <fieldset class="nested-fieldset">
-                        <legend>Activity</legend>
+                        <div class="col-12 col-md-6">
+                            <label for="coffee-level" class="form-label">Coffee Experience Level</label>
+                            <select class="form-select" id="coffee-level" name="coffee-level" required>
+                                <option value="">Choose your level</option>
+                                <option value="beginner">Beginner</option>
+                                <option value="some-experience">Some Experience</option>
+                                <option value="experienced">Experienced</option>
+                            </select>
+                        </div>
 
-                        <p>
-                            <input
-                                type="radio"
-                                id="public-cupping"
-                                name="activity"
-                                value="public-cupping"
-                                required>
-                            <label for="public-cupping">Public Cupping</label>
-                        </p>
+                        <div class="col-12">
+                            <fieldset class="border rounded p-3">
+                                <legend class="float-none w-auto px-2 fs-6">Activity</legend>
 
-                        <p>
-                            <input
-                                type="radio"
-                                id="latte-art-option"
-                                name="activity"
-                                value="latte-art">
-                            <label for="latte-art-option">Latte Art</label>
-                        </p>
+                                <div class="d-flex flex-wrap gap-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                               id="public-cupping" name="activity"
+                                               value="public-cupping" required>
+                                        <label class="form-check-label" for="public-cupping">
+                                            Public Cupping
+                                        </label>
+                                    </div>
 
-                        <p>
-                            <input
-                                type="radio"
-                                id="community-event"
-                                name="activity"
-                                value="community-event">
-                            <label for="community-event">Community Event</label>
-                        </p>
-                    </fieldset>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                               id="latte-art-option" name="activity"
+                                               value="latte-art">
+                                        <label class="form-check-label" for="latte-art-option">
+                                            Latte Art
+                                        </label>
+                                    </div>
 
-                    <p class="form-field">
-                        <label for="coffee-level">Coffee Experience Level</label>
-                        <select
-                            id="coffee-level"
-                            name="coffee-level"
-                            required>
-                            <option value="">Choose your level</option>
-                            <option value="beginner">Beginner</option>
-                            <option value="some-experience">Some Experience</option>
-                            <option value="experienced">Experienced</option>
-                        </select>
-                    </p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                               id="community-event" name="activity"
+                                               value="community-event">
+                                        <label class="form-check-label" for="community-event">
+                                            Community Event
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
 
-                    <p class="checkbox-field">
-                        <input
-                            type="checkbox"
-                            id="event-updates"
-                            name="event-updates"
-                            value="yes">
-                        <label for="event-updates">
-                            Send me information about future events.
-                        </label>
-                    </p>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                       id="event-updates" name="event-updates" value="yes">
+                                <label class="form-check-label" for="event-updates">
+                                    Send me information about future events.
+                                </label>
+                            </div>
+                        </div>
 
-                    <p class="form-field">
-                        <label for="event-message">Message</label>
-                        <textarea
-                            id="event-message"
-                            name="event-message"
-                            rows="6"
-                            cols="50"
-                            placeholder="Tell us what you would like to know..."
-                            required></textarea>
-                    </p>
+                        <div class="col-12">
+                            <label for="event-message" class="form-label">Message</label>
+                            <textarea class="form-control" id="event-message"
+                                      name="event-message" rows="6"
+                                      placeholder="Tell us what you would like to know..."
+                                      required></textarea>
+                        </div>
 
-                    <p class="form-actions">
-                        <button type="submit">Send Request</button>
-                        <button type="reset">Clear</button>
-                    </p>
+                        <div class="col-12 d-flex flex-wrap gap-2 justify-content-center">
+                            <button type="submit" class="btn btn-success btn-lg">Send Request</button>
+                            <button type="reset" class="btn btn-outline-secondary">Clear</button>
+                            <button type="button" class="btn btn-secondary">Info</button>
+                            <button type="button" class="btn btn-outline-dark" disabled>Unavailable</button>
+                        </div>
+                    </div>
                 </fieldset>
             </form>
-        </section>
+        </div>
+    </section>
 
-        <hr>
+    <section id="explore-events" class="card shadow-sm mb-5">
+        <div class="card-body p-4">
+            <h2 class="card-title">Explore Tokyo Coffee</h2>
+            <p>Use the links below to explore other Tokyo Coffee pages.</p>
 
-        <section id="useful-links" class="content-card">
-            <h2>Explore Tokyo Coffee</h2>
+            <ul class="row g-3 list-unstyled mb-0">
+                <li class="col-12 col-md-6 col-lg-3">
+                    <a class="btn btn-outline-dark w-100" href="menu.html">Full Menu</a>
+                </li>
+                <li class="col-12 col-md-6 col-lg-3">
+                    <a class="btn btn-outline-dark w-100" href="brewing-guides.html">Brewing Guides</a>
+                </li>
+                <li class="col-12 col-md-6 col-lg-3">
+                    <a class="btn btn-outline-dark w-100" href="blog.html">Coffee Blog</a>
+                </li>
+                <li class="col-12 col-md-6 col-lg-3">
+                    <a class="btn btn-outline-dark w-100" href="contact.html">Contact Us</a>
+                </li>
+            </ul>
 
-            <p>
-                You can explore more information about Tokyo Coffee through the
-                following pages.
-            </p>
-
-            <div class="link-group">
-                <ul>
-                    <li><a href="menu.html">Full Menu</a></li>
-                    <li><a href="brewing-guides.html">Home Brewing Guides</a></li>
-                    <li><a href="blog.html">Coffee Blog</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                </ul>
+            <div class="alert alert-info mt-4 mb-0" role="alert">
+                <strong>Tip:</strong> Contact Tokyo Coffee if you would like more
+                information about upcoming activities.
             </div>
+        </div>
+    </section>
 
-            <p class="business-note">
-                <span class="inline-tip">Tip:</span>
-                Contact Tokyo Coffee if you would like more information about
-                upcoming activities.
-            </p>
-        </section>
-    </main>
+</main>
 
-    <footer class="site-footer">
-        <p><strong>Tokyo Coffee</strong></p>
-        <p>Contact: <a href="tel:+77023712782">+7-702-371-27-82</a></p>
+<footer class="bg-dark text-light py-5">
+    <div class="container-fluid text-center px-4">
+        <p class="fw-bold">Tokyo Coffee</p>
+        <p>Contact: <a class="link-light" href="tel:+77023712782">+7-702-371-27-82</a></p>
         <p>
             Address: Bukhar Zhyrau Street, 19, Astana —
-            <a href="https://2gis.kz/astana/geo/70000001114006291" target="_blank" rel="noopener noreferrer">Find us on 2GIS</a>
+            <a class="link-light"
+               href="https://2gis.kz/astana/geo/70000001114006291"
+               target="_blank" rel="noopener noreferrer">Find us on 2GIS</a>
         </p>
-        <p>&copy; 2026 Tokyo Coffee. All rights reserved.</p>
-    </footer>
+        <p class="mb-0">&copy; 2026 Tokyo Coffee. All rights reserved.</p>
+    </div>
+</footer>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
