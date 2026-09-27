@@ -1,0 +1,24 @@
+{
+  "name": "web-tech",
+  "version": "1.0.0",
+  "description": "WEB Technologies group project website about DAMDYМ tobacco store.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev-dmitrii-g/web-technologies-1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/dev-dmitrii-g/web-technologies-1/issues"
+  },
+  "homepage": "https://github.com/dev-dmitrii-g/web-technologies-1#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.8"
+  }
+}

@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lora:ital,wght@0,400..700;1,400..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+    --background: #fff2de;
+    --text: #fff2de;
+    --primary: #241c1a;
+    --secondary: #ecc499;
+    --accent: #a63a50;
+    --bs-font-monospace: 'Space Mono', monospace;
+    --bs-body-font-family: 'Lora', serif;
+    --bs-primary-rgb: 166, 58, 80;
+    --bs-secondary-rgb: 36, 28, 36;
+    --bs-body-bg: var(--primary);
+    --bs-body-bg-rgb: 255, 242, 222;
+    --bs-white-rgb: 255, 242, 222;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'DM Serif Display', serif;
+}
+
+body {
+    --bs-body-color: var(--primary);
+}
+.btn-primary {
+    --bs-btn-color: var(--text);
+    --bs-btn-bg: var(--accent);
+    --bs-btn-border-color: var(--accent);
+    --bs-btn-hover-color: var(--text);
+    --bs-btn-hover-bg: var(--accent);
+    --bs-btn-hover-border-color: var(--accent);
+    --bs-btn-active-color: var(--text);
+    --bs-btn-active-bg: var(--accent);
+    --bs-btn-active-border-color: var(--accent);
+    --bs-btn-disabled-color: var(--text);
+    --bs-btn-disabled-bg: var(--accent);
+    --bs-btn-disabled-border-color: var(--accent);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--accent);
+    --bs-btn-border-color: var(--accent);
+    --bs-btn-hover-color: var(--text);
+    --bs-btn-hover-bg: var(--accent);
+    --bs-btn-hover-border-color: var(--accent);
+    --bs-btn-active-color: var(--text);
+    --bs-btn-active-bg: var(--accent);
+    --bs-btn-active-border-color: var(--accent);
+    --bs-btn-disabled-color: var(--accent);
+    --bs-btn-disabled-border-color: var(--accent);
+}
+
+@media (max-width: 991px) {
+    #login-button-header {
+        width: 100%;
+    }
+}
+
+.table {
+    --bs-table-bg: var(--primary);
+    --bs-table-color: var(--background);
+    --bs-table-border-color: var(--accent);
+    --bs-table-hover-bg: var(--accent);
+    --bs-table-hover-color: var(--background);
+}
