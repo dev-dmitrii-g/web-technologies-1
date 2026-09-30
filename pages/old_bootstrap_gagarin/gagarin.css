@@ -1,0 +1,17 @@
+:root {
+    --color-dark-espresso: rgb(26, 20, 18);
+    --color-text: #3A2D27;
+    --color-alabaster: ivory;
+    --color-card-bg: #f5f5dc;
+    --color-beige: #C8A27A;
+    --color-border: #DCD3CB;
+    --color-dropdown-hover: #2A211D;
+    --bs-body-bg-rgb: 255, 255, 240;
+    --bs-primary-rgb: 26, 20, 18;
+    --bs-body-color: var(--color-text);
+    --bs-heading-color: var(--color-dark-espresso);
+}
+
+.order-header, .order-header:hover {
+    border-color: var(--color-alabaster);
+}
