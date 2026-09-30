@@ -25,73 +25,47 @@
 
 <!-- HEADER -->
 
-<header class="border-bottom">
-    <div class="container py-3">
-
-        <div class="d-flex flex-wrap align-items-center justify-content-between">
-
-            <a href="index.html"
-               class="text-decoration-none text-dark fs-3 fw-bold">
-                Tokyo Coffee
-            </a>
-
-            <nav>
-                <ul class="nav">
-
+<header class="font-monospace sticky-top">
+    <nav class="navbar navbar-expand-lg bg-secondary">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white" href="index.html"><b>Tokyo Coffee</b></a>
+            <button class="navbar-toggler text-white border-primary" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                </svg>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-uppercase">
                     <li class="nav-item">
-                        <a class="nav-link text-dark"
-                           href="index.html">
-                            Home
-                        </a>
+                        <a class="nav-link text-white" aria-current="page" href="menu.html">[ Menu ]</a>
                     </li>
-
                     <li class="nav-item">
-                        <a class="nav-link active fw-bold"
-                           href="menu.html">
-                            Menu
-                        </a>
+                        <a class="nav-link text-white" href="brewing-guides.html">[ Brewing Guides ]</a>
                     </li>
-
                     <li class="nav-item">
-                        <a class="nav-link text-dark"
-                           href="subscriptions.html">
-                            Subscriptions
-                        </a>
+                        <a class="nav-link text-white" aria-current="page" href="events.html">[ Events ]</a>
                     </li>
-
                     <li class="nav-item">
-                        <a class="nav-link text-dark"
-                           href="about.html">
-                            About
-                        </a>
+                        <a class="nav-link text-white" href="about.html">[ About Us ]</a>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link text-dark"
-                           href="locations.html">
-                            Locations
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link text-dark"
-                           href="contact.html">
-                            Contact
-                        </a>
-                    </li>
-
                 </ul>
-            </nav>
-
-            <a href="order.html"
-               class="btn btn-dark">
-                Order Online
-            </a>
-
+                <a id="login-button-header"
+                   class="btn btn-primary font-monospace d-inline-flex align-items-center justify-content-center justify-content-md-start gap-2 p-2 px-3"
+                   href="login.html">
+                    Login
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-door-open-fill" viewBox="0 0 16 16">
+                        <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15zM11 2h.5a.5.5 0 0 1 .5.5V15h-1zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1"/>
+                    </svg>
+                </a>
+            </div>
         </div>
-
-    </div>
+    </nav>
+    <hr class="my-0">
 </header>
+
 
 
 <!-- MAIN -->
@@ -807,54 +781,39 @@
 
 <!-- FOOTER -->
 
-<footer class="border-top mt-5">
-
-    <div class="container py-4">
-
-        <div class="row">
-
-            <div class="col-md-6">
-
-                <h2 class="h5">
-                    Tokyo Coffee
-                </h2>
-
-                <p>
-                    Bukhar Zhyrau Street, 19, Astana
-                </p>
-
-            </div>
-
-            <div class="col-md-6 text-md-end">
-
-                <p>
-                    Contact:
-                    <a href="tel:+77023712782">
-                        +7-702-371-27-82
-                    </a>
-                </p>
-
-                <p>
-                    <a href="https://2gis.kz/astana/geo/70000001114006291"
-                       target="_blank"
-                       rel="noopener noreferrer">
-                        Find us on 2GIS
-                    </a>
-                </p>
-
-            </div>
-
-        </div>
-
-        <hr>
-
-        <p class="text-center mb-0">
-            &copy; 2026 Tokyo Coffee. All rights reserved.
-        </p>
-
-    </div>
-
+<footer class="w-100 position-static bottom-0 bg-secondary pt-5 d-flex flex-column justify-content-center align-items-center">
+    <hr class="my-1">
+    <section class="container row w-100 font-monospace">
+        <article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
+            <p class="font-monospace text-white">[ Company ]</p>
+            <a class="text-primary" href="about.html">About us</a>
+            <a class="text-primary" href="locations.html">Locations &amp; Hours</a>
+            <a class="text-primary" href="contacts.html">Contacts</a>
+        </article>
+        <article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
+            <p class="font-monospace text-white">[ Explore ]</p>
+            <a class="text-primary" href="brewing-guides.html">Brewing Guides</a>
+            <a class="text-primary" href="events.html">Events &amp; Classes</a>
+            <a class="text-primary" href="blog.html">Coffee Blog</a>
+            <a class="text-primary" href="wholesale.html">B2B Wholesale</a>
+        </article>
+        <article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
+            <p class="font-monospace text-white">[ Products ]</p>
+            <a class="text-primary" href="subscriptions.html">Subscriptions</a>
+            <a class="text-primary" href="menu.html">Full Menu</a>
+        </article>
+        <article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
+            <p class="font-monospace text-white">[ Account ]</p>
+            <a class="text-primary" href="login.html">Sign In / Resister</a>
+            <a class="text-primary" href="#">Track Order</a>
+            <a class="text-primary" href="#">Loyalty Program</a>
+        </article>
+    </section>
+    <section class="container d-flex justify-content-start justify-content-md-center py-4">
+        <p class="font-monospace text-white-50 small">&copy; 2026 Tokyo Coffee. All rights reserved.</p>
+    </section>
 </footer>
+
 
 </body>
 </html>
