@@ -1,0 +1,27 @@
+.card .form-label,
+.card .form-check-label,
+.card legend,
+.card p,
+.card output {
+    color: var(--bs-card-color);
+}
+
+.card .form-control,
+.card .form-select {
+    background-color: var(--background);
+    color: var(--primary);
+    border-color: var(--accent);
+}
+
+.card .form-control:focus,
+.card .form-select:focus {
+    background-color: var(--background);
+    color: var(--primary);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.25rem rgba(166, 58, 80, 0.25);
+}
+
+fieldset.border legend {
+    color: var(--accent);
+    font-family: var(--bs-font-monospace);
+}

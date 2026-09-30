@@ -6,9 +6,11 @@
   <title>
    Order Online | Tokyo Coffee
   </title>
-  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" rel="stylesheet"/>
-  <link href="css/base.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Lora:ital,wght@0,400;0,600;1,400&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link href="css/base.css" rel="stylesheet">
+  <link href="css/abylay.css" rel="stylesheet">
+
  </head>
  <body>
  <header class="font-monospace sticky-top">
@@ -52,379 +54,202 @@
   <hr class="my-0">
  </header>
 
-  <main class="container py-5">
-   <h1 class="mb-4">
-    Order Online
-   </h1>
-   <section class="mb-5">
-    <h2>
-     Online Order and Pickup
-    </h2>
-    <p>
-     Choose a drink or food item from the Tokyo Coffee menu,
-            customize your order, and select your preferred pickup time.
-    </p>
-    <p>
-     You can view all available drinks, food, desserts, and prices on our
-     <a class="link-dark" href="menu.html">
-      full menu
-     </a>
-     .
-    </p>
-   </section>
-   <section class="mb-5 card shadow-sm p-4">
-    <h2>
-     Build Your Order
-    </h2>
-    <form action="#" class="mt-3" method="post">
-     <fieldset class="border rounded p-3 mb-4">
-      <legend class="float-none w-auto px-2 h5">
-       Choose an Item
-      </legend>
-      <label class="form-label" for="item">
-       Menu Item
-      </label>
-      <select class="form-select mb-3" id="item" name="item" required="">
-       <option value="">
-        Select an item
-       </option>
-       <optgroup label="Coffee">
-        <option value="espresso">
-         Espresso
-        </option>
-        <option value="americano">
-         Americano
-        </option>
-        <option value="cappuccino">
-         Cappuccino
-        </option>
-        <option value="latte">
-         Latte
-        </option>
-        <option value="flat-white">
-         Flat White
-        </option>
-        <option value="raf">
-         Raf Coffee
-        </option>
-        <option value="espresso-tonic">
-         Espresso Tonic
-        </option>
-        <option value="ice-cherry">
-         Ice Cherry
-        </option>
-        <option value="bumble-coffee">
-         Bumble Coffee
-        </option>
-        <option value="affogato">
-         Affogato
-        </option>
-       </optgroup>
-       <optgroup label="Non-Coffee Drinks">
-        <option value="green-matcha">
-         Green Matcha
-        </option>
-        <option value="iced-matcha">
-         Iced Matcha Latte
-        </option>
-        <option value="cocoa">
-         Cocoa
-        </option>
-       </optgroup>
-       <optgroup label="Signature Tea">
-        <option value="berry-tea">
-         Berry Tea
-        </option>
-        <option value="pineapple-passion">
-         Pineapple Passion Fruit Tea
-        </option>
-        <option value="moroccan-tea">
-         Moroccan Tea
-        </option>
-        <option value="tashkent-tea">
-         Tashkent Tea
-        </option>
-        <option value="sea-buckthorn">
-         Sea Buckthorn and Ginger Tea
-        </option>
-        <option value="black-tea">
-         Black Tea
-        </option>
-        <option value="milk-tea">
-         Tea with Milk
-        </option>
-       </optgroup>
-       <optgroup label="Milkshakes">
-        <option value="vanilla-milkshake">
-         Vanilla Milkshake
-        </option>
-        <option value="strawberry-milkshake">
-         Strawberry Milkshake
-        </option>
-        <option value="banana-milkshake">
-         Banana Milkshake
-        </option>
-        <option value="chocolate-milkshake">
-         Chocolate Milkshake
-        </option>
-       </optgroup>
-       <optgroup label="Smoothies">
-        <option value="strawberry-banana">
-         Strawberry Banana
-        </option>
-        <option value="mango-pineapple">
-         Mango Pineapple
-        </option>
-        <option value="light-breakfast">
-         Light Breakfast
-        </option>
-        <option value="healthy-smoothie">
-         Healthy Smoothie
-        </option>
-       </optgroup>
-       <optgroup label="Lemonades">
-        <option value="berry-lemonade">
-         Berry Lemonade
-        </option>
-        <option value="mango-passion-lemonade">
-         Mango Passion Fruit Lemonade
-        </option>
-        <option value="mojito">
-         Mojito
-        </option>
-        <option value="pomegranate">
-         Pomegranate Lemonade
-        </option>
-        <option value="citrus">
-         Citrus Lemonade
-        </option>
-        <option value="ice-tea">
-         Ice Tea
-        </option>
-       </optgroup>
-       <optgroup label="Bakery">
-        <option value="chicken-panini">
-         Chicken Panini
-        </option>
-        <option value="chicken-quesadilla">
-         Chicken Quesadilla
-        </option>
-        <option value="chicken-croissant">
-         Chicken Croissant
-        </option>
-        <option value="turkey-croissant">
-         Turkey Croissant
-        </option>
-        <option value="club-sandwich">
-         Chicken Club Sandwich
-        </option>
-        <option value="chicken-pancakes">
-         Pancakes with Chicken and Mushrooms
-        </option>
-        <option value="meat-pancakes">
-         Pancakes with Meat
-        </option>
-        <option value="french-dog">
-         French Dog
-        </option>
-        <option value="danish">
-         Danish
-        </option>
-        <option value="meat-samsa">
-         Meat Samsa
-        </option>
-        <option value="chicken-samsa">
-         Chicken Samsa
-        </option>
-        <option value="cheburek">
-         Cheburek
-        </option>
-       </optgroup>
-       <optgroup label="Desserts">
-        <option value="granola">
-         Granola with Yogurt
-        </option>
-        <option value="tiramisu">
-         Tiramisu Trifle
-        </option>
-        <option value="pistachio-raspberry">
-         Pistachio Raspberry Trifle
-        </option>
-        <option value="banoffee">
-         Banoffee Pie Trifle
-        </option>
-        <option value="snickers">
-         Snickers Trifle
-        </option>
-        <option value="cinnabon">
-         Cinnabon
-        </option>
-        <option value="dates">
-         Dates with Cottage Cheese
-        </option>
-        <option value="condensed-milk-cookies">
-         Cookies with Condensed Milk
-        </option>
-       </optgroup>
-       <optgroup label="Salads and Bowls">
-        <option value="teriyaki-bowl">
-         Chicken Teriyaki Bowl
-        </option>
-        <option value="caesar">
-         Caesar Salad
-        </option>
-        <option value="fitness-salad">
-         Fitness Salad
-        </option>
-       </optgroup>
-      </select>
-     </fieldset>
-     <fieldset class="border rounded p-3 mb-4">
-      <legend class="float-none w-auto px-2 h5">
-       Choose a Size
-      </legend>
-      <label class="form-label" for="size">
-       Size
-      </label>
-      <select class="form-select mb-3" id="size" name="size">
-       <option value="">
-        Not Applicable
-       </option>
-       <option value="s">
-        Small
-       </option>
-       <option value="m">
-        Medium
-       </option>
-       <option value="l">
-        Large
-       </option>
-       <option value="400">
-        400 ml
-       </option>
-       <option value="900">
-        900 ml
-       </option>
-      </select>
-     </fieldset>
-     <fieldset class="border rounded p-3 mb-4">
-      <legend class="float-none w-auto px-2 h5">
-       Extras
-      </legend>
+ <main class="container py-5">
+  <h1 class="mb-4">Order Online</h1>
+
+  <section class="mb-5">
+   <h2>Online Order and Pickup</h2>
+   <p>
+    Choose a drink or food item from the Tokyo Coffee menu, customize your order, and select your preferred pickup time.
+   </p>
+   <p>
+    You can view all available drinks, food, desserts, and prices on our <a class="text-primary" href="menu.html">full menu</a>.
+   </p>
+  </section>
+
+  <section class="card shadow-sm p-4 mb-5">
+   <h2 class="card-title h3 mb-3">Build Your Order</h2>
+   <form action="#" method="post">
+
+    <fieldset class="border rounded p-3 mb-4">
+     <legend class="float-none w-auto px-2 h5">Choose an Item</legend>
+     <label class="form-label" for="item">Menu Item</label>
+     <select class="form-select mb-3" id="item" name="item" required>
+      <option value="">Select an item</option>
+      <optgroup label="Coffee">
+       <option value="espresso">Espresso</option>
+       <option value="americano">Americano</option>
+       <option value="cappuccino">Cappuccino</option>
+       <option value="latte">Latte</option>
+       <option value="flat-white">Flat White</option>
+       <option value="raf">Raf Coffee</option>
+       <option value="espresso-tonic">Espresso Tonic</option>
+       <option value="ice-cherry">Ice Cherry</option>
+       <option value="bumble-coffee">Bumble Coffee</option>
+       <option value="affogato">Affogato</option>
+      </optgroup>
+      <optgroup label="Non-Coffee Drinks">
+       <option value="green-matcha">Green Matcha</option>
+       <option value="iced-matcha">Iced Matcha Latte</option>
+       <option value="cocoa">Cocoa</option>
+      </optgroup>
+      <optgroup label="Signature Tea">
+       <option value="berry-tea">Berry Tea</option>
+       <option value="pineapple-passion">Pineapple Passion Fruit Tea</option>
+       <option value="moroccan-tea">Moroccan Tea</option>
+       <option value="tashkent-tea">Tashkent Tea</option>
+       <option value="sea-buckthorn">Sea Buckthorn and Ginger Tea</option>
+       <option value="black-tea">Black Tea</option>
+       <option value="milk-tea">Tea with Milk</option>
+      </optgroup>
+      <optgroup label="Milkshakes">
+       <option value="vanilla-milkshake">Vanilla Milkshake</option>
+       <option value="strawberry-milkshake">Strawberry Milkshake</option>
+       <option value="banana-milkshake">Banana Milkshake</option>
+       <option value="chocolate-milkshake">Chocolate Milkshake</option>
+      </optgroup>
+      <optgroup label="Smoothies">
+       <option value="strawberry-banana">Strawberry Banana</option>
+       <option value="mango-pineapple">Mango Pineapple</option>
+       <option value="light-breakfast">Light Breakfast</option>
+       <option value="healthy-smoothie">Healthy Smoothie</option>
+      </optgroup>
+      <optgroup label="Lemonades">
+       <option value="berry-lemonade">Berry Lemonade</option>
+       <option value="mango-passion-lemonade">Mango Passion Fruit Lemonade</option>
+       <option value="mojito">Mojito</option>
+       <option value="pomegranate">Pomegranate Lemonade</option>
+       <option value="citrus">Citrus Lemonade</option>
+       <option value="ice-tea">Ice Tea</option>
+      </optgroup>
+      <optgroup label="Bakery">
+       <option value="chicken-panini">Chicken Panini</option>
+       <option value="chicken-quesadilla">Chicken Quesadilla</option>
+       <option value="chicken-croissant">Chicken Croissant</option>
+       <option value="turkey-croissant">Turkey Croissant</option>
+       <option value="club-sandwich">Chicken Club Sandwich</option>
+       <option value="chicken-pancakes">Pancakes with Chicken and Mushrooms</option>
+       <option value="meat-pancakes">Pancakes with Meat</option>
+       <option value="french-dog">French Dog</option>
+       <option value="danish">Danish</option>
+       <option value="meat-samsa">Meat Samsa</option>
+       <option value="chicken-samsa">Chicken Samsa</option>
+       <option value="cheburek">Cheburek</option>
+      </optgroup>
+      <optgroup label="Desserts">
+       <option value="granola">Granola with Yogurt</option>
+       <option value="tiramisu">Tiramisu Trifle</option>
+       <option value="pistachio-raspberry">Pistachio Raspberry Trifle</option>
+       <option value="banoffee">Banoffee Pie Trifle</option>
+       <option value="snickers">Snickers Trifle</option>
+       <option value="cinnabon">Cinnabon</option>
+       <option value="dates">Dates with Cottage Cheese</option>
+       <option value="condensed-milk-cookies">Cookies with Condensed Milk</option>
+      </optgroup>
+      <optgroup label="Salads and Bowls">
+       <option value="teriyaki-bowl">Chicken Teriyaki Bowl</option>
+       <option value="caesar">Caesar Salad</option>
+       <option value="fitness-salad">Fitness Salad</option>
+      </optgroup>
+     </select>
+    </fieldset>
+
+    <fieldset class="border rounded p-3 mb-4">
+     <legend class="float-none w-auto px-2 h5">Choose a Size</legend>
+     <label class="form-label" for="size">Size</label>
+     <select class="form-select mb-3" id="size" name="size">
+      <option value="">Not Applicable</option>
+      <option value="s">Small</option>
+      <option value="m">Medium</option>
+      <option value="l">Large</option>
+      <option value="400">400 ml</option>
+      <option value="900">900 ml</option>
+     </select>
+    </fieldset>
+
+    <fieldset class="border rounded p-3 mb-4">
+     <legend class="float-none w-auto px-2 h5">Extras</legend>
+
+     <div class="form-check mb-2">
       <input class="form-check-input" id="syrup" name="extras" type="checkbox" value="syrup"/>
-      <label class="form-check-label me-3" for="syrup">
-       Syrup +100 ₸
-      </label>
-      <div class="mb-2">
-      </div>
+      <label class="form-check-label" for="syrup">Syrup +100 ₸</label>
+     </div>
+
+     <div class="form-check mb-2">
       <input class="form-check-input" id="lemon" name="extras" type="checkbox" value="lemon"/>
-      <label class="form-check-label me-3" for="lemon">
-       Lemon +200 ₸
-      </label>
-      <div class="mb-2">
-      </div>
+      <label class="form-check-label" for="lemon">Lemon +200 ₸</label>
+     </div>
+
+     <div class="form-check mb-2">
       <input class="form-check-input" id="milk" name="extras" type="checkbox" value="milk"/>
-      <label class="form-check-label me-3" for="milk">
-       Milk +200 ₸
-      </label>
-      <div class="mb-2">
-      </div>
+      <label class="form-check-label" for="milk">Milk +200 ₸</label>
+     </div>
+
+     <div class="form-check mb-2">
       <input class="form-check-input" id="cream" name="extras" type="checkbox" value="cream"/>
-      <label class="form-check-label me-3" for="cream">
-       Cream +290 ₸
-      </label>
-      <div class="mb-2">
-      </div>
+      <label class="form-check-label" for="cream">Cream +290 ₸</label>
+     </div>
+
+     <div class="form-check mb-2">
       <input class="form-check-input" id="extra-shot" name="extras" type="checkbox" value="extra-shot"/>
-      <label class="form-check-label me-3" for="extra-shot">
-       Extra Coffee Shot +350 ₸
-      </label>
-      <div class="mb-2">
-      </div>
+      <label class="form-check-label" for="extra-shot">Extra Coffee Shot +350 ₸</label>
+     </div>
+
+     <div class="form-check mb-2">
       <input class="form-check-input" id="alternative-milk" name="extras" type="checkbox" value="alternative-milk"/>
-      <label class="form-check-label me-3" for="alternative-milk">
-       Alternative Milk +300 ₸
-      </label>
-      <div class="mb-2">
-      </div>
+      <label class="form-check-label" for="alternative-milk">Alternative Milk +300 ₸</label>
+     </div>
+
+     <div class="form-check mb-2">
       <input class="form-check-input" id="honey" name="extras" type="checkbox" value="honey"/>
-      <label class="form-check-label me-3" for="honey">
-       Honey +200 ₸
-      </label>
-      <div class="mb-2">
-      </div>
+      <label class="form-check-label" for="honey">Honey +200 ₸</label>
+     </div>
+
+     <div class="form-check mb-2">
       <input class="form-check-input" id="marshmallow" name="extras" type="checkbox" value="marshmallow"/>
-      <label class="form-check-label me-3" for="marshmallow">
-       Marshmallow +200 ₸
-      </label>
-     </fieldset>
-     <fieldset class="border rounded p-3 mb-4">
-      <legend class="float-none w-auto px-2 h5">
-       Quantity
-      </legend>
-      <label class="form-label" for="quantity">
-       Number of Items
-      </label>
-      <input class="form-control mb-3" id="quantity" min="1" name="quantity" required="" type="number" value="1"/>
-     </fieldset>
-     <fieldset class="border rounded p-3 mb-4">
-      <legend class="float-none w-auto px-2 h5">
-       Pickup Details
-      </legend>
-      <label class="form-label" for="pickup-time">
-       Pickup Time
-      </label>
-      <input class="form-control mb-3" id="pickup-time" name="pickup-time" required="" type="time"/>
-     </fieldset>
-     <fieldset class="border rounded p-3 mb-4">
-      <legend class="float-none w-auto px-2 h5">
-       Customer Information
-      </legend>
-      <label class="form-label" for="name">
-       Full Name
-      </label>
-      <input class="form-control mb-3" id="name" name="name" required="" type="text"/>
-      <div class="mb-2">
-      </div>
-      <label class="form-label" for="phone">
-       Phone Number
-      </label>
-      <input class="form-control mb-3" id="phone" name="phone" required="" type="tel"/>
-      <div class="mb-2">
-      </div>
-      <label class="form-label" for="comment">
-       Order Notes
-      </label>
-      <textarea class="form-control mb-3" cols="30" id="comment" name="comment" rows="4"></textarea>
-     </fieldset>
-     <p>
-      Estimated preparation time:
-      <output class="fw-bold">
-       15–20 minutes
-      </output>
-     </p>
-     <button class="btn btn-dark me-2" type="submit">
-      Place Order
-     </button>
-     <button class="btn btn-outline-secondary" type="reset">
-      Clear Order
-     </button>
-    </form>
-   </section>
-   <section class="mb-5 card shadow-sm p-4">
-    <h2>
-     Pickup Information
-    </h2>
-    <p>
-     Your order will be prepared before your selected pickup time.
-            Please provide your name at the pickup counter when you arrive.
-    </p>
-    <p>
-     Preparation time may vary depending on the number of items
-            in your order and café availability.
-    </p>
-   </section>
-  </main>
+      <label class="form-check-label" for="marshmallow">Marshmallow +200 ₸</label>
+     </div>
+    </fieldset>
+
+    <fieldset class="border rounded p-3 mb-4">
+     <legend class="float-none w-auto px-2 h5">Quantity</legend>
+     <label class="form-label" for="quantity">Number of Items</label>
+     <input class="form-control mb-3" id="quantity" min="1" name="quantity" required type="number" value="1"/>
+    </fieldset>
+
+    <fieldset class="border rounded p-3 mb-4">
+     <legend class="float-none w-auto px-2 h5">Pickup Details</legend>
+     <label class="form-label" for="pickup-time">Pickup Time</label>
+     <input class="form-control mb-3" id="pickup-time" name="pickup-time" required type="time"/>
+    </fieldset>
+
+    <fieldset class="border rounded p-3 mb-4">
+     <legend class="float-none w-auto px-2 h5">Customer Information</legend>
+     <label class="form-label" for="name">Full Name</label>
+     <input class="form-control mb-3" id="name" name="name" required type="text"/>
+
+     <label class="form-label" for="phone">Phone Number</label>
+     <input class="form-control mb-3" id="phone" name="phone" required type="tel"/>
+
+     <label class="form-label" for="comment">Order Notes</label>
+     <textarea class="form-control mb-3" cols="30" id="comment" name="comment" rows="4"></textarea>
+    </fieldset>
+
+    <p class="mb-4">Estimated preparation time: <output class="fw-bold">15–20 minutes</output></p>
+
+    <div class="d-flex gap-2">
+     <button class="btn btn-primary" type="submit">Place Order</button>
+     <button class="btn btn-outline-primary" type="reset">Clear Order</button>
+    </div>
+   </form>
+  </section>
+
+  <section class="card shadow-sm p-4">
+   <h2 class="card-title h3 mb-3">Pickup Information</h2>
+   <p class="mb-2">Your order will be prepared before your selected pickup time. Please provide your name at the pickup counter when you arrive.</p>
+   <p class="mb-0">Preparation time may vary depending on the number of items in your order and café availability.</p>
+  </section>
+ </main>
  <footer class="w-100 position-static bottom-0 bg-secondary pt-5 d-flex flex-column justify-content-center align-items-center">
   <hr class="my-1">
   <section class="container row w-100 font-monospace">
@@ -457,6 +282,13 @@
    <p class="font-monospace text-white-50 small">&copy; 2026 Tokyo Coffee. All rights reserved.</p>
   </section>
  </footer>
+
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+         crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+         integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+         crossorigin="anonymous"></script>
 
  </body>
 </html>
