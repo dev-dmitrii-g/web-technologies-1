@@ -53,19 +53,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card {
-    --bs-card-bg: var(--primary);
-    --bs-card-color: var(--background);
+    --bs-card-bg: var(--background);
+    --bs-card-color: var(--primary);
     --bs-card-border-color: var(--accent);
     --bs-card-border-width: 2px;
 }
 
-.card .card-title {
-    font-family: var(--bs-font-monospace);
-    color: var(--accent);
-}
 
 .card .card-text {
-    color: var(--background);
+    color: var(--primary);
 }
 
 .navbar-brand {
@@ -82,8 +78,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .table {
-    --bs-table-bg: var(--primary);
-    --bs-table-color: var(--background);
+    --bs-table-bg: var(--background);
+    --bs-table-color: var(--primary);
     --bs-table-border-color: var(--accent);
     --bs-table-hover-bg: var(--accent);
     --bs-table-hover-color: var(--background);
