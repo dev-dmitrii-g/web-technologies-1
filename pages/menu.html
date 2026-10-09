@@ -1,822 +1,567 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Explore the Tokyo Coffee menu in Astana including coffee, tea, matcha, smoothies, desserts and food." name="description"/>
+<title>Menu | Tokyo Coffee</title>
 
-    <meta name="description"
-          content="Explore the Tokyo Coffee menu in Astana including coffee, tea, matcha, smoothies, desserts and food.">
 
-    <title>Menu | Tokyo Coffee</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link href="css/base.css" rel="stylesheet">
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="css/base.css" rel="stylesheet"/>
 </head>
-
-
-<body>
-
+<body class="bg-body">
 <!-- HEADER -->
-
 <header class="font-monospace sticky-top">
-    <nav class="navbar navbar-expand-lg bg-secondary">
-        <div class="container-fluid">
-            <a class="navbar-brand text-white" href="index.html"><b>Tokyo Coffee</b></a>
-            <button class="navbar-toggler text-white border-primary" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-                </svg>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-uppercase">
-                    <li class="nav-item">
-                        <a class="nav-link active text-white" aria-current="page" href="menu.html">[ Menu ]</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="brewing-guides.html">[ Brewing Guides ]</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" aria-current="page" href="events.html">[ Events ]</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="about.html">[ About Us ]</a>
-                    </li>
-                </ul>
-                <a id="login-button-header"
-                   class="btn btn-primary font-monospace d-inline-flex align-items-center justify-content-center justify-content-md-start gap-2 p-2 px-3"
-                   href="login.html">
+<nav class="navbar navbar-expand-lg bg-secondary">
+<div class="container-fluid">
+<a class="navbar-brand text-white" href="index.html"><b>Tokyo Coffee</b></a>
+<button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler text-white border-primary" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+<svg class="bi bi-list" fill="currentColor" height="32" viewbox="0 0 16 16" width="32" xmlns="http://www.w3.org/2000/svg">
+<path d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" fill-rule="evenodd"></path>
+</svg>
+</button>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+<ul class="navbar-nav me-auto mb-2 mb-lg-0 text-uppercase">
+<li class="nav-item">
+<a aria-current="page" class="active text-white nav-link" href="menu.html">[ Menu ]</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-white" href="brewing-guides.html">[ Brewing Guides ]</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-white" href="events.html">[ Events ]</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-white" href="about.html">[ About Us ]</a>
+</li>
+<li class="nav-item"><a class="nav-link text-white" href="order.html">[ Order ]</a></li><li class="nav-item"><a class="nav-link text-white" href="subscriptions.html">[ Subscriptions ]</a></li></ul>
+<a class="btn btn-primary font-monospace d-inline-flex align-items-center justify-content-center justify-content-md-start gap-2 p-2 px-3" href="login.html" id="login-button-header">
                     Login
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-door-open-fill" viewBox="0 0 16 16">
-                        <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15zM11 2h.5a.5.5 0 0 1 .5.5V15h-1zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </nav>
-    <hr class="my-0">
+                    <svg class="bi bi-door-open-fill" fill="currentColor" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15zM11 2h.5a.5.5 0 0 1 .5.5V15h-1zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1"></path>
+</svg>
+</a>
+</div>
+</div>
+</nav>
+<hr class="my-0"/>
 </header>
-
-
-
 <!-- MAIN -->
-
-<main>
-
-    <!-- PAGE TITLE -->
-
-    <section class="container py-5 text-center">
-
-        <h1 class="display-4 fw-bold">
-            Tokyo Coffee Menu
-        </h1>
-
-        <p class="lead">
+<main class="container py-4">
+<!-- PAGE TITLE -->
+<section class="text-center mb-5" id="menu-section-1">
+<h1 class="text-center mb-3">Tokyo Coffee Menu</h1>
+<p class="lead text-center mx-auto mb-0">
             Explore our coffee, signature drinks, fresh food
             and desserts.
         </p>
-
-    </section>
-
-
-    <!-- COFFEE -->
-
-    <section class="container mb-5">
-
-        <div class="card shadow-sm">
-
-            <div class="card-body">
-
-                <h2 class="card-title mb-4">
+</section>
+<!-- COFFEE -->
+<section class="mb-4" id="coffee-menu">
+<div class="card shadow-sm">
+<div class="card-body">
+<h2 class="">
                     Coffee
                 </h2>
-
-                <div class="table-responsive">
-
-                    <table class="table table-hover align-middle">
-
-                        <thead class="table-dark">
-                        <tr>
-                            <th scope="col">Drink</th>
-                            <th scope="col">S</th>
-                            <th scope="col">M</th>
-                            <th scope="col">L</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-
-                        <tr>
-                            <th scope="row">Espresso</th>
-                            <td>990 ₸</td>
-                            <td>1090 ₸</td>
-                            <td>—</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Americano</th>
-                            <td>990 ₸</td>
-                            <td>1090 ₸</td>
-                            <td>1290 ₸</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Cappuccino</th>
-                            <td>1290 ₸</td>
-                            <td>1390 ₸</td>
-                            <td>1490 ₸</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Latte</th>
-                            <td>1290 ₸</td>
-                            <td>1390 ₸</td>
-                            <td>1490 ₸</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Flat White</th>
-                            <td>1590 ₸</td>
-                            <td>—</td>
-                            <td>—</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Raf Coffee</th>
-                            <td>—</td>
-                            <td>1790 ₸</td>
-                            <td>1890 ₸</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Espresso Tonic</th>
-                            <td>—</td>
-                            <td>—</td>
-                            <td>1390 ₸</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Ice Cherry</th>
-                            <td>—</td>
-                            <td>—</td>
-                            <td>1490 ₸</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Bumble Coffee</th>
-                            <td>—</td>
-                            <td>—</td>
-                            <td>1390 ₸</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Affogato</th>
-                            <td>1590 ₸</td>
-                            <td>—</td>
-                            <td>—</td>
-                        </tr>
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- DRINKS GRID -->
-
-    <section class="container mb-5">
-
-        <div class="row g-4">
-
-
-            <!-- NON COFFEE -->
-
-            <div class="col-md-6">
-
-                <article class="card h-100 shadow-sm">
-
-                    <div class="card-body">
-
-                        <h2 class="card-title">
+<div class="table-responsive">
+<table class="table table-hover align-middle mb-0">
+<thead class="">
+<tr>
+<th scope="col">Drink</th>
+<th scope="col">S</th>
+<th scope="col">M</th>
+<th scope="col">L</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Espresso</th>
+<td data-price-kzt="990">990 ₸</td>
+<td data-price-kzt="1090">1090 ₸</td>
+<td>—</td>
+</tr>
+<tr>
+<th scope="row">Americano</th>
+<td data-price-kzt="990">990 ₸</td>
+<td data-price-kzt="1090">1090 ₸</td>
+<td data-price-kzt="1290">1290 ₸</td>
+</tr>
+<tr>
+<th scope="row">Cappuccino</th>
+<td data-price-kzt="1290">1290 ₸</td>
+<td data-price-kzt="1390">1390 ₸</td>
+<td data-price-kzt="1490">1490 ₸</td>
+</tr>
+<tr>
+<th scope="row">Latte</th>
+<td data-price-kzt="1290">1290 ₸</td>
+<td data-price-kzt="1390">1390 ₸</td>
+<td data-price-kzt="1490">1490 ₸</td>
+</tr>
+<tr>
+<th scope="row">Flat White</th>
+<td data-price-kzt="1590">1590 ₸</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<th scope="row">Raf Coffee</th>
+<td>—</td>
+<td data-price-kzt="1790">1790 ₸</td>
+<td data-price-kzt="1890">1890 ₸</td>
+</tr>
+<tr>
+<th scope="row">Espresso Tonic</th>
+<td>—</td>
+<td>—</td>
+<td data-price-kzt="1390">1390 ₸</td>
+</tr>
+<tr>
+<th scope="row">Ice Cherry</th>
+<td>—</td>
+<td>—</td>
+<td data-price-kzt="1490">1490 ₸</td>
+</tr>
+<tr>
+<th scope="row">Bumble Coffee</th>
+<td>—</td>
+<td>—</td>
+<td data-price-kzt="1390">1390 ₸</td>
+</tr>
+<tr>
+<th scope="row">Affogato</th>
+<td data-price-kzt="1590">1590 ₸</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<!-- DRINKS GRID -->
+<section class="mb-4" id="menu-section-3">
+<div class="row g-4">
+<!-- NON COFFEE -->
+<div class="col-md-6">
+<article class="card h-100 shadow-sm">
+<div class="card-body">
+<h2 class="">
                             Non-Coffee Drinks
                         </h2>
-
-                        <h3 class="h5 text-secondary">
-                            Matcha & Cocoa
+<h3 class="h5 text-secondary">
+                            Matcha &amp; Cocoa
                         </h3>
-
-                        <dl>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Green Matcha</dt>
-                                <dd>1790 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Iced Matcha Latte</dt>
-                                <dd>2090 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between py-2">
-                                <dt>Cocoa</dt>
-                                <dd>1290–1390 ₸</dd>
-                            </div>
-
-                        </dl>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-
-            <!-- MILKSHAKES -->
-
-            <div class="col-md-6">
-
-                <article class="card h-100 shadow-sm">
-
-                    <div class="card-body">
-
-                        <h2 class="card-title">
+<dl>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Green Matcha</dt>
+<dd>1790 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Iced Matcha Latte</dt>
+<dd>2090 ₸</dd>
+</div>
+<div class="d-flex justify-content-between py-2">
+<dt>Cocoa</dt>
+<dd>1290–1390 ₸</dd>
+</div>
+</dl>
+</div>
+</article>
+</div>
+<!-- MILKSHAKES -->
+<div class="col-md-6">
+<article class="card h-100 shadow-sm">
+<div class="card-body">
+<h2 class="">
                             Milkshakes
                         </h2>
-
-                        <p class="text-secondary">
+<p class="text-secondary">
                             400 ml
                         </p>
-
-                        <dl>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Vanilla</dt>
-                                <dd>1590 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Strawberry</dt>
-                                <dd>1590 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Banana</dt>
-                                <dd>1590 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between py-2">
-                                <dt>Chocolate</dt>
-                                <dd>1590 ₸</dd>
-                            </div>
-
-                        </dl>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-
-            <!-- SMOOTHIES -->
-
-            <div class="col-md-6">
-
-                <article class="card h-100 shadow-sm">
-
-                    <div class="card-body">
-
-                        <h2 class="card-title">
+<dl>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Vanilla</dt>
+<dd>1590 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Strawberry</dt>
+<dd>1590 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Banana</dt>
+<dd>1590 ₸</dd>
+</div>
+<div class="d-flex justify-content-between py-2">
+<dt>Chocolate</dt>
+<dd>1590 ₸</dd>
+</div>
+</dl>
+</div>
+</article>
+</div>
+<!-- SMOOTHIES -->
+<div class="col-md-6">
+<article class="card h-100 shadow-sm">
+<div class="card-body">
+<h2 class="">
                             Smoothies
                         </h2>
-
-                        <p class="text-secondary">
+<p class="text-secondary">
                             400 ml
                         </p>
-
-                        <dl>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Strawberry Banana</dt>
-                                <dd>2490 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Mango Pineapple</dt>
-                                <dd>2490 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Light Breakfast</dt>
-                                <dd>2490 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between py-2">
-                                <dt>Healthy Smoothie</dt>
-                                <dd>2490 ₸</dd>
-                            </div>
-
-                        </dl>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-
-            <!-- LEMONADES -->
-
-            <div class="col-md-6">
-
-                <article class="card h-100 shadow-sm">
-
-                    <div class="card-body">
-
-                        <h2 class="card-title">
+<dl>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Strawberry Banana</dt>
+<dd>2490 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Mango Pineapple</dt>
+<dd>2490 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Light Breakfast</dt>
+<dd>2490 ₸</dd>
+</div>
+<div class="d-flex justify-content-between py-2">
+<dt>Healthy Smoothie</dt>
+<dd>2490 ₸</dd>
+</div>
+</dl>
+</div>
+</article>
+</div>
+<!-- LEMONADES -->
+<div class="col-md-6">
+<article class="card h-100 shadow-sm">
+<div class="card-body">
+<h2 class="">
                             Lemonades
                         </h2>
-
-                        <p class="text-secondary">
+<p class="text-secondary">
                             400 ml
                         </p>
-
-                        <dl>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Berry</dt>
-                                <dd>1490 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Mango Passion Fruit</dt>
-                                <dd>1490 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Mojito</dt>
-                                <dd>1490 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Pomegranate</dt>
-                                <dd>1490 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Citrus</dt>
-                                <dd>1490 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between py-2">
-                                <dt>Ice Tea</dt>
-                                <dd>1490 ₸</dd>
-                            </div>
-
-                        </dl>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- SIGNATURE TEA -->
-
-    <section class="container mb-5">
-
-        <div class="card shadow-sm">
-
-            <div class="card-body">
-
-                <h2 class="card-title mb-4">
+<dl>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Berry</dt>
+<dd>1490 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Mango Passion Fruit</dt>
+<dd>1490 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Mojito</dt>
+<dd>1490 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Pomegranate</dt>
+<dd>1490 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Citrus</dt>
+<dd>1490 ₸</dd>
+</div>
+<div class="d-flex justify-content-between py-2">
+<dt>Ice Tea</dt>
+<dd>1490 ₸</dd>
+</div>
+</dl>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- SIGNATURE TEA -->
+<section class="mb-4" id="menu-section-4">
+<div class="card shadow-sm">
+<div class="card-body">
+<h2 class="">
                     Signature Tea
                 </h2>
-
-                <div class="table-responsive">
-
-                    <table class="table table-striped">
-
-                        <thead>
-                        <tr>
-                            <th scope="col">Tea</th>
-                            <th scope="col">400 ml</th>
-                            <th scope="col">900 ml</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-
-                        <tr>
-                            <th scope="row">Berry Tea</th>
-                            <td>990 ₸</td>
-                            <td>1790 ₸</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Pineapple Passion Fruit</th>
-                            <td>990 ₸</td>
-                            <td>1790 ₸</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Moroccan Tea</th>
-                            <td>990 ₸</td>
-                            <td>1790 ₸</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Tashkent Tea</th>
-                            <td>990 ₸</td>
-                            <td>1790 ₸</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Sea Buckthorn and Ginger</th>
-                            <td>990 ₸</td>
-                            <td>1790 ₸</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Black Tea</th>
-                            <td>490 ₸</td>
-                            <td>1090 ₸</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Tea with Milk</th>
-                            <td>590 ₸</td>
-                            <td>1590 ₸</td>
-                        </tr>
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- FOOD -->
-
-    <section class="container mb-5">
-
-        <div class="row g-4">
-
-
-            <!-- BAKERY -->
-
-            <div class="col-lg-6">
-
-                <article class="card h-100 shadow-sm">
-
-                    <div class="card-body">
-
-                        <h2 class="card-title mb-4">
+<div class="table-responsive">
+<table class="table table-hover align-middle mb-0">
+<thead class="">
+<tr>
+<th scope="col">Tea</th>
+<th scope="col">400 ml</th>
+<th scope="col">900 ml</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Berry Tea</th>
+<td data-price-kzt="990">990 ₸</td>
+<td data-price-kzt="1790">1790 ₸</td>
+</tr>
+<tr>
+<th scope="row">Pineapple Passion Fruit</th>
+<td data-price-kzt="990">990 ₸</td>
+<td data-price-kzt="1790">1790 ₸</td>
+</tr>
+<tr>
+<th scope="row">Moroccan Tea</th>
+<td data-price-kzt="990">990 ₸</td>
+<td data-price-kzt="1790">1790 ₸</td>
+</tr>
+<tr>
+<th scope="row">Tashkent Tea</th>
+<td data-price-kzt="990">990 ₸</td>
+<td data-price-kzt="1790">1790 ₸</td>
+</tr>
+<tr>
+<th scope="row">Sea Buckthorn and Ginger</th>
+<td data-price-kzt="990">990 ₸</td>
+<td data-price-kzt="1790">1790 ₸</td>
+</tr>
+<tr>
+<th scope="row">Black Tea</th>
+<td data-price-kzt="490">490 ₸</td>
+<td data-price-kzt="1090">1090 ₸</td>
+</tr>
+<tr>
+<th scope="row">Tea with Milk</th>
+<td data-price-kzt="590">590 ₸</td>
+<td data-price-kzt="1590">1590 ₸</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<!-- FOOD -->
+<section class="mb-4" id="menu-section-5">
+<div class="row g-4">
+<!-- BAKERY -->
+<div class="col-lg-6">
+<article class="card h-100 shadow-sm">
+<div class="card-body">
+<h2 class="">
                             Bakery
                         </h2>
-
-                        <dl>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Chicken Panini</dt>
-                                <dd>1290 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Chicken Quesadilla</dt>
-                                <dd>1390 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Chicken Croissant</dt>
-                                <dd>1290 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Turkey Croissant</dt>
-                                <dd>1290 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Chicken Club Sandwich</dt>
-                                <dd>1290 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Pancakes with Chicken and Mushrooms</dt>
-                                <dd>1190 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Pancakes with Meat</dt>
-                                <dd>1190 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>French Dog</dt>
-                                <dd>1090 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Danish</dt>
-                                <dd>1290 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Meat Samsa</dt>
-                                <dd>490 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Chicken Samsa</dt>
-                                <dd>490 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between py-2">
-                                <dt>Cheburek</dt>
-                                <dd>490 ₸</dd>
-                            </div>
-
-                        </dl>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-
-            <!-- DESSERTS -->
-
-            <div class="col-lg-6">
-
-                <article class="card h-100 shadow-sm">
-
-                    <div class="card-body">
-
-                        <h2 class="card-title mb-4">
+<dl>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Chicken Panini</dt>
+<dd>1290 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Chicken Quesadilla</dt>
+<dd>1390 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Chicken Croissant</dt>
+<dd>1290 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Turkey Croissant</dt>
+<dd>1290 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Chicken Club Sandwich</dt>
+<dd>1290 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Pancakes with Chicken and Mushrooms</dt>
+<dd>1190 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Pancakes with Meat</dt>
+<dd>1190 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>French Dog</dt>
+<dd>1090 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Danish</dt>
+<dd>1290 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Meat Samsa</dt>
+<dd>490 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Chicken Samsa</dt>
+<dd>490 ₸</dd>
+</div>
+<div class="d-flex justify-content-between py-2">
+<dt>Cheburek</dt>
+<dd>490 ₸</dd>
+</div>
+</dl>
+</div>
+</article>
+</div>
+<!-- DESSERTS -->
+<div class="col-lg-6">
+<article class="card h-100 shadow-sm">
+<div class="card-body">
+<h2 class="">
                             Desserts
                         </h2>
-
-                        <dl>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Granola with Yogurt</dt>
-                                <dd>1090 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Tiramisu Trifle</dt>
-                                <dd>1190 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Pistachio Raspberry Trifle</dt>
-                                <dd>1190 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Banoffee Pie Trifle</dt>
-                                <dd>1190 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Snickers Trifle</dt>
-                                <dd>1190 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Cinnabon</dt>
-                                <dd>1190 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Dates with Cottage Cheese</dt>
-                                <dd>1190 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between py-2">
-                                <dt>Cookies with Condensed Milk</dt>
-                                <dd>290 ₸</dd>
-                            </div>
-
-                        </dl>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- SALADS + EXTRAS -->
-
-    <section class="container mb-5">
-
-        <div class="row g-4">
-
-
-            <div class="col-md-6">
-
-                <article class="card h-100 shadow-sm">
-
-                    <div class="card-body">
-
-                        <h2 class="card-title">
-                            Salads & Bowls
+<dl>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Granola with Yogurt</dt>
+<dd>1090 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Tiramisu Trifle</dt>
+<dd>1190 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Pistachio Raspberry Trifle</dt>
+<dd>1190 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Banoffee Pie Trifle</dt>
+<dd>1190 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Snickers Trifle</dt>
+<dd>1190 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Cinnabon</dt>
+<dd>1190 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Dates with Cottage Cheese</dt>
+<dd>1190 ₸</dd>
+</div>
+<div class="d-flex justify-content-between py-2">
+<dt>Cookies with Condensed Milk</dt>
+<dd>290 ₸</dd>
+</div>
+</dl>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- SALADS + EXTRAS -->
+<section class="mb-4" id="menu-section-6">
+<div class="row g-4">
+<div class="col-md-6">
+<article class="card h-100 shadow-sm">
+<div class="card-body">
+<h2 class="">
+                            Salads &amp; Bowls
                         </h2>
-
-                        <dl>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Chicken Teriyaki Bowl</dt>
-                                <dd>1790 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Caesar Salad</dt>
-                                <dd>1790 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between py-2">
-                                <dt>Fitness Salad</dt>
-                                <dd>1790 ₸</dd>
-                            </div>
-
-                        </dl>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-
-            <div class="col-md-6">
-
-                <article class="card h-100 shadow-sm">
-
-                    <div class="card-body">
-
-                        <h2 class="card-title">
+<dl>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Chicken Teriyaki Bowl</dt>
+<dd>1790 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Caesar Salad</dt>
+<dd>1790 ₸</dd>
+</div>
+<div class="d-flex justify-content-between py-2">
+<dt>Fitness Salad</dt>
+<dd>1790 ₸</dd>
+</div>
+</dl>
+</div>
+</article>
+</div>
+<div class="col-md-6">
+<article class="card h-100 shadow-sm">
+<div class="card-body">
+<h2 class="">
                             Extras
                         </h2>
-
-                        <dl>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Syrup</dt>
-                                <dd>100 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Lemon</dt>
-                                <dd>200 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Milk</dt>
-                                <dd>200 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Cream</dt>
-                                <dd>290 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Extra Coffee Shot</dt>
-                                <dd>350 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Alternative Milk</dt>
-                                <dd>300 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between border-bottom py-2">
-                                <dt>Honey</dt>
-                                <dd>200 ₸</dd>
-                            </div>
-
-                            <div class="d-flex justify-content-between py-2">
-                                <dt>Marshmallow</dt>
-                                <dd>200 ₸</dd>
-                            </div>
-
-                        </dl>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ORDER CTA -->
-
-    <section class="container py-5">
-
-        <div class="card text-center shadow-sm">
-
-            <div class="card-body py-5">
-
-                <h2>
+<dl>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Syrup</dt>
+<dd>100 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Lemon</dt>
+<dd>200 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Milk</dt>
+<dd>200 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Cream</dt>
+<dd>290 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Extra Coffee Shot</dt>
+<dd>350 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Alternative Milk</dt>
+<dd>300 ₸</dd>
+</div>
+<div class="d-flex justify-content-between border-bottom py-2">
+<dt>Honey</dt>
+<dd>200 ₸</dd>
+</div>
+<div class="d-flex justify-content-between py-2">
+<dt>Marshmallow</dt>
+<dd>200 ₸</dd>
+</div>
+</dl>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- ORDER CTA -->
+<section class="mb-4" id="menu-section-7">
+<div class="card shadow-sm">
+<div class="card-body">
+<h2 class="">
                     Ready to Order?
                 </h2>
-
-                <p class="lead">
+<p class="lead">
                     Choose your favorite drink or meal
                     and place your order for pickup.
                 </p>
-
-                <a href="order.html"
-                   class="btn btn-dark btn-lg">
+<a class="btn btn-primary" href="order.html" id="menu-order-button">
                     Order Online
                 </a>
-
-            </div>
-
-        </div>
-
-    </section>
-
+</div>
+</div>
+</section>
 </main>
-
-
 <!-- FOOTER -->
-
 <footer class="w-100 position-static bottom-0 bg-secondary pt-5 d-flex flex-column justify-content-center align-items-center">
-    <hr class="my-1">
-    <section class="container row w-100 font-monospace">
-        <article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
-            <p class="font-monospace text-white">[ Company ]</p>
-            <a class="text-primary" href="about.html">About us</a>
-            <a class="text-primary" href="locations.html">Locations &amp; Hours</a>
-            <a class="text-primary" href="contacts.html">Contacts</a>
-        </article>
-        <article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
-            <p class="font-monospace text-white">[ Explore ]</p>
-            <a class="text-primary" href="brewing-guides.html">Brewing Guides</a>
-            <a class="text-primary" href="events.html">Events &amp; Classes</a>
-            <a class="text-primary" href="blog.html">Coffee Blog</a>
-            <a class="text-primary" href="wholesale.html">B2B Wholesale</a>
-        </article>
-        <article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
-            <p class="font-monospace text-white">[ Products ]</p>
-            <a class="text-primary" href="subscriptions.html">Subscriptions</a>
-            <a class="text-primary" href="menu.html">Full Menu</a>
-        </article>
-        <article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
-            <p class="font-monospace text-white">[ Account ]</p>
-            <a class="text-primary" href="login.html">Sign In / Register</a>
-            <a class="text-primary" href="#">Track Order</a>
-            <a class="text-primary" href="#">Loyalty Program</a>
-        </article>
-    </section>
-    <section class="container d-flex justify-content-start justify-content-md-center py-4">
-        <p class="font-monospace text-white-50 small">&copy; 2026 Tokyo Coffee. All rights reserved.</p>
-    </section>
+<hr class="my-1"/>
+<section class="container row w-100 font-monospace">
+<article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
+<p class="font-monospace text-white">[ Company ]</p>
+<a class="text-primary" href="about.html">About us</a>
+<a class="text-primary" href="locations.html">Locations &amp; Hours</a>
+<a class="text-primary" href="contacts.html">Contacts</a>
+</article>
+<article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
+<p class="font-monospace text-white">[ Explore ]</p>
+<a class="text-primary" href="brewing-guides.html">Brewing Guides</a>
+<a class="text-primary" href="events.html">Events &amp; Classes</a>
+<a class="text-primary" href="blog.html">Coffee Blog</a>
+<a class="text-primary" href="wholesale.html">B2B Wholesale</a>
+</article>
+<article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
+<p class="font-monospace text-white">[ Products ]</p>
+<a class="text-primary" href="subscriptions.html">Subscriptions</a>
+<a class="text-primary" href="menu.html">Full Menu</a>
+</article>
+<article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
+<p class="font-monospace text-white">[ Account ]</p>
+<a class="text-primary" href="login.html">Sign In / Register</a>
+</article>
+</section>
+<section class="container d-flex justify-content-start justify-content-md-center py-4">
+<p class="font-monospace text-white-50 small">© 2026 Tokyo Coffee. All rights reserved.</p>
+</section>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
-        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
-        crossorigin="anonymous"></script>
 
 
-
-</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script></body>
 </html>
