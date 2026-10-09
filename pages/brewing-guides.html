@@ -1,974 +1,896 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
+    <head>
+        <meta charset="utf-8" />
 
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
+        <meta
+            content="Home brewing guides for V60, French Press and AeroPress coffee preparation at Tokyo Coffee."
+            name="description"
+        />
 
-<head>
+        <meta content="Rakhmetolla Sultan-Ali" name="author" />
 
-    <meta charset="utf-8" />
+        <title>Brewing Guides | Tokyo Coffee</title>
 
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <!-- Google Fonts -->
+        <!-- Bootstrap CSS -->
+        <!-- Custom CSS -->
 
-    <meta content="Home brewing guides for V60, French Press and AeroPress coffee preparation at Tokyo Coffee." name="description" />
+        <!-- Google Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+            rel="stylesheet"
+        />
 
-    <meta content="Rakhmetolla Sultan-Ali" name="author" />
+        <!-- Bootstrap 5.3.3 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <!-- Base styles -->
+        <link rel="stylesheet" href="css/base.css" />
+        <!-- Project correction layer: custom CSS comes after Bootstrap -->
+        <link rel="stylesheet" href="css/rakhmetolla.css" />
+    </head>
 
+    <header class="font-monospace sticky-top">
+        <nav class="navbar navbar-expand-lg bg-secondary">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" href="index.html"
+                    ><b>Tokyo Coffee</b></a
+                >
 
-
-    <title>Brewing Guides | Tokyo Coffee</title>
-
-
-
-    <!-- Google Fonts -->
-<!-- Bootstrap CSS -->
-<!-- Custom CSS -->
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-  
-
-    <!-- Bootstrap 5.3.3 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Base styles -->
-    <link rel="stylesheet" href="css/base.css">
-    <!-- Project correction layer: custom CSS comes after Bootstrap -->
-    <link rel="stylesheet" href="css/rakhmetolla.css">
-
-</head>
-
-<header class="font-monospace sticky-top">
-
-    <nav class="navbar navbar-expand-lg bg-secondary">
-
-        <div class="container-fluid">
-
-            <a class="navbar-brand text-white" href="index.html"><b>Tokyo Coffee</b></a>
-
-            <button class="navbar-toggler text-white border-primary" type="button" data-bs-toggle="collapse"
-
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-
-                    aria-expanded="false" aria-label="Toggle navigation">
-
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-
-                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-
-                </svg>
-
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-uppercase">
-
-                    <li class="nav-item">
-
-                        <a class="nav-link text-white" aria-current="page" href="menu.html">[ Menu ]</a>
-
-                    </li>
-
-                    <li class="nav-item">
-
-                        <a class="nav-link active text-white" href="brewing-guides.html">[ Brewing Guides ]</a>
-
-                    </li>
-
-                    <li class="nav-item">
-
-                        <a class="nav-link text-white" aria-current="page" href="events.html">[ Events ]</a>
-
-                    </li>
-
-                    <li class="nav-item">
-
-                        <a class="nav-link text-white" href="about.html">[ About Us ]</a>
-
-                    </li>
-
-                </ul>
-
-                <a id="login-button-header"
-
-                   class="btn btn-primary font-monospace d-inline-flex align-items-center justify-content-center justify-content-md-start gap-2 p-2 px-3"
-
-                   href="login.html">
-
-                    Login
-
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-
-                         class="bi bi-door-open-fill" viewBox="0 0 16 16">
-
-                        <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15zM11 2h.5a.5.5 0 0 1 .5.5V15h-1zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1"/>
-
+                <button
+                    class="navbar-toggler text-white border-primary"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        fill="currentColor"
+                        class="bi bi-list"
+                        viewBox="0 0 16 16"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+                        />
                     </svg>
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </nav>
-
-    <hr class="my-0">
-
-</header>
-
-
-
-<body>
-
-
-
-    <!-- Main Content -->
-
-    <main class="container py-4">
-
-
-
-        <h1 class="text-center mb-3">Brewing Guides</h1>
-
-
-
-        <p class="lead text-center mx-auto mb-5">
-
-            Learn the basics of preparing coffee at home with three popular
-
-            methods: V60, French Press and AeroPress. These guides provide
-
-            simple starting points for coffee, water, grind size and brewing time.
-
-        </p>
-
-
-
-        <section class="card shadow-sm mb-4">
-
-            <div class="card-body">
-
-                <h2>About Home Brewing</h2>
-
-                <p>
-
-                    Home brewing gives you control over coffee strength, water,
-
-                    grind size and brewing time. Small changes can affect the final
-
-                    taste, so it is useful to change one part of the process at a time.
-
-                </p>
-
-                <p class="mb-0">
-
-                    The ratios and instructions below are starting points rather than
-
-                    strict rules. Coffee beans, grinders, water and personal taste
-
-                    can all affect the result.
-
-                </p>
-
-            </div>
-
-        </section>
-
-
-
-        <aside class="card shadow-sm mb-4">
-
-            <div class="card-body">
-
-                <h2>Before You Start</h2>
-
-                <ul class="mb-0">
-
-                    <li>Use fresh coffee beans when possible.</li>
-
-                    <li>Use clean water with a suitable temperature.</li>
-
-                    <li>Measure coffee and water consistently.</li>
-
-                    <li>Keep track of brewing time.</li>
-
-                    <li>Change one variable at a time when experimenting.</li>
-
-                </ul>
-
-            </div>
-
-        </aside>
-
-
-
-        <!-- Method Cards -->
-
-        <div class="row g-4 mb-5">
-
-            <!-- V60 -->
-
-            <section class="col-12 col-md-6 col-lg-4" id="v60">
-
-                <div class="card h-100 shadow-sm">
-
-                    <div class="card-body">
-
-                        <h2>V60</h2>
-
-                        <p>
-
-                            <img alt="V60 coffee dripper" class="img-fluid rounded mb-3" src="images/v60.png" />
-
-                            V60 is a pour-over method that uses a cone-shaped dripper and
-
-                            paper filter. Water is poured over ground coffee in controlled
-
-                            stages.
-
-                        </p>
-
-                        <p>
-
-                            A good starting ratio is approximately <code>1 g coffee : 16-17 g water</code>.
-
-                        </p>
-
-                        <ol>
-
-                            <li>Place the paper filter in the dripper.</li>
-
-                            <li>Rinse the filter with hot water.</li>
-
-                            <li>Add ground coffee.</li>
-
-                            <li>Bloom the coffee with a small amount of water.</li>
-
-                            <li>Pour the remaining water slowly and evenly.</li>
-
-                            <li>Allow the coffee to finish dripping.</li>
-
-                        </ol>
-
-                        <p>Starting ratio: 1:16-17</p>
-
-                        <p class="mb-0">
-
-                            The next content starts below the floated image because
-
-                            <code>clear: both</code> prevents it from wrapping beside the image.
-
-                        </p>
-
-                    </div>
-
+                </button>
+
+                <div
+                    class="collapse navbar-collapse"
+                    id="navbarSupportedContent"
+                >
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-uppercase">
+                        <li class="nav-item">
+                            <a
+                                class="nav-link text-white"
+                                aria-current="page"
+                                href="menu.html"
+                                >[ Menu ]</a
+                            >
+                        </li>
+
+                        <li class="nav-item">
+                            <a
+                                class="nav-link active text-white"
+                                href="brewing-guides.html"
+                                >[ Brewing Guides ]</a
+                            >
+                        </li>
+
+                        <li class="nav-item">
+                            <a
+                                class="nav-link text-white"
+                                aria-current="page"
+                                href="events.html"
+                                >[ Events ]</a
+                            >
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="about.html"
+                                >[ About Us ]</a
+                            >
+                        </li>
+                    </ul>
+
+                    <a
+                        id="login-button-header"
+                        class="btn btn-primary font-monospace d-inline-flex align-items-center justify-content-center justify-content-md-start gap-2 p-2 px-3"
+                        href="login.html"
+                    >
+                        Login
+
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            class="bi bi-door-open-fill"
+                            viewBox="0 0 16 16"
+                        >
+                            <path
+                                d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15zM11 2h.5a.5.5 0 0 1 .5.5V15h-1zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1"
+                            />
+                        </svg>
+                    </a>
                 </div>
+            </div>
+        </nav>
 
+        <hr class="my-0" />
+    </header>
+
+    <body>
+        <!-- Main Content -->
+
+        <main class="container py-4">
+            <h1 class="text-center mb-3">Brewing Guides</h1>
+
+            <p class="lead text-center mx-auto mb-5">
+                Learn the basics of preparing coffee at home with three popular
+                methods: V60, French Press and AeroPress. These guides provide
+                simple starting points for coffee, water, grind size and brewing
+                time.
+            </p>
+
+            <section class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2>About Home Brewing</h2>
+
+                    <p>
+                        Home brewing gives you control over coffee strength,
+                        water, grind size and brewing time. Small changes can
+                        affect the final taste, so it is useful to change one
+                        part of the process at a time.
+                    </p>
+
+                    <p class="mb-0">
+                        The ratios and instructions below are starting points
+                        rather than strict rules. Coffee beans, grinders, water
+                        and personal taste can all affect the result.
+                    </p>
+                </div>
             </section>
 
+            <aside class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2>Before You Start</h2>
 
+                    <ul class="mb-0">
+                        <li>Use fresh coffee beans when possible.</li>
 
-            <!-- French Press -->
+                        <li>Use clean water with a suitable temperature.</li>
 
-            <section class="col-12 col-md-6 col-lg-4" id="french-press">
+                        <li>Measure coffee and water consistently.</li>
 
-                <div class="card h-100 shadow-sm">
+                        <li>Keep track of brewing time.</li>
 
-                    <div class="card-body">
-
-                        <h2>French Press</h2>
-
-                        <p>
-
-                            <img alt="French Press coffee maker" class="img-fluid rounded mb-3" src="images/french-press.png" />
-
-                            French Press brewing uses immersion. Coffee grounds stay in
-
-                            contact with water before the filter is pressed down.
-
-                        </p>
-
-                        <p>
-
-                            A useful starting ratio is approximately <code>1 g coffee : 15 g water</code>.
-
-                        </p>
-
-                        <ol>
-
-                            <li>Add coarse-ground coffee to the French Press.</li>
-
-                            <li>Add hot water.</li>
-
-                            <li>Stir gently to wet the grounds.</li>
-
-                            <li>Wait for approximately four minutes.</li>
-
-                            <li>Press the filter down slowly.</li>
-
-                            <li>Serve the coffee immediately.</li>
-
-                        </ol>
-
-                        <p class="mb-0">
-
-                            Clearing the float makes sure the next content starts below
-
-                            the floated image instead of wrapping beside it.
-
-                        </p>
-
-                    </div>
-
+                        <li>
+                            Change one variable at a time when experimenting.
+                        </li>
+                    </ul>
                 </div>
+            </aside>
 
+            <!-- Method Cards -->
+
+            <div class="row g-4 mb-5">
+                <!-- V60 -->
+
+                <section class="col-12 col-md-6 col-lg-4" id="v60">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h2>V60</h2>
+
+                            <p>
+                                <img
+                                    alt="V60 coffee dripper"
+                                    class="img-fluid rounded mb-3"
+                                    src="images/v60.png"
+                                />
+
+                                V60 is a pour-over method that uses a
+                                cone-shaped dripper and paper filter. Water is
+                                poured over ground coffee in controlled stages.
+                            </p>
+
+                            <p>
+                                A good starting ratio is approximately
+                                <code>1 g coffee : 16-17 g water</code>.
+                            </p>
+
+                            <ol>
+                                <li>Place the paper filter in the dripper.</li>
+
+                                <li>Rinse the filter with hot water.</li>
+
+                                <li>Add ground coffee.</li>
+
+                                <li>
+                                    Bloom the coffee with a small amount of
+                                    water.
+                                </li>
+
+                                <li>
+                                    Pour the remaining water slowly and evenly.
+                                </li>
+
+                                <li>Allow the coffee to finish dripping.</li>
+                            </ol>
+
+                            <p>Starting ratio: 1:16-17</p>
+
+                            <p class="mb-0">
+                                The next content starts below the floated image
+                                because
+
+                                <code>clear: both</code> prevents it from
+                                wrapping beside the image.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- French Press -->
+
+                <section class="col-12 col-md-6 col-lg-4" id="french-press">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h2>French Press</h2>
+
+                            <p>
+                                <img
+                                    alt="French Press coffee maker"
+                                    class="img-fluid rounded mb-3"
+                                    src="images/french-press.png"
+                                />
+
+                                French Press brewing uses immersion. Coffee
+                                grounds stay in contact with water before the
+                                filter is pressed down.
+                            </p>
+
+                            <p>
+                                A useful starting ratio is approximately
+                                <code>1 g coffee : 15 g water</code>.
+                            </p>
+
+                            <ol>
+                                <li>
+                                    Add coarse-ground coffee to the French
+                                    Press.
+                                </li>
+
+                                <li>Add hot water.</li>
+
+                                <li>Stir gently to wet the grounds.</li>
+
+                                <li>Wait for approximately four minutes.</li>
+
+                                <li>Press the filter down slowly.</li>
+
+                                <li>Serve the coffee immediately.</li>
+                            </ol>
+
+                            <p class="mb-0">
+                                Clearing the float makes sure the next content
+                                starts below the floated image instead of
+                                wrapping beside it.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- AeroPress -->
+
+                <section class="col-12 col-md-6 col-lg-4" id="aeropress">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h2>AeroPress</h2>
+
+                            <p>
+                                <img
+                                    alt="AeroPress coffee brewer"
+                                    class="img-fluid rounded mb-3"
+                                    src="images/aeropress.png"
+                                />
+
+                                AeroPress is an immersion and pressure-based
+                                brewing method. It can produce a clean and
+                                concentrated cup in a relatively short time.
+                            </p>
+
+                            <p>
+                                A simple starting ratio is approximately
+                                <code>1 g coffee : 15 g water</code>.
+                            </p>
+
+                            <ol>
+                                <li>Place the filter in the filter cap.</li>
+
+                                <li>Rinse the filter with hot water.</li>
+
+                                <li>Add medium-fine ground coffee.</li>
+
+                                <li>Add hot water and stir.</li>
+
+                                <li>Allow the coffee to brew briefly.</li>
+
+                                <li>Press slowly into the cup.</li>
+                            </ol>
+
+                            <p class="mb-0">
+                                The clear property keeps this content below the
+                                floated image.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Tables -->
+
+            <section class="card shadow-sm mb-4" id="water-ratios">
+                <div class="card-body">
+                    <h2>Water-to-Coffee Starting Ratios</h2>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Method</th>
+
+                                    <th scope="col">Coffee</th>
+
+                                    <th scope="col">Water</th>
+
+                                    <th scope="col">Starting Ratio</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <th scope="row">V60</th>
+
+                                    <td>15 g</td>
+
+                                    <td>250 g</td>
+
+                                    <td>1:16-17</td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">French Press</th>
+
+                                    <td>20 g</td>
+
+                                    <td>300 g</td>
+
+                                    <td>1:15</td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">AeroPress</th>
+
+                                    <td>15 g</td>
+
+                                    <td>225 g</td>
+
+                                    <td>1:15</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </section>
 
+            <section class="card shadow-sm mb-4" id="grind-size">
+                <div class="card-body">
+                    <h2>Grind Size Guide</h2>
 
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Method</th>
 
-            <!-- AeroPress -->
+                                    <th scope="col">Starting Grind</th>
 
-            <section class="col-12 col-md-6 col-lg-4" id="aeropress">
+                                    <th scope="col">Brewing Style</th>
+                                </tr>
+                            </thead>
 
-                <div class="card h-100 shadow-sm">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">V60</th>
 
-                    <div class="card-body">
+                                    <td>Medium</td>
 
-                        <h2>AeroPress</h2>
+                                    <td>Pour-over</td>
+                                </tr>
 
-                        <p>
+                                <tr>
+                                    <th scope="row">French Press</th>
 
-                            <img alt="AeroPress coffee brewer" class="img-fluid rounded mb-3" src="images/aeropress.png" />
+                                    <td>Coarse</td>
 
-                            AeroPress is an immersion and pressure-based brewing method.
+                                    <td>Immersion</td>
+                                </tr>
 
-                            It can produce a clean and concentrated cup in a relatively
+                                <tr>
+                                    <th scope="row">AeroPress</th>
 
-                            short time.
+                                    <td>Medium-fine</td>
 
-                        </p>
-
-                        <p>
-
-                            A simple starting ratio is approximately <code>1 g coffee : 15 g water</code>.
-
-                        </p>
-
-                        <ol>
-
-                            <li>Place the filter in the filter cap.</li>
-
-                            <li>Rinse the filter with hot water.</li>
-
-                            <li>Add medium-fine ground coffee.</li>
-
-                            <li>Add hot water and stir.</li>
-
-                            <li>Allow the coffee to brew briefly.</li>
-
-                            <li>Press slowly into the cup.</li>
-
-                        </ol>
-
-                        <p class="mb-0">
-
-                            The clear property keeps this content below the floated image.
-
-                        </p>
-
+                                    <td>Immersion / pressure</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-
                 </div>
-
             </section>
 
-        </div>
+            <!-- Troubleshooting -->
 
+            <section class="card shadow-sm mb-5" id="troubleshooting">
+                <div class="card-body">
+                    <h2>Troubleshooting</h2>
 
+                    <dl class="row g-3 mb-0">
+                        <dt class="col-12 col-md-6">
+                            Coffee tastes too bitter
+                        </dt>
 
-        <!-- Tables -->
+                        <dd class="col-12 col-md-6">
+                            Try a coarser grind, shorter brewing time or
+                            slightly cooler water.
+                        </dd>
 
-        <section class="card shadow-sm mb-4" id="water-ratios">
+                        <dt class="col-12 col-md-6">Coffee tastes too sour</dt>
 
-            <div class="card-body">
+                        <dd class="col-12 col-md-6">
+                            Try a finer grind, longer brewing time or slightly
+                            hotter water.
+                        </dd>
 
-                <h2>Water-to-Coffee Starting Ratios</h2>
+                        <dt class="col-12 col-md-6">Coffee tastes weak</dt>
 
-                <div class="table-responsive">
+                        <dd class="col-12 col-md-6">
+                            Check the coffee-to-water ratio and consider using
+                            more coffee.
+                        </dd>
 
-                    <table class="table table-hover align-middle mb-0">
+                        <dt class="col-12 col-md-6">
+                            Coffee tastes too strong
+                        </dt>
 
-                
-
-                        <thead>
-
-                            <tr>
-
-                                <th scope="col">Method</th>
-
-                                <th scope="col">Coffee</th>
-
-                                <th scope="col">Water</th>
-
-                                <th scope="col">Starting Ratio</th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            <tr>
-
-                                <th scope="row">V60</th>
-
-                                <td>15 g</td>
-
-                                <td>250 g</td>
-
-                                <td>1:16-17</td>
-
-                            </tr>
-
-                            <tr>
-
-                                <th scope="row">French Press</th>
-
-                                <td>20 g</td>
-
-                                <td>300 g</td>
-
-                                <td>1:15</td>
-
-                            </tr>
-
-                            <tr>
-
-                                <th scope="row">AeroPress</th>
-
-                                <td>15 g</td>
-
-                                <td>225 g</td>
-
-                                <td>1:15</td>
-
-                            </tr>
-
-                        </tbody>
-
-                    </table>
-
+                        <dd class="col-12 col-md-6">
+                            Try using more water or slightly less coffee.
+                        </dd>
+                    </dl>
                 </div>
+            </section>
 
-            </div>
+            <!-- Notes -->
 
-        </section>
+            <section class="card shadow-sm mb-4" id="brewing-notes">
+                <div class="card-body">
+                    <h2>Brewing Notes</h2>
 
+                    <p>
+                        You can record your brewing variables so you can compare
+                        different attempts.
+                    </p>
 
-
-        <section class="card shadow-sm mb-4" id="grind-size">
-
-            <div class="card-body">
-
-                <h2>Grind Size Guide</h2>
-
-                <div class="table-responsive">
-
-                    <table class="table table-hover align-middle mb-0">
-
-              
-
-                        <thead>
-
-                            <tr>
-
-                                <th scope="col">Method</th>
-
-                                <th scope="col">Starting Grind</th>
-
-                                <th scope="col">Brewing Style</th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            <tr>
-
-                                <th scope="row">V60</th>
-
-                                <td>Medium</td>
-
-                                <td>Pour-over</td>
-
-                            </tr>
-
-                            <tr>
-
-                                <th scope="row">French Press</th>
-
-                                <td>Coarse</td>
-
-                                <td>Immersion</td>
-
-                            </tr>
-
-                            <tr>
-
-                                <th scope="row">AeroPress</th>
-
-                                <td>Medium-fine</td>
-
-                                <td>Immersion / pressure</td>
-
-                            </tr>
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- Troubleshooting -->
-
-        <section class="card shadow-sm mb-5" id="troubleshooting">
-
-            <div class="card-body">
-
-                <h2>Troubleshooting</h2>
-
-                <dl class="row g-3 mb-0">
-
-                    <dt class="col-12 col-md-6">Coffee tastes too bitter</dt>
-
-                    <dd class="col-12 col-md-6">
-
-                        Try a coarser grind, shorter brewing time or slightly cooler water.
-
-                    </dd>
-
-
-
-                    <dt class="col-12 col-md-6">Coffee tastes too sour</dt>
-
-                    <dd class="col-12 col-md-6">
-
-                        Try a finer grind, longer brewing time or slightly hotter water.
-
-                    </dd>
-
-
-
-                    <dt class="col-12 col-md-6">Coffee tastes weak</dt>
-
-                    <dd class="col-12 col-md-6">
-
-                        Check the coffee-to-water ratio and consider using more coffee.
-
-                    </dd>
-
-
-
-                    <dt class="col-12 col-md-6">Coffee tastes too strong</dt>
-
-                    <dd class="col-12 col-md-6">
-
-                        Try using more water or slightly less coffee.
-
-                    </dd>
-
-                </dl>
-
-            </div>
-
-        </section>
-
-
-
-      <!-- Notes -->
-
-<section class="card shadow-sm mb-4" id="brewing-notes">
-
-    <div class="card-body">
-
-        <h2>Brewing Notes</h2>
-
-        <p>
-            You can record your brewing variables so you can compare different attempts.
-        </p>
-
-        <pre class="bg-light text-dark p-3 rounded">Method: V60
+                    <pre class="bg-light text-dark p-3 rounded">
+Method: V60
 Coffee: 15 g
 Water: 250 ml
 Grind: Medium
 Time: Record your brewing time
-Result: Record the taste and strength after brewing.</pre>
-
-        <p class="mb-0">
-            Save your notes with <kbd>Ctrl</kbd> + <kbd>S</kbd>.
-        </p>
-
-    </div>
-
-</section>
-
-
-
-        <!-- Explore More -->
-
-        <section class="card shadow-sm mb-4" id="explore-more">
-
-            <div class="card-body">
-
-                <h2>Explore More</h2>
-
-                <ul>
-
-                    <li>
-
-                        <a href="menu.html">Full Menu</a> — see coffee, tea, food and other drinks.
-
-                    </li>
-
-                    <li>
-
-                        <a href="blog.html">Coffee Blog</a> — read coffee stories and customer reviews.
-
-                    </li>
-
-                    <li>
-
-                        <a href="subscriptions.html">Subscriptions</a> — explore coffee subscription options.
-
-                    </li>
-
-                    <li>
-
-                        <a href="contact.html">Contact Us</a> — ask Tokyo Coffee about products and services.
-
-                    </li>
-
-                </ul>
-
-                <p class="mb-0">
-
-                    <span class="fw-bold">Tip:</span> Start with the recommended ratio and change one variable at a time when experimenting.
-
-                </p>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- Inquiry Form -->
-
-        <section class="card shadow-sm mb-4" id="ask-brewing">
-
-            <div class="card-body">
-
-                <h2>Ask About Brewing</h2>
-
-                <p>
-
-                    If you have a question about brewing, use the form below to describe your method and problem.
-
-                </p>
-
-
-
-                <form method="post" id="brewing-question-form">
-
-                    <fieldset>
-
-                        <legend class="h5 mb-3">Brewing Question</legend>
-
-
-
-                        <div class="mb-3">
-
-                            <label class="form-label" for="visitor-name">Name:</label>
-
-                            <input class="form-control" id="visitor-name" name="visitor-name" placeholder="Enter your name" required type="text" />
-
-                        </div>
-
-
-
-                        <div class="mb-3">
-
-                            <label class="form-label" for="visitor-email">Email:</label>
-
-                            <input class="form-control" id="visitor-email" name="visitor-email" placeholder="you@example.com" required type="email" />
-
-                        </div>
-
-
-
-                        <div class="mb-3">
-
-                            <label class="form-label" for="visitor-phone">Phone:</label>
-
-                            <input class="form-control" id="visitor-phone" name="visitor-phone" placeholder="+7 700 000 00 00" required type="tel" />
-
-                        </div>
-
-
-
-                        <div class="mb-3">
-
-                            <label class="form-label" for="brew-date">Brewing date:</label>
-
-                            <input class="form-control" id="brew-date" name="brew-date" required type="date" />
-
-                        </div>
-
-
-
-                        <div class="mb-3">
-
-                            <label class="form-label" for="brewing-method">Brewing method:</label>
-
-                            <select class="form-select" id="brewing-method" name="brewing-method" required>
-
-                                <option value="">Choose a method</option>
-
-                                <option value="v60">V60</option>
-
-                                <option value="french-press">French Press</option>
-
-                                <option value="aeropress">AeroPress</option>
-
-                                <option value="other">Other</option>
-
-                            </select>
-
-                        </div>
-
-
-
-                        <div class="mb-3">
-
-                            <label class="form-label" for="coffee-amount">Coffee amount, grams:</label>
-
-                            <input class="form-control" id="coffee-amount" min="1" name="coffee-amount" placeholder="15" required type="number" />
-
-                        </div>
-
-
-
-                        <div class="mb-3">
-
-                            <label class="form-label d-block">What would you like to adjust?</label>
-
-
-
-                            <div class="form-check">
-
-                                <input class="form-check-input" id="adjust-grind" name="adjustment" required type="radio" value="grind" />
-
-                                <label class="form-check-label" for="adjust-grind">Grind size</label>
-
-                            </div>
-
-
-
-                            <div class="form-check">
-
-                                <input class="form-check-input" id="adjust-ratio" name="adjustment" type="radio" value="ratio" />
-
-                                <label class="form-check-label" for="adjust-ratio">Coffee-to-water ratio</label>
-
-                            </div>
-
-
-
-                            <div class="form-check">
-
-                                <input class="form-check-input" id="adjust-time" name="adjustment" type="radio" value="time" />
-
-                                <label class="form-check-label" for="adjust-time">Brewing time</label>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <div class="mb-3">
-
-                            <label class="form-label" for="brewing-question">Brewing question:</label>
-
-                            <textarea class="form-control" id="brewing-question" name="brewing-question" placeholder="Describe your brewing problem or question" required rows="6"></textarea>
-
-                        </div>
-
-
-
-                        <div class="form-check mb-3">
-
-                            <input class="form-check-input" id="permission" name="permission" required type="checkbox" value="yes" />
-
-                            <label class="form-check-label" for="permission">
-
-                                I agree to be contacted about this question.
-
-                            </label>
-
-                        </div>
-
-
-
-                        <div class="d-flex gap-2 flex-wrap mt-3">
-
-        <input class="btn btn-primary" type="submit" value="Send Question" />
-
-        <input class="btn btn-outline-secondary" type="reset" value="Clear" />
-
-        <button class="btn btn-success" type="button">Save Draft</button>
-
-         <button class="btn btn-secondary" disabled type="button">Unavailable</button>
-
-    </div>
-
-                    </fieldset>
-
-                
-                <div class="small text-muted mt-3" aria-live="polite">Form status will appear here after submission.</div>
-                <div id="brewing-question-form-result" class="alert alert-success d-none" role="status">
-                    Your request has been submitted successfully.
+Result: Record the taste and strength after brewing.</pre
+                    >
+
+                    <p class="mb-0">
+                        Save your notes with <kbd>Ctrl</kbd> + <kbd>S</kbd>.
+                    </p>
                 </div>
-                <div id="brewing-question-form-error" class="alert alert-danger d-none" role="alert">
-                    Please check the information and try again.
+            </section>
+
+            <!-- Explore More -->
+
+            <section class="card shadow-sm mb-4" id="explore-more">
+                <div class="card-body">
+                    <h2>Explore More</h2>
+
+                    <ul>
+                        <li>
+                            <a href="menu.html">Full Menu</a> — see coffee, tea,
+                            food and other drinks.
+                        </li>
+
+                        <li>
+                            <a href="blog.html">Coffee Blog</a> — read coffee
+                            stories and customer reviews.
+                        </li>
+
+                        <li>
+                            <a href="subscriptions.html">Subscriptions</a> —
+                            explore coffee subscription options.
+                        </li>
+
+                        <li>
+                            <a href="contact.html">Contact Us</a> — ask Tokyo
+                            Coffee about products and services.
+                        </li>
+                    </ul>
+
+                    <p class="mb-0">
+                        <span class="fw-bold">Tip:</span> Start with the
+                        recommended ratio and change one variable at a time when
+                        experimenting.
+                    </p>
                 </div>
-            </form>
+            </section>
 
-            </div>
+            <!-- Inquiry Form -->
 
-        </section>
+            <section class="card shadow-sm mb-4" id="ask-brewing">
+                <div class="card-body">
+                    <h2>Ask About Brewing</h2>
 
+                    <p>
+                        If you have a question about brewing, use the form below
+                        to describe your method and problem.
+                    </p>
 
+                    <form method="post" id="brewing-question-form">
+                        <fieldset>
+                            <legend class="h5 mb-3">Brewing Question</legend>
 
-        <section class="card shadow-sm mb-4">
+                            <div class="mb-3">
+                                <label class="form-label" for="visitor-name"
+                                    >Name:</label
+                                >
 
-            <div class="card-body">
+                                <input
+                                    class="form-control"
+                                    id="visitor-name"
+                                    name="visitor-name"
+                                    placeholder="Enter your name"
+                                    required
+                                    type="text"
+                                />
+                            </div>
 
-                <h2>Brewing Information</h2>
+                            <div class="mb-3">
+                                <label class="form-label" for="visitor-email"
+                                    >Email:</label
+                                >
 
-                <p class="mb-0">
+                                <input
+                                    class="form-control"
+                                    id="visitor-email"
+                                    name="visitor-email"
+                                    placeholder="you@example.com"
+                                    required
+                                    type="email"
+                                />
+                            </div>
 
-                    This section uses the normal static positioning mode.
+                            <div class="mb-3">
+                                <label class="form-label" for="visitor-phone"
+                                    >Phone:</label
+                                >
 
-                    Static positioning is the default document flow and does not
+                                <input
+                                    class="form-control"
+                                    id="visitor-phone"
+                                    name="visitor-phone"
+                                    placeholder="+7 700 000 00 00"
+                                    required
+                                    type="tel"
+                                />
+                            </div>
 
-                    create a special positioning context.
+                            <div class="mb-3">
+                                <label class="form-label" for="brew-date"
+                                    >Brewing date:</label
+                                >
 
+                                <input
+                                    class="form-control"
+                                    id="brew-date"
+                                    name="brew-date"
+                                    required
+                                    type="date"
+                                />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="brewing-method"
+                                    >Brewing method:</label
+                                >
+
+                                <select
+                                    class="form-select"
+                                    id="brewing-method"
+                                    name="brewing-method"
+                                    required
+                                >
+                                    <option value="">Choose a method</option>
+
+                                    <option value="v60">V60</option>
+
+                                    <option value="french-press">
+                                        French Press
+                                    </option>
+
+                                    <option value="aeropress">AeroPress</option>
+
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="coffee-amount"
+                                    >Coffee amount, grams:</label
+                                >
+
+                                <input
+                                    class="form-control"
+                                    id="coffee-amount"
+                                    min="1"
+                                    name="coffee-amount"
+                                    placeholder="15"
+                                    required
+                                    type="number"
+                                />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label d-block"
+                                    >What would you like to adjust?</label
+                                >
+
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        id="adjust-grind"
+                                        name="adjustment"
+                                        required
+                                        type="radio"
+                                        value="grind"
+                                    />
+
+                                    <label
+                                        class="form-check-label"
+                                        for="adjust-grind"
+                                        >Grind size</label
+                                    >
+                                </div>
+
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        id="adjust-ratio"
+                                        name="adjustment"
+                                        type="radio"
+                                        value="ratio"
+                                    />
+
+                                    <label
+                                        class="form-check-label"
+                                        for="adjust-ratio"
+                                        >Coffee-to-water ratio</label
+                                    >
+                                </div>
+
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        id="adjust-time"
+                                        name="adjustment"
+                                        type="radio"
+                                        value="time"
+                                    />
+
+                                    <label
+                                        class="form-check-label"
+                                        for="adjust-time"
+                                        >Brewing time</label
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="brewing-question"
+                                    >Brewing question:</label
+                                >
+
+                                <textarea
+                                    class="form-control"
+                                    id="brewing-question"
+                                    name="brewing-question"
+                                    placeholder="Describe your brewing problem or question"
+                                    required
+                                    rows="6"
+                                ></textarea>
+                            </div>
+
+                            <div class="form-check mb-3">
+                                <input
+                                    class="form-check-input"
+                                    id="permission"
+                                    name="permission"
+                                    required
+                                    type="checkbox"
+                                    value="yes"
+                                />
+
+                                <label
+                                    class="form-check-label"
+                                    for="permission"
+                                >
+                                    I agree to be contacted about this question.
+                                </label>
+                            </div>
+
+                            <div class="d-flex gap-2 flex-wrap mt-3">
+                                <input
+                                    class="btn btn-primary"
+                                    type="submit"
+                                    value="Send Question"
+                                />
+
+                                <input
+                                    class="btn btn-outline-secondary"
+                                    type="reset"
+                                    value="Clear"
+                                />
+
+                                <button class="btn btn-success" type="button">
+                                    Save Draft
+                                </button>
+
+                                <button
+                                    class="btn btn-secondary"
+                                    disabled
+                                    type="button"
+                                >
+                                    Unavailable
+                                </button>
+                            </div>
+                        </fieldset>
+
+                        <div class="small text-muted mt-3" aria-live="polite">
+                            Form status will appear here after submission.
+                        </div>
+                        <div
+                            id="brewing-question-form-result"
+                            class="alert alert-success d-none"
+                            role="status"
+                        >
+                            Your request has been submitted successfully.
+                        </div>
+                        <div
+                            id="brewing-question-form-error"
+                            class="alert alert-danger d-none"
+                            role="alert"
+                        >
+                            Please check the information and try again.
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2>Brewing Information</h2>
+
+                    <p class="mb-0">
+                        This section uses the normal static positioning mode.
+                        Static positioning is the default document flow and does
+                        not create a special positioning context.
+                    </p>
+                </div>
+            </section>
+
+            <aside class="mb-4">
+                <a class="btn btn-link px-0" href="#ask-brewing"
+                    >Ask about brewing &rarr;</a
+                >
+            </aside>
+        </main>
+
+        <!-- Footer -->
+
+        <footer
+            class="w-100 position-static bottom-0 bg-secondary pt-5 d-flex flex-column justify-content-center align-items-center"
+        >
+            <hr class="my-1" />
+
+            <section class="container row w-100 font-monospace">
+                <article
+                    class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3"
+                >
+                    <p class="font-monospace text-white">[ Company ]</p>
+
+                    <a class="text-primary" href="about.html">About us</a>
+
+                    <a class="text-primary" href="locations.html"
+                        >Locations &amp; Hours</a
+                    >
+
+                    <a class="text-primary" href="contacts.html">Contacts</a>
+                </article>
+
+                <article
+                    class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3"
+                >
+                    <p class="font-monospace text-white">[ Explore ]</p>
+
+                    <a class="text-primary" href="brewing-guides.html"
+                        >Brewing Guides</a
+                    >
+
+                    <a class="text-primary" href="events.html"
+                        >Events &amp; Classes</a
+                    >
+
+                    <a class="text-primary" href="blog.html">Coffee Blog</a>
+
+                    <a class="text-primary" href="wholesale.html"
+                        >B2B Wholesale</a
+                    >
+                </article>
+
+                <article
+                    class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3"
+                >
+                    <p class="font-monospace text-white">[ Products ]</p>
+
+                    <a class="text-primary" href="subscriptions.html"
+                        >Subscriptions</a
+                    >
+
+                    <a class="text-primary" href="menu.html">Full Menu</a>
+                </article>
+
+                <article
+                    class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3"
+                >
+                    <p class="font-monospace text-white">[ Account ]</p>
+
+                    <a class="text-primary" href="login.html"
+                        >Sign In / Register</a
+                    >
+                </article>
+            </section>
+
+            <section
+                class="container d-flex justify-content-start justify-content-md-center py-4"
+            >
+                <p class="font-monospace text-white-50 small">
+                    &copy; 2026 Tokyo Coffee. All rights reserved.
                 </p>
+            </section>
+        </footer>
 
-            </div>
+        <!-- Bootstrap JS Bundle -->
 
-        </section>
-
-
-
-        <aside class="mb-4">
-
-            <a class="btn btn-link px-0" href="#ask-brewing">Ask about brewing &rarr;</a>
-
-        </aside>
-
-
-
-    </main>
-
-
-
-    <!-- Footer -->
-
-    <footer class="w-100 position-static bottom-0 bg-secondary pt-5 d-flex flex-column justify-content-center align-items-center">
-
-        <hr class="my-1">
-
-        <section class="container row w-100 font-monospace">
-
-            <article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
-
-                <p class="font-monospace text-white">[ Company ]</p>
-
-                <a class="text-primary" href="about.html">About us</a>
-
-                <a class="text-primary" href="locations.html">Locations &amp; Hours</a>
-
-                <a class="text-primary" href="contacts.html">Contacts</a>
-
-            </article>
-
-            <article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
-
-                <p class="font-monospace text-white">[ Explore ]</p>
-
-                <a class="text-primary" href="brewing-guides.html">Brewing Guides</a>
-
-                <a class="text-primary" href="events.html">Events &amp; Classes</a>
-
-                <a class="text-primary" href="blog.html">Coffee Blog</a>
-
-                <a class="text-primary" href="wholesale.html">B2B Wholesale</a>
-
-            </article>
-
-            <article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
-
-                <p class="font-monospace text-white">[ Products ]</p>
-
-                <a class="text-primary" href="subscriptions.html">Subscriptions</a>
-
-                <a class="text-primary" href="menu.html">Full Menu</a>
-
-            </article>
-
-            <article class="col-12 col-md-6 col-lg-3 d-flex flex-column justify-content-start pb-3">
-
-                <p class="font-monospace text-white">[ Account ]</p>
-
-                <a class="text-primary" href="login.html">Sign In / Register</a>
-
-                <a class="text-primary" href="order.html">Track Order</a>
-
-                <a class="text-primary" href="subscriptions.html">Loyalty Program</a>
-
-            </article>
-
-        </section>
-
-        <section class="container d-flex justify-content-start justify-content-md-center py-4">
-
-            <p class="font-monospace text-white-50 small">&copy; 2026 Tokyo Coffee. All rights reserved.</p>
-
-        </section>
-
-    </footer>
-
-
-
-
-
-    <!-- Bootstrap JS Bundle -->
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-
-
-
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
 </html>
