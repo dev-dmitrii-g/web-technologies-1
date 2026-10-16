@@ -1,0 +1,56 @@
+{
+    "category": {
+        "Trending": [
+            {
+                "category": "Trending",
+                "title": "Iced Pistachio Cream Cold Brew",
+                "image": "./images/pistachio-cold-brew.jpg",
+                "alt": "Iced cold brew topped with thick pastel green pistachio foam",
+                "description": "Slow-steeped 16-hour cold brew topped with rich, velvety pistachio cold foam and crushed pistachios.",
+                "price": "2,600 ₸"
+            },
+            {
+                "category": "Trending",
+                "title": "Classic Spanish Latte",
+                "image": "./images/spanish-latte.jpg",
+                "alt": "Layered iced espresso with condensed milk",
+                "description": "Double shot of espresso mixed with sweetened condensed milk and fresh whole milk over ice.",
+                "price": "2,300 ₸"
+            },
+            {
+                "category": "Trending",
+                "title": "Iced Matcha Vanilla Cloud",
+                "image": "./images/matcha-cloud.jpg",
+                "alt": "Vibrant green iced matcha latte topped with vanilla cold foam",
+                "description": "Ceremonial grade Uji matcha whisked with oat milk, layered over ice and topped with sweet vanilla cream.",
+                "price": "2,500 ₸"
+            }
+        ],
+        "Seasonal": [
+            {
+                "category": "Seasonal",
+                "title": "Spiced Pumpkin Cappuccino",
+                "image": "./images/pumpkin-cappuccino.jpg",
+                "alt": "A warm cappuccino dusted with cinnamon and pumpkin spices in a ceramic cup",
+                "description": "Rich espresso combined with steamed milk, real pumpkin puree, and warm autumn spices, topped with a light dusting of cinnamon.",
+                "price": "2,200 ₸"
+            },
+            {
+                "category": "Seasonal",
+                "title": "Pecan Caramel Latte",
+                "image": "./images/pecan-caramel-latte.jpg",
+                "alt": "A hot latte with buttery caramel drizzle and crushed roasted pecans",
+                "description": "Espresso and silky milk infused with toasted pecan syrup, drizzled with house-made salted caramel sauce.",
+                "price": "2,400 ₸"
+            },
+            {
+                "category": "Seasonal",
+                "title": "Honey Cinnamon Rooibos",
+                "image": "./images/honey-rooibos.jpg",
+                "alt": "Steaming herbal tea with a cinnamon stick and fresh honey swirl",
+                "description": "Caffeine-free organic red rooibos tea brewed with cinnamon bark, fresh lemon zest, and local mountain honey.",
+                "price": "1,800 ₸"
+            }
+        ]
+    }
+}
