@@ -1,0 +1,62 @@
+body {
+    background-color: #f7f3ec;
+    color: #2f241f;
+    font-family: "Lora", serif;
+}
+
+h1,
+h2,
+h3,
+.navbar-brand {
+    font-family: "DM Serif Display", serif;
+}
+
+.navbar,
+footer {
+    font-family: "Space Mono", monospace;
+}
+
+main {
+    min-height: 70vh;
+}
+
+.card,
+.alert {
+    border-color: #c8a27a;
+}
+
+.card-title {
+    color: #4b3427;
+}
+
+blockquote {
+    border-left: 4px solid #c8a27a;
+    padding-left: 1rem;
+}
+
+code {
+    color: #6b4f3a;
+}
+
+.table caption {
+    caption-side: top;
+    color: #6b4f3a;
+}
+
+footer a:hover {
+    opacity: 0.8;
+}
+
+pre {
+    max-width: 100%;
+}
+
+@media (max-width: 575.98px) {
+    .display-4 {
+        font-size: 2.2rem;
+    }
+}
+
+.beige-text {
+    color: #f5e6d3;
+}
