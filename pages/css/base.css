@@ -32,6 +32,10 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0.5rem 1rem;
 }
 
+.btn:hover {
+    color: var(--text)
+}
+
 .btn-primary {
     --bs-btn-color: var(--text);
     --bs-btn-bg: var(--accent);
@@ -74,7 +78,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link.active {
-    color: var(--secondary) !important;
+    color: var(--accent) !important;
 }
 
 .table {

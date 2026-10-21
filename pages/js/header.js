@@ -1,8 +1,8 @@
 const navLinks = [
-    { name: "[ Menu ]", href: "menu.html" },
-    { name: "[ Brewing Guides ]", href: "brewing-guides.html" },
-    { name: "[ Events ]", href: "events.html" },
-    { name: "[ About Us ]", href: "about.html" },
+    { name: "Menu", href: "menu.html" },
+    { name: "Brewing Guides", href: "brewing-guides.html" },
+    { name: "Events", href: "events.html" },
+    { name: "About Us", href: "about.html" },
 ];
 
 function createHeader(links) {
@@ -12,9 +12,7 @@ function createHeader(links) {
     const linksHTML = links
         .map(
             (link) => `
-    <li class="nav-item">
-      <a class="nav-link text-white" href="${link.href}">${link.name}</a>
-    </li>
+      <a class="btn btn-light bg-white nav-link text-dark p-2 px-3" href="${link.href}">${link.name}</a>
   `,
         )
         .join("");
@@ -29,9 +27,9 @@ function createHeader(links) {
           </svg>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-uppercase">
+          <div class="d-flex gap-3 navbar-nav me-auto mb-2 mb-lg-0 py-2">
             ${linksHTML}
-          </ul>
+          </div>
           <a id="login-button-header" class="btn btn-primary font-monospace d-inline-flex align-items-center justify-content-center justify-content-md-start gap-2 p-2 px-3" href="login.html">
             Login
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
