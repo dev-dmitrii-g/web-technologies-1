@@ -1,164 +1,183 @@
+
 "use strict";
 
-const coffeeEvents = [
-    { id: "public-cupping", name: "Public Cupping", category: "tasting", durationMinutes: 90, pricePerPerson: 4500, capacity: 8 },
-    { id: "latte-art", name: "Latte Art", category: "workshop", durationMinutes: 120, pricePerPerson: 6500, capacity: 6 },
-    { id: "community-event", name: "Community Event", category: "community", durationMinutes: 60, pricePerPerson: 0, capacity: 12 },
-    { id: "v60-workshop", name: "V60 Brewing Workshop", category: "workshop", durationMinutes: 90, pricePerPerson: 5500, capacity: 6 },
-    { id: "espresso-tasting", name: "Espresso Tasting", category: "tasting", durationMinutes: 75, pricePerPerson: 4000, capacity: 8 },
-    { id: "coffee-talk", name: "Coffee Community Talk", category: "community", durationMinutes: 60, pricePerPerson: 0, capacity: 12 }
+const events = [
+    { id: "public-cupping", name: "Public Cupping", duration: 90, price: 4500, capacity: 8 },
+    { id: "latte-art", name: "Latte Art", duration: 120, price: 6500, capacity: 6 },
+    { id: "community-event", name: "Community Event", duration: 60, price: 0, capacity: 12 },
+    { id: "v60-workshop", name: "V60 Brewing Workshop", duration: 90, price: 5500, capacity: 6 },
+    { id: "espresso-tasting", name: "Espresso Tasting", duration: 75, price: 4000, capacity: 8 },
+    { id: "coffee-talk", name: "Coffee Community Talk", duration: 60, price: 0, capacity: 12 }
 ];
 
-function findCoffeeEvent(eventId) {
-    return coffeeEvents.find((coffeeEvent) => coffeeEvent.id === eventId) || null;
-}
+const money = price => price.toLocaleString("en-US") + " ₸";
+const findEvent = id => events.find(e => e.id === id);
 
-function calculateEventTotal(coffeeEvent, participantCount) {
-    if (!coffeeEvent || participantCount < 1 || participantCount > coffeeEvent.capacity) return 0;
-    return coffeeEvent.pricePerPerson * participantCount;
-}
-
-function formatEventPrice(amount) {
-    return `${amount.toLocaleString("en-US")} ₸`;
-}
-
-function createEventReference() {
-    return `TC-${Math.floor(Math.random() * 900000) + 100000}`;
-}
-
-function getEventRequestSummary(coffeeEvent, participantCount, requestedDate) {
-    const total = calculateEventTotal(coffeeEvent, participantCount);
-    return `${coffeeEvent.name} · ${requestedDate} · ${participantCount} participant${participantCount === 1 ? "" : "s"} · ${coffeeEvent.durationMinutes} minutes · ${total === 0 ? "Free" : formatEventPrice(total)}`;
-}
-
-function animatePageSections() {
-    const sections = [...document.querySelectorAll("main > section")];
-    if (typeof IntersectionObserver !== "function") return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
+document.addEventListener("DOMContentLoaded", () => {
+    // Animate sections when they appear.
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add("show");
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.1 });
 
-    sections.forEach((section) => {
-        section.classList.add("fade");
+    document.querySelectorAll("main > section").forEach(section => {
+        section.style.opacity = "0";
+        section.style.transform = "translateY(20px)";
+        section.style.transition = "opacity .6s ease, transform .6s ease";
         observer.observe(section);
     });
-}
 
-function prepareAnimatedMessages(...messages) {
-    messages.forEach((message) => message.classList.add("fade"));
-}
-
-function showAnimatedMessage(message) {
-    message.classList.remove("d-none");
-    requestAnimationFrame(() => message.classList.add("show"));
-}
-
-function hideAnimatedMessage(message) {
-    message.classList.remove("show");
-    message.classList.add("d-none");
-}
-
-function initializeEventsRequest() {
     const form = document.getElementById("events-registration-form");
     if (!form) return;
 
-    const nameField = document.getElementById("event-name");
-    const emailField = document.getElementById("event-email");
-    const phoneField = document.getElementById("event-phone");
-    const dateField = document.getElementById("preferred-date");
-    const participantsField = document.getElementById("participants");
-    const activityFields = [...form.querySelectorAll('input[name="activity"]')];
-    const result = document.getElementById("events-registration-form-result");
-    const error = document.getElementById("events-registration-form-error");
-    animatePageSections();
-    prepareAnimatedMessages(result, error);
-    const fieldsToValidate = [
-        nameField,
-        emailField,
-        phoneField,
-        dateField,
-        participantsField,
-        ...activityFields,
-        form.querySelector("#coffee-level"),
-        form.querySelector("#event-message")
-    ];
+    const get = id => document.getElementById(id);
+    const name = get("event-name");
+    const email = get("event-email");
+    const phone = get("event-phone");
+    const date = get("preferred-date");
+    const people = get("participants");
+    const experience = get("coffee-level");
+    const message = get("event-message");
+    const result = get("events-registration-form-result");
+    const error = get("events-registration-form-error");
+    const activities = [...form.querySelectorAll('[name="activity"]')];
 
-    function setFieldError(field, message) {
-        field.classList.add("is-invalid");
-        let feedback = field.parentElement.querySelector(`[data-error-for="${field.id}"]`);
-        if (!feedback) {
-            feedback = document.createElement("div");
-            feedback.dataset.errorFor = field.id;
-            feedback.className = "invalid-feedback d-block";
-            field.insertAdjacentElement("afterend", feedback);
+    // Create the time selector and price summary.
+    const timeColumn = document.createElement("div");
+    timeColumn.className = "col-12 col-md-6";
+    timeColumn.innerHTML = `
+        <label for="preferred-time" class="form-label">Preferred Start Time</label>
+        <select id="preferred-time" class="form-select" required></select>
+    `;
+    date.closest(".col-12").after(timeColumn);
+    const time = get("preferred-time");
+
+    const summary = document.createElement("div");
+    summary.className = "alert alert-info mt-3";
+    form.querySelector("fieldset").append(summary);
+
+    // Set the earliest date to tomorrow.
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    date.min = [
+        tomorrow.getFullYear(),
+        String(tomorrow.getMonth() + 1).padStart(2, "0"),
+        String(tomorrow.getDate()).padStart(2, "0")
+    ].join("-");
+
+    const selected = () => findEvent(activities.find(a => a.checked)?.value);
+
+    function update() {
+        const event = selected();
+        const count = Number(people.value);
+        const duration = event ? event.duration : 120;
+        const previous = time.value;
+        const options = [new Option("Choose a preferred time", "")];
+
+        for (let m = 540; m + duration <= 1260; m += 30) {
+            const value = String(Math.floor(m / 60)).padStart(2, "0") +
+                ":" + String(m % 60).padStart(2, "0");
+            options.push(new Option(value, value));
         }
-        feedback.textContent = message;
+
+        time.replaceChildren(...options);
+        if (options.some(o => o.value === previous)) time.value = previous;
+
+        let price = "Choose an activity and group size to estimate the price.";
+        if (event) {
+            price = count < 1 || count > event.capacity
+                ? `Enter 1 to ${event.capacity} participants.`
+                : `${event.name}: ${count} participant${count === 1 ? "" : "s"}, ` +
+                  `${event.duration} minutes, ${money(event.price * count)}.`;
+        }
+
+        summary.textContent =
+            `Estimate: ${date.value || "choose a date"} at ${time.value || "choose a time"}. ` +
+            `${price} This is a preferred time, not a confirmed booking.`;
     }
 
-    function clearFieldError(field) {
-        field.classList.remove("is-invalid");
-        field.parentElement.querySelector(`[data-error-for="${field.id}"]`)?.remove();
+    // Update the estimate when form values change.
+    form.addEventListener("input", update);
+    form.addEventListener("change", update);
+    update();
+
+    const detailsButton = form.querySelector('button[type="button"]:not(:disabled)');
+    if (detailsButton) {
+        detailsButton.addEventListener("click", () => {
+            get("event-details").scrollIntoView({ behavior: "smooth" });
+        });
     }
 
-    function clearValidation() {
-        fieldsToValidate.forEach(clearFieldError);
+    function show(element, text) {
+        element.textContent = text;
+        element.classList.remove("d-none");
+        element.style.opacity = "0";
+        element.style.transition = "opacity .4s ease";
+        requestAnimationFrame(() => element.style.opacity = "1");
     }
 
-    fieldsToValidate.forEach((field) => {
-        field.addEventListener("input", () => clearFieldError(field));
-        field.addEventListener("change", () => clearFieldError(field));
-    });
+    form.addEventListener("submit", event => {
+        event.preventDefault();
+        result.classList.add("d-none");
+        error.classList.add("d-none");
 
-    const minimumDate = new Date();
-    minimumDate.setDate(minimumDate.getDate() + 1);
-    dateField.min = minimumDate.toISOString().slice(0, 10);
-
-    form.addEventListener("submit", (submission) => {
-        submission.preventDefault();
-        clearValidation();
-        hideAnimatedMessage(result);
-        hideAnimatedMessage(error);
-
-        const selectedEventId = activityFields.find((field) => field.checked)?.value || "";
-        const selectedEvent = findCoffeeEvent(selectedEventId);
-        const participantCount = Number(participantsField.value);
+        const activity = selected();
+        const count = Number(people.value);
+        const digits = phone.value.replace(/\D/g, "").length;
         const errors = [];
 
-        if (nameField.value.trim().length < 2) errors.push([nameField, "Enter a name with at least 2 characters."]);
-        if (!emailField.validity.valid || emailField.value.trim() === "") errors.push([emailField, "Enter a valid email address."]);
-        if (!/^\+?[0-9 ()-]{7,20}$/.test(phoneField.value.trim())) errors.push([phoneField, "Enter a phone number with 7 to 20 digits or phone characters."]);
-        if (!dateField.value || dateField.value < dateField.min) errors.push([dateField, "Choose a date starting from tomorrow."]);
-        if (!selectedEvent) errors.push([activityFields[0], "Choose an activity."]);
-        if (!Number.isInteger(participantCount) || participantCount < 1 || (selectedEvent && participantCount > selectedEvent.capacity)) {
-            errors.push([participantsField, selectedEvent ? `This activity allows 1 to ${selectedEvent.capacity} participants.` : "Enter at least 1 participant."]);
-        }
-        if (!form.querySelector("#coffee-level").value) errors.push([form.querySelector("#coffee-level"), "Choose your coffee experience level."]);
-        if (form.querySelector("#event-message").value.trim().length < 10) errors.push([form.querySelector("#event-message"), "Please add at least 10 characters to your message."]);
+        if (name.value.trim().length < 2)
+            errors.push("Enter a name with at least 2 characters.");
 
-        if (errors.length > 0) {
-            errors.forEach(([field, message]) => setFieldError(field, message));
-            error.textContent = "Please correct the fields marked below.";
-            showAnimatedMessage(error);
-            errors[0][0].focus();
+        if (!email.validity.valid || !email.value.trim())
+            errors.push("Enter a valid email address.");
+
+        if (!/^\+?[0-9 ()-]{7,20}$/.test(phone.value.trim()) ||
+            digits < 7 || digits > 15)
+            errors.push("Enter a valid phone number.");
+
+        if (!date.value || date.value < date.min)
+            errors.push("Choose a date starting from tomorrow.");
+
+        if (!time.value)
+            errors.push("Choose a preferred start time.");
+
+        if (!activity)
+            errors.push("Choose an activity.");
+
+        if (!Number.isInteger(count) || count < 1 ||
+            (activity && count > activity.capacity))
+            errors.push("Check the number of participants.");
+
+        if (!experience.value)
+            errors.push("Choose your coffee experience level.");
+
+        if (message.value.trim().length < 10)
+            errors.push("Your message must contain at least 10 characters.");
+
+        if (errors.length) {
+            show(error, errors.join(" "));
             return;
         }
 
-        const summary = getEventRequestSummary(selectedEvent, participantCount, dateField.value);
-        result.textContent = `Demo request ${createEventReference()}: ${summary}. Prices shown here are illustrative only. This is not a confirmed booking; no data was sent to a server.`;
-        showAnimatedMessage(result);
+        const total = activity.price * count;
+        const reference = "TC-" + (Math.floor(Math.random() * 900000) + 100000);
+
+        show(result,
+            `Demo request ${reference}: ${activity.name}, ${date.value} at ${time.value}. ` +
+            `${count} participant(s), ${activity.duration} minutes, ${money(total)}. ` +
+            "This is not a confirmed booking; no data was sent to a server."
+        );
     });
 
     form.addEventListener("reset", () => {
-        clearValidation();
-        hideAnimatedMessage(result);
-        hideAnimatedMessage(error);
+        result.classList.add("d-none");
+        error.classList.add("d-none");
+        setTimeout(update, 0);
     });
-}
-
-initializeEventsRequest();
+});

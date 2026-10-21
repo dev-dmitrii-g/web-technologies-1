@@ -40,6 +40,12 @@ function calculateReviewAverage(reviewRecords) {
     return ratingTotal / reviewRecords.length;
 }
 
+function isValidReviewPhone(value) {
+    const phone = value.trim();
+    const digitCount = phone.replace(/\D/g, "").length;
+    return /^\+?[0-9 ()-]{7,20}$/.test(phone) && digitCount >= 7 && digitCount <= 15;
+}
+
 function animatePageSections() {
     const sections = [...document.querySelectorAll("main > section")];
     if (typeof IntersectionObserver !== "function") return;
@@ -162,20 +168,27 @@ function initializeCoffeeBlog() {
     sortSelect.insertAdjacentElement("afterend", resetFilterButton);
 
     function clearFieldError(field) {
-        field.classList.remove("is-invalid");
-        const feedback = field.parentElement.querySelector(`[data-error-for="${field.id}"]`);
+        const feedbackField = experienceFields.includes(field) ? experienceFields[0] : field;
+        feedbackField.classList.remove("is-invalid");
+        feedbackField.removeAttribute("aria-invalid");
+        feedbackField.removeAttribute("aria-describedby");
+        const feedback = feedbackField.parentElement.querySelector(`[data-error-for="${feedbackField.id}"]`);
         if (feedback) feedback.remove();
     }
 
     function showFieldError(field, message) {
-        field.classList.add("is-invalid");
-        let feedback = field.parentElement.querySelector(`[data-error-for="${field.id}"]`);
+        const feedbackField = experienceFields.includes(field) ? experienceFields[0] : field;
+        feedbackField.classList.add("is-invalid");
+        feedbackField.setAttribute("aria-invalid", "true");
+        let feedback = feedbackField.parentElement.querySelector(`[data-error-for="${feedbackField.id}"]`);
         if (!feedback) {
             feedback = document.createElement("div");
-            feedback.dataset.errorFor = field.id;
+            feedback.dataset.errorFor = feedbackField.id;
+            feedback.id = `${feedbackField.id}-error`;
             feedback.className = "invalid-feedback d-block";
-            field.insertAdjacentElement("afterend", feedback);
+            feedbackField.insertAdjacentElement("afterend", feedback);
         }
+        feedbackField.setAttribute("aria-describedby", feedback.id);
         feedback.textContent = message;
     }
 
@@ -223,8 +236,19 @@ function initializeCoffeeBlog() {
     });
 
     fieldsToValidate.forEach((field) => {
+        const feedbackField = experienceFields.includes(field) ? experienceFields[0] : field;
         const clearOutdatedError = () => {
-            clearFieldError(field);
+            clearFieldError(feedbackField);
+            if (experienceFields.includes(field)) {
+                const selectedExperience = experienceFields.find((radio) => radio.checked)?.value || "";
+                const rating = Number(ratingField.value);
+                const mismatch = (selectedExperience === "excellent" && rating >= 1 && rating <= 2)
+                    || (selectedExperience === "okay" && rating === 5);
+                const ratingFeedback = ratingField.parentElement.querySelector(`[data-error-for="${ratingField.id}"]`);
+                if (ratingFeedback?.textContent.startsWith("Make the star rating consistent") && !mismatch) {
+                    clearFieldError(ratingField);
+                }
+            }
             if (!form.querySelector(".is-invalid")) error.classList.add("d-none");
         };
         field.addEventListener("input", clearOutdatedError);
@@ -248,13 +272,13 @@ function initializeCoffeeBlog() {
 
         if (nameField.value.trim().length < 2 || nameField.value.trim().length > 80) validationErrors.push([nameField, "Enter a name between 2 and 80 characters."]);
         if (!emailField.validity.valid || emailField.value.trim() === "") validationErrors.push([emailField, "Enter a valid email address."]);
-        if (!/^\+?[0-9 ()-]{7,20}$/.test(phoneField.value.trim())) validationErrors.push([phoneField, "Enter a valid phone number with 7 to 20 digits or phone characters."]);
+        if (!isValidReviewPhone(phoneField.value)) validationErrors.push([phoneField, "Enter a phone number containing 7 to 15 digits."]);
         if (!visitDate || visitDate > today) validationErrors.push([visitDateField, "Choose today or an earlier visit date."]);
         if (!Number.isInteger(visitCount) || visitCount < 1) validationErrors.push([visitCountField, "Enter a whole number of visits greater than zero."]);
         if (!drinkField.value) validationErrors.push([drinkField, "Choose your favorite drink."]);
         if (!experienceField) validationErrors.push([experienceFields[0], "Choose an experience category."]);
         if (!Number.isInteger(rating) || rating < 1 || rating > 5) validationErrors.push([ratingField, "Choose a rating from 1 to 5 stars."]);
-        if (experienceField && ((experienceField.value === "excellent" && rating <= 2) || (experienceField.value === "okay" && rating === 5))) {
+        if (experienceField && rating >= 1 && rating <= 5 && ((experienceField.value === "excellent" && rating <= 2) || (experienceField.value === "okay" && rating === 5))) {
             validationErrors.push([ratingField, "Make the star rating consistent with the experience category."]);
         }
         if (commentField.value.trim().length < 20 || commentField.value.trim().length > maximumCommentLength) validationErrors.push([commentField, "Write a review between 20 and 2,000 characters."]);
