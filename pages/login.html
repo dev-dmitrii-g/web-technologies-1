@@ -20,6 +20,7 @@
             crossorigin="anonymous"
         />
         <link href="css/base.css" rel="stylesheet" />
+        <link href="css/gagarin.css" rel="stylesheet" />
     </head>
     <header class="font-monospace sticky-top">
         <nav class="navbar navbar-expand-lg bg-secondary">
@@ -90,7 +91,7 @@
         <hr class="my-0" />
     </header>
 
-    <body class="bg-body">
+    <body id="body" class="bg-body">
         <main class="container py-5">
             <section class="row mx-2 gap-4 d-flex justify-content-center">
                 <article
@@ -99,9 +100,10 @@
                     <h1 class="pb-2 card-title text-center">Welcome back!</h1>
                     <hr class="border border-1 border-primary mx-2" />
                     <form
+                        id="login-form"
                         class="card-body d-flex flex-column"
                         action="index.html"
-                        method="GET"
+                        method="POST"
                     >
                         <div class="mb-3">
                             <label
@@ -315,6 +317,5 @@
         integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
         crossorigin="anonymous"
     ></script>
-    <script src="js/auth.js" defer></script>
-</body>
+    <script src="js/login.js"></script>
 </html>

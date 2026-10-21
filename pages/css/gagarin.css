@@ -8,3 +8,26 @@
     opacity: 1;
     transform: translateY(0);
 }
+
+.loading-icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#loading-overlay {
+    transition: opacity 0.3s ease;
+}
+
+#loading-overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
