@@ -1,328 +1,244 @@
+
 "use strict";
 
-function createReviewReference() {
-    return `TC-REV-${Math.floor(Math.random() * 900000) + 100000}`;
-}
-
-function formatReviewDate(dateValue) {
-    const date = new Date(dateValue);
-    if (Number.isNaN(date.getTime())) return "Date unavailable";
-    return date.toLocaleString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-    });
-}
-
-function getSortedReviews(reviewRecords, mode) {
-    let visibleReviews = [...reviewRecords];
-
-    if (mode.startsWith("rating-")) {
-        const requestedRating = Number(mode.slice("rating-".length));
-        visibleReviews = visibleReviews.filter((review) => review.rating === requestedRating);
-        visibleReviews.sort((first, second) => new Date(second.created_at) - new Date(first.created_at));
-    } else if (mode === "highest") {
-        visibleReviews.sort((first, second) => second.rating - first.rating || new Date(second.created_at) - new Date(first.created_at));
-    } else if (mode === "lowest") {
-        visibleReviews.sort((first, second) => first.rating - second.rating || new Date(second.created_at) - new Date(first.created_at));
-    } else {
-        visibleReviews.sort((first, second) => new Date(second.created_at) - new Date(first.created_at));
-    }
-
-    return visibleReviews;
-}
-
-function calculateReviewAverage(reviewRecords) {
-    if (reviewRecords.length === 0) return 0;
-    const ratingTotal = reviewRecords.reduce((total, review) => total + review.rating, 0);
-    return ratingTotal / reviewRecords.length;
-}
-
-function isValidReviewPhone(value) {
-    const phone = value.trim();
-    const digitCount = phone.replace(/\D/g, "").length;
-    return /^\+?[0-9 ()-]{7,20}$/.test(phone) && digitCount >= 7 && digitCount <= 15;
-}
-
-function animatePageSections() {
-    const sections = [...document.querySelectorAll("main > section")];
-    if (typeof IntersectionObserver !== "function") return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("show");
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.08 });
-
-    sections.forEach((section) => {
-        section.classList.add("fade");
-        observer.observe(section);
-    });
-}
-
-function prepareAnimatedMessages(...messages) {
-    messages.forEach((message) => message.classList.add("fade"));
-}
-
-function showAnimatedMessage(message) {
-    message.classList.remove("d-none");
-    requestAnimationFrame(() => message.classList.add("show"));
-}
-
-function hideAnimatedMessage(message) {
-    message.classList.remove("show");
-    message.classList.add("d-none");
-}
-
-function createReviewCard(review) {
-    const card = document.createElement("article");
-    card.className = "card shadow-sm fade";
-
-    const body = document.createElement("div");
-    body.className = "card-body";
-
-    const name = document.createElement("h3");
-    name.className = "h5 mb-1";
-    name.textContent = review.name;
-
-    const date = document.createElement("p");
-    date.className = "small text-muted mb-2";
-    date.textContent = formatReviewDate(review.created_at);
-
-    const stars = document.createElement("p");
-    stars.className = "text-warning mb-2";
-    stars.setAttribute("aria-label", `${review.rating} out of 5 stars`);
-    stars.textContent = `${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}`;
-
-    const details = document.createElement("p");
-    details.className = "small text-muted mb-2";
-    details.textContent = `Visit date: ${review.visitDate} · Favorite drink: ${review.drink} · Visits: ${review.visits} · Experience: ${review.experience}`;
-
-    const comment = document.createElement("p");
-    comment.className = "mb-0";
-    comment.textContent = review.comment;
-
-    body.append(name, date, stars, details, comment);
-    card.appendChild(body);
-    return card;
-}
-
-function initializeCoffeeBlog() {
+document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("blog-review-form");
-    const reviewIntroduction = document.querySelector("#customer-reviews > p.text-muted");
-    const wrapper = document.getElementById("reviews-article");
+    const list = document.getElementById("reviews-article");
     const status = document.getElementById("reviews-status");
-    const sortSelect = document.getElementById("reviews-sort");
-    if (!form || !wrapper || !status || !sortSelect) return;
-
-    const nameField = document.getElementById("review-name");
-    const emailField = document.getElementById("review-email");
-    const phoneField = document.getElementById("review-phone");
-    const visitDateField = document.getElementById("visit-date");
-    const visitCountField = document.getElementById("visit-count");
-    const drinkField = document.getElementById("favorite-drink");
-    const experienceFields = [...form.querySelectorAll('input[name="experience"]')];
-    const ratingField = document.getElementById("review-rating");
-    const commentField = document.getElementById("review-text");
-    const permissionField = document.getElementById("permission");
-    const averageRating = document.getElementById("average-rating");
-    const averageStars = document.getElementById("average-stars");
-    const reviewsCount = document.getElementById("reviews-count");
+    const sort = document.getElementById("reviews-sort");
     const result = document.getElementById("blog-review-form-result");
     const error = document.getElementById("blog-review-form-error");
-    animatePageSections();
-    prepareAnimatedMessages(result, error);
-    const fieldsToValidate = [nameField, emailField, phoneField, visitDateField, visitCountField, drinkField, ...experienceFields, ratingField, commentField, permissionField];
+
+    if (!form || !list || !sort) return;
+
     const reviews = [];
-    const maximumCommentLength = 2000;
 
-    if (reviewIntroduction) {
-        reviewIntroduction.textContent = "Reviews submitted here are local previews for this browser session and are not published or sent to a server.";
-    }
-
-    form.noValidate = true;
-    commentField.maxLength = maximumCommentLength;
+    const name = document.getElementById("review-name");
+    const email = document.getElementById("review-email");
+    const phone = document.getElementById("review-phone");
+    const date = document.getElementById("visit-date");
+    const visits = document.getElementById("visit-count");
+    const drink = document.getElementById("favorite-drink");
+    const rating = document.getElementById("review-rating");
+    const comment = document.getElementById("review-text");
+    const permission = document.getElementById("permission");
+    const average = document.getElementById("average-rating");
+    const stars = document.getElementById("average-stars");
+    const count = document.getElementById("reviews-count");
 
     const counter = document.createElement("small");
     counter.className = "form-text text-muted d-block mt-1";
-    counter.setAttribute("aria-live", "polite");
-    commentField.insertAdjacentElement("afterend", counter);
-
-    const ratingFilterOptions = [5, 4, 3, 2, 1].map((rating) => {
-        const option = document.createElement("option");
-        option.value = `rating-${rating}`;
-        option.textContent = `${rating} star${rating === 1 ? "" : "s"} only`;
-        return option;
-    });
-    sortSelect.append(...ratingFilterOptions);
-
-    const resetFilterButton = document.createElement("button");
-    resetFilterButton.type = "button";
-    resetFilterButton.className = "btn btn-outline-secondary mt-2";
-    resetFilterButton.textContent = "Reset review filter";
-    sortSelect.insertAdjacentElement("afterend", resetFilterButton);
-
-    function clearFieldError(field) {
-        const feedbackField = experienceFields.includes(field) ? experienceFields[0] : field;
-        feedbackField.classList.remove("is-invalid");
-        feedbackField.removeAttribute("aria-invalid");
-        feedbackField.removeAttribute("aria-describedby");
-        const feedback = feedbackField.parentElement.querySelector(`[data-error-for="${feedbackField.id}"]`);
-        if (feedback) feedback.remove();
-    }
-
-    function showFieldError(field, message) {
-        const feedbackField = experienceFields.includes(field) ? experienceFields[0] : field;
-        feedbackField.classList.add("is-invalid");
-        feedbackField.setAttribute("aria-invalid", "true");
-        let feedback = feedbackField.parentElement.querySelector(`[data-error-for="${feedbackField.id}"]`);
-        if (!feedback) {
-            feedback = document.createElement("div");
-            feedback.dataset.errorFor = feedbackField.id;
-            feedback.id = `${feedbackField.id}-error`;
-            feedback.className = "invalid-feedback d-block";
-            feedbackField.insertAdjacentElement("afterend", feedback);
-        }
-        feedbackField.setAttribute("aria-describedby", feedback.id);
-        feedback.textContent = message;
-    }
-
-    function clearAllErrors() {
-        fieldsToValidate.forEach(clearFieldError);
-    }
+    comment.insertAdjacentElement("afterend", counter);
+    comment.maxLength = 2000;
 
     function updateCounter() {
-        counter.textContent = `${commentField.value.length} / ${maximumCommentLength} characters`;
+        counter.textContent = comment.value.length + " / 2000 characters";
+    }
+
+    comment.addEventListener("input", updateCounter);
+
+    function showMessage(element, message) {
+        if (element) {
+            element.textContent = message;
+            element.classList.remove("d-none");
+        }
+    }
+
+    function hideMessages() {
+        [result, error].forEach(function (element) {
+            if (element) element.classList.add("d-none");
+        });
     }
 
     function renderReviews() {
-        const visibleReviews = getSortedReviews(reviews, sortSelect.value);
-        wrapper.replaceChildren();
+        list.replaceChildren();
 
-        if (visibleReviews.length === 0) {
-            const emptyMessage = document.createElement("p");
-            emptyMessage.className = "text-muted";
-            emptyMessage.textContent = reviews.length === 0
-                ? "No reviews have been shared in this browser session yet. A review you add will appear here as a preview."
-                : "No reviews match this rating filter. Choose another rating or reset the filter.";
-            wrapper.appendChild(emptyMessage);
+        let sorted = [...reviews];
+
+        if (sort.value === "highest") {
+            sorted.sort((a, b) => b.rating - a.rating);
+        } else if (sort.value === "lowest") {
+            sorted.sort((a, b) => a.rating - b.rating);
+        } else if (sort.value.startsWith("rating-")) {
+            sorted = sorted.filter(
+                review => review.rating === Number(sort.value.slice(7))
+            );
         } else {
-            visibleReviews.forEach((review) => {
-                const card = createReviewCard(review);
-                wrapper.appendChild(card);
-                requestAnimationFrame(() => card.classList.add("show"));
-            });
+            sorted.sort((a, b) => b.created - a.created);
         }
 
-        const average = calculateReviewAverage(reviews);
-        averageRating.textContent = reviews.length > 0 ? average.toFixed(1) : "—";
-        averageStars.textContent = `${"★".repeat(Math.round(average))}${"☆".repeat(5 - Math.round(average))}`;
-        reviewsCount.textContent = sortSelect.value.startsWith("rating-")
-            ? `${visibleReviews.length} matching of ${reviews.length} reviews`
-            : `${reviews.length} ${reviews.length === 1 ? "review" : "reviews"}`;
+        if (sorted.length === 0) {
+            const message = document.createElement("p");
+            message.className = "text-muted";
+            message.textContent = reviews.length === 0
+                ? "No reviews yet. Submit a review to see it here."
+                : "No reviews match this filter.";
+            list.appendChild(message);
+        }
+
+        sorted.forEach(function (review) {
+            const card = document.createElement("article");
+            card.className = "card shadow-sm mb-3";
+
+            const body = document.createElement("div");
+            body.className = "card-body";
+
+            const title = document.createElement("h3");
+            title.className = "h5";
+            title.textContent = review.name;
+
+            const reviewStars = document.createElement("p");
+            reviewStars.className = "text-warning";
+            reviewStars.textContent =
+                "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
+
+            const details = document.createElement("p");
+            details.className = "small text-muted";
+            details.textContent =
+                new Date(review.created).toLocaleString();
+
+            const info = document.createElement("p");
+            info.className = "small text-muted";
+            info.textContent = "Visit date: " + review.visitDate +
+                " · Drink: " + review.drink +
+                " · Visits: " + review.visits +
+                " · Experience: " + review.experience;
+
+            const text = document.createElement("p");
+            text.textContent = review.comment;
+
+            body.append(title, reviewStars, details, info, text);
+            card.appendChild(body);
+            list.appendChild(card);
+        });
+
+        const total = reviews.reduce(
+            (sum, review) => sum + review.rating, 0
+        );
+        const avg = reviews.length ? total / reviews.length : 0;
+
+        if (average) {
+            average.textContent = reviews.length ? avg.toFixed(1) : "—";
+        }
+
+        if (stars) {
+            stars.textContent =
+                "★".repeat(Math.round(avg)) +
+                "☆".repeat(5 - Math.round(avg));
+        }
+
+        if (count) {
+            count.textContent = reviews.length + " reviews";
+        }
     }
 
-    commentField.addEventListener("input", updateCounter);
-    sortSelect.addEventListener("change", renderReviews);
-    resetFilterButton.addEventListener("click", () => {
-        sortSelect.value = "newest";
-        renderReviews();
-        status.textContent = "Review filter reset.";
+    [5, 4, 3, 2, 1].forEach(function (number) {
+        const option = document.createElement("option");
+        option.value = "rating-" + number;
+        option.textContent = number + " stars only";
+        sort.appendChild(option);
     });
 
-    fieldsToValidate.forEach((field) => {
-        const feedbackField = experienceFields.includes(field) ? experienceFields[0] : field;
-        const clearOutdatedError = () => {
-            clearFieldError(feedbackField);
-            if (experienceFields.includes(field)) {
-                const selectedExperience = experienceFields.find((radio) => radio.checked)?.value || "";
-                const rating = Number(ratingField.value);
-                const mismatch = (selectedExperience === "excellent" && rating >= 1 && rating <= 2)
-                    || (selectedExperience === "okay" && rating === 5);
-                const ratingFeedback = ratingField.parentElement.querySelector(`[data-error-for="${ratingField.id}"]`);
-                if (ratingFeedback?.textContent.startsWith("Make the star rating consistent") && !mismatch) {
-                    clearFieldError(ratingField);
-                }
-            }
-            if (!form.querySelector(".is-invalid")) error.classList.add("d-none");
-        };
-        field.addEventListener("input", clearOutdatedError);
-        field.addEventListener("change", clearOutdatedError);
-    });
+    sort.addEventListener("change", renderReviews);
 
-    form.addEventListener("submit", (submission) => {
-        submission.preventDefault();
-        clearAllErrors();
-        hideAnimatedMessage(result);
-        hideAnimatedMessage(error);
-        status.textContent = "";
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        hideMessages();
 
-        const visitCount = Number(visitCountField.value);
-        const rating = Number(ratingField.value);
-        const experienceField = experienceFields.find((field) => field.checked);
-        const visitDate = visitDateField.value;
-        const now = new Date();
-        const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
-        const validationErrors = [];
+        const experience = form.querySelector(
+            'input[name="experience"]:checked'
+        );
 
-        if (nameField.value.trim().length < 2 || nameField.value.trim().length > 80) validationErrors.push([nameField, "Enter a name between 2 and 80 characters."]);
-        if (!emailField.validity.valid || emailField.value.trim() === "") validationErrors.push([emailField, "Enter a valid email address."]);
-        if (!isValidReviewPhone(phoneField.value)) validationErrors.push([phoneField, "Enter a phone number containing 7 to 15 digits."]);
-        if (!visitDate || visitDate > today) validationErrors.push([visitDateField, "Choose today or an earlier visit date."]);
-        if (!Number.isInteger(visitCount) || visitCount < 1) validationErrors.push([visitCountField, "Enter a whole number of visits greater than zero."]);
-        if (!drinkField.value) validationErrors.push([drinkField, "Choose your favorite drink."]);
-        if (!experienceField) validationErrors.push([experienceFields[0], "Choose an experience category."]);
-        if (!Number.isInteger(rating) || rating < 1 || rating > 5) validationErrors.push([ratingField, "Choose a rating from 1 to 5 stars."]);
-        if (experienceField && rating >= 1 && rating <= 5 && ((experienceField.value === "excellent" && rating <= 2) || (experienceField.value === "okay" && rating === 5))) {
-            validationErrors.push([ratingField, "Make the star rating consistent with the experience category."]);
-        }
-        if (commentField.value.trim().length < 20 || commentField.value.trim().length > maximumCommentLength) validationErrors.push([commentField, "Write a review between 20 and 2,000 characters."]);
-        if (!permissionField.checked) validationErrors.push([permissionField, "Confirm the feedback permission checkbox."]);
+        const digits = phone.value.replace(/\D/g, "").length;
+        const score = Number(rating.value);
+        const visitNumber = Number(visits.value);
 
-        if (validationErrors.length > 0) {
-            validationErrors.forEach(([field, message]) => showFieldError(field, message));
-            error.textContent = "Please correct the fields marked below.";
-            showAnimatedMessage(error);
-            validationErrors[0][0].focus();
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const visitDate = new Date(date.value + "T00:00:00");
+
+        if (name.value.trim().length < 2) {
+            showMessage(error, "Please enter your name.");
             return;
         }
 
-        const newReview = {
-            name: nameField.value.trim(),
-            rating,
-            comment: commentField.value.trim(),
-            created_at: new Date().toISOString(),
-            visitDate,
-            drink: drinkField.options[drinkField.selectedIndex].textContent.trim(),
-            visits: visitCount,
-            experience: experienceField.labels[0].textContent.trim()
-        };
+        if (!email.validity.valid || !email.value.trim()) {
+            showMessage(error, "Please enter a valid email.");
+            return;
+        }
 
-        reviews.push(newReview);
-        sortSelect.value = "newest";
+        if (digits < 7 || digits > 15 ||
+            !/^\+?[0-9 ()-]{7,20}$/.test(phone.value.trim())) {
+            showMessage(error, "Please enter a valid phone number.");
+            return;
+        }
+
+        if (!date.value || isNaN(visitDate.getTime()) || visitDate > today) {
+            showMessage(error, "Choose today or an earlier visit date.");
+            return;
+        }
+
+        if (!Number.isInteger(visitNumber) || visitNumber < 1) {
+            showMessage(error, "Enter a valid number of visits.");
+            return;
+        }
+
+        if (!drink.value || !experience) {
+            showMessage(error, "Please complete all required fields.");
+            return;
+        }
+
+        if (!Number.isInteger(score) || score < 1 || score > 5) {
+            showMessage(error, "Choose a rating from 1 to 5.");
+            return;
+        }
+
+        if (experience.value === "excellent" && score <= 2 ||
+            experience.value === "okay" && score === 5) {
+            showMessage(error, "Make your rating match your experience.");
+            return;
+        }
+
+        if (comment.value.trim().length < 20) {
+            showMessage(error, "Write at least 20 characters.");
+            return;
+        }
+
+        if (!permission.checked) {
+            showMessage(error, "Please confirm the permission checkbox.");
+            return;
+        }
+
+        reviews.push({
+            name: name.value.trim(),
+            rating: score,
+            comment: comment.value.trim(),
+            created: new Date(),
+            visitDate: date.value,
+            drink: drink.options[drink.selectedIndex].textContent.trim(),
+            visits: visitNumber,
+            experience: experience.labels[0].textContent.trim()
+        });
+
+        sort.value = "newest";
         renderReviews();
-        const reference = createReviewReference();
         form.reset();
         updateCounter();
-        result.textContent = `Demo review ${reference} is now previewed in this page. It is held only in this browser tab; it was not sent to a server or permanently published.`;
-        showAnimatedMessage(result);
-        status.textContent = "Your review preview was added to the list below.";
+
+        showMessage(result, "Your review was added successfully!");
+
+        if (status) {
+            status.textContent =
+                "Your review is displayed on this page only.";
+        }
     });
 
-    form.addEventListener("reset", () => {
-        clearAllErrors();
-        hideAnimatedMessage(result);
-        hideAnimatedMessage(error);
-        status.textContent = "";
+    form.addEventListener("reset", function () {
+        hideMessages();
+        updateCounter();
     });
 
     updateCounter();
     renderReviews();
-}
-
-initializeCoffeeBlog();
+});
