@@ -6,9 +6,6 @@ const navLinks = [
 ];
 
 function createHeader(links) {
-    const header = document.createElement("header");
-    header.className = "font-monospace sticky-top";
-
     const linksHTML = links
         .map(
             (link) => `
@@ -17,7 +14,7 @@ function createHeader(links) {
         )
         .join("");
 
-    header.innerHTML = `
+    return $("<header>", { class: "font-monospace sticky-top" }).html(`
     <nav class="navbar navbar-expand-lg bg-secondary">
       <div class="container-fluid">
         <a class="navbar-brand text-white" href="index.html"><b>Tokyo Coffee</b></a>
@@ -40,9 +37,9 @@ function createHeader(links) {
       </div>
     </nav>
     <hr class="my-0" />
-  `;
-
-    return header;
+  `);
 }
 
-document.body.prepend(createHeader(navLinks));
+$(function () {
+    $("body").prepend(createHeader(navLinks));
+});
