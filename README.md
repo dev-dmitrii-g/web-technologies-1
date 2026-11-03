@@ -62,3 +62,26 @@ The new account and contact behavior is loaded using deferred script references.
 - Contact form validation and local confirmation: `pages/js/contacts.js` lines 17 and 103–133.
 
 For final submission, capture browser evidence for the empty/no-match states and one invalid plus one valid demonstration flow. Add the required `assignment-4` and `assignment-5` tags after committing the corresponding versions, and keep the midterm tag unchanged. The current working tree has not been committed or tagged.
+
+## Assignment 4–5: Functionality Plan
+
+| Page | Visitor goal | Planned function | Expected result | Responsible |
+|---|---|---|---|---|
+| menu.html | Find a drink or dish quickly | Catalogue rendered from an array with category buttons, search and sort | Matching cards, "Showing N of 57 items", a no-results message and a reset button | Abylay Opayev |
+| menu.html | Decide what to order | "Order this" on every card (with the chosen size) and a random "Barista suggestion" | `order.html` opens with the item and size already selected | Abylay Opayev |
+| order.html | Build a pickup order | Cart: add, +/−, remove, clear; recalculation after every change | Line subtotals, item count, cart total, preparation time and the prepared Order Summary update; "Place Order" is disabled while the cart is empty | Abylay Opayev |
+| order.html | Send correct pickup details | Validation of pickup time, full name, phone and order notes | Errors beside the fields, focus on the first error, then a demo confirmation with a TC-XXXXXX reference (nothing is sent) | Abylay Opayev |
+| subscriptions.html | Choose a plan that fits the budget | Plan table rendered from an array, budget filter, "Choose" buttons | Plan count, empty state with reset, selected plan highlighted | Abylay Opayev |
+| subscriptions.html | Understand the price and subscribe | Live summary (price per delivery, cost every 4 weeks) and form validation | Errors beside the fields (incl. Roaster's Choice only every 2 weeks), then a demo confirmation with a SUB-XXXXXX reference (nothing is sent) | Abylay Opayev |
+
+Other team members add their own rows above.
+
+### Notes for menu.html, order.html, subscriptions.html (Abylay Opayev)
+* JavaScript: `pages/js/mainabyl.js` (shared data and helpers for these three pages), `pages/js/menu.js`, `pages/js/order.js`, `pages/js/subscriptions.js`.
+* HTML after the midterm: only `<script defer>` tags were added. No CSS was added or removed.
+* The static price lists on `menu.html` are hidden with the Bootstrap `d-none` class and replaced by the catalogue rendered from `MENU_ITEMS`.
+* Data kept consistent across the site:
+  * Cocoa is 1290 ₸ (400 ml) everywhere, the same price as the order form.
+  * Subscription plans are priced per delivery. Explorer, Daily Brew and Coffee Lover can be delivered every 2 or 4 weeks; Roaster's Choice only every 2 weeks. The plan table is rendered from data with this wording.
+* Known midterm CSS limitation: disabled `btn-primary` buttons use the default Bootstrap blue because `base.css` has no `:disabled` styles. This was not changed because of the CSS freeze.
+* JavaScript checklist: [CHECKLIST_JS.md](CHECKLIST_JS.md). Evidence: `documents/abylay/`. AI log: [documents/abylay/AI_LOG_JS.md](documents/abylay/AI_LOG_JS.md).
