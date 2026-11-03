@@ -153,15 +153,31 @@ function createReference(prefix) {
     return `${prefix}-${number}`;
 }
 
+// jQuery 4.0.0 (js/jquery/jquery-4.0.0.min.js) is loaded before this file, so $ already exists here.
+// These helpers only build elements and change classes; the page scripts call them inside $(function () { ... }).
+
+// Rewritten with jQuery: $('<tag>') replaces document.createElement, .addClass() replaces className and
+// .text() replaces textContent. .text() puts the value in as plain text, so a visitor's input never becomes HTML.
+// It is the same length as before — the gain is that it returns a jQuery object that can be chained.
 function makeElement(tagName, className, text) {
-    const element = document.createElement(tagName);
+    const $element = $(`<${tagName}>`);
     if (className) {
-        element.className = className;
+        $element.addClass(className);
     }
     if (text !== undefined) {
-        element.textContent = text;
+        $element.text(text);
     }
-    return element;
+    return $element;
+}
+
+function makeOption(text, value) {
+    return $('<option>', { text, value });
+}
+
+// Bootstrap's d-none is display: none !important, which beats the inline style a jQuery effect sets.
+// So the block is hidden by jQuery first, d-none is removed, and only then the effect ('fadeIn' or 'slideDown') runs.
+function revealBlock($block, effect, duration, done) {
+    return $block.stop(true, true).hide().removeClass('d-none')[effect](duration, done);
 }
 
 function timeToMinutes(time) {
@@ -201,55 +217,54 @@ function validatePhone(value) {
     return '';
 }
 
-// Error and success states use Bootstrap classes; a fieldset stands for a radio group.
-function getStateTargets(control) {
-    if (control.tagName === 'FIELDSET') {
-        return Array.from(control.querySelectorAll('.form-check-input'));
-    }
-    return [control];
+// Form validation, rewritten with jQuery. $control is a jQuery object: one field, or a fieldset for a radio group.
+// .is('fieldset') replaces tagName === 'FIELDSET', .find() replaces querySelectorAll + Array.from,
+// .removeAttr('a b') and .attr({ ... }) replace two setAttribute/removeAttribute calls each, and
+// .addClass/.removeClass work on the whole set at once, so the forEach loops are gone. Shorter and clearer.
+function getStateTargets($control) {
+    return $control.is('fieldset') ? $control.find('.form-check-input') : $control;
 }
 
-function clearFieldState(control) {
-    const feedback = document.getElementById(`${control.id}-feedback`);
-    if (feedback !== null) {
-        feedback.remove();
-    }
-    control.removeAttribute('aria-invalid');
-    control.removeAttribute('aria-describedby');
-    getStateTargets(control).forEach((target) => target.classList.remove('is-invalid', 'is-valid'));
+function getFeedbackId($control) {
+    return `${$control.attr('id')}-feedback`;
 }
 
-function setFieldError(control, message) {
-    clearFieldState(control);
-    const feedback = makeElement('div', 'invalid-feedback d-block', `Error: ${message}`);
-    feedback.id = `${control.id}-feedback`;
-    if (control.tagName === 'FIELDSET') {
-        control.append(feedback);
+function clearFieldState($control) {
+    $(`#${getFeedbackId($control)}`).remove();
+    $control.removeAttr('aria-invalid aria-describedby');
+    getStateTargets($control).removeClass('is-invalid is-valid');
+}
+
+// The error message is placed next to its own field, not one message for the whole form.
+function setFieldError($control, message) {
+    clearFieldState($control);
+    const feedbackId = getFeedbackId($control);
+    const $feedback = makeElement('div', 'invalid-feedback d-block', `Error: ${message}`).attr('id', feedbackId);
+    if ($control.is('fieldset')) {
+        $feedback.appendTo($control);
     } else {
-        control.after(feedback);
+        $control.after($feedback);
     }
-    control.setAttribute('aria-invalid', 'true');
-    control.setAttribute('aria-describedby', feedback.id);
-    getStateTargets(control).forEach((target) => target.classList.add('is-invalid'));
+    $control.attr({ 'aria-invalid': 'true', 'aria-describedby': feedbackId });
+    getStateTargets($control).addClass('is-invalid');
 }
 
-function setFieldValid(control) {
-    clearFieldState(control);
-    if (control.tagName !== 'FIELDSET') {
-        control.setAttribute('aria-invalid', 'false');
-        control.classList.add('is-valid');
+function setFieldValid($control) {
+    clearFieldState($control);
+    if (!$control.is('fieldset')) {
+        $control.attr('aria-invalid', 'false').addClass('is-valid');
     }
 }
 
-function applyValidation(control, message) {
+function applyValidation($control, message) {
     if (message === '') {
-        setFieldValid(control);
+        setFieldValid($control);
         return true;
     }
-    setFieldError(control, message);
+    setFieldError($control, message);
     return false;
 }
 
-function hasFieldError(control) {
-    return document.getElementById(`${control.id}-feedback`) !== null;
+function hasFieldError($control) {
+    return $(`#${getFeedbackId($control)}`).length !== 0;
 }
