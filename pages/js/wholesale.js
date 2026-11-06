@@ -1,97 +1,86 @@
-
 "use strict";
 
-document.addEventListener("DOMContentLoaded", () => {
-    const sections = document.querySelectorAll(
-        "main > section, main > div, main .card"
-    );
-    const buttons = document.querySelectorAll(
-        "button, input[type='submit'], input[type='reset']"
-    );
-    const form = document.getElementById("wholesale-enquiry-form");
-
-    sections.forEach((section, index) => {
-        section.style.opacity = "0";
-        section.style.transform = "translateY(20px)";
-        section.style.transition =
-    `opacity 0.2s ease ${index * 0.03}s, transform 0.2s ease ${index * 0.03}s`;
-    });
-
-    const showSection = section => {
-        section.style.opacity = "1";
-        section.style.transform = "translateY(0)";
-    };
-
-    if ("IntersectionObserver" in window) {
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    showSection(entry.target);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-
-        sections.forEach(section => observer.observe(section));
-    } else {
-        sections.forEach(showSection);
+$(document).ready(function () {
+    // jQuery 3.7.1 is loaded from the official CDN; ready() waits until this page's enquiry form exists.
+    const $form = $("#wholesale-enquiry-form");
+    if (!$form.length) return;
+    const $result = $("#wholesale-enquiry-form-result"), $error = $("#wholesale-enquiry-form-error");
+    const $status = $form.find("[aria-live]").first();
+    const STORAGE_KEY = "tokyo-coffee-wholesale-enquiries";
+    function validate($field) {
+        const value = $.trim(String($field.val() || ""));
+        const id = $field.attr("id");
+        let valid = !!value, message = "This field is required.", group;
+        if (id === "company") { valid = value.length >= 2; message = "Enter your company name."; }
+        if (id === "contact-name") { valid = value.length >= 2; message = "Enter at least two characters for your name."; }
+        if (id === "business-email") { valid = FormUI.emailValid(value); message = "Enter a valid business email."; }
+        if (id === "business-phone") { valid = FormUI.phoneValid(value); message = "Enter a valid phone number with 7 to 15 digits."; }
+        if (id === "volume") { valid = Number(value) > 0; message = "Enter an expected volume greater than zero."; }
+        if (id === "preferred-date") { valid = !!value && value >= FormUI.today(); message = "Choose today or a future contact date."; }
+        if (id === "business-cafe") { valid = $form.find('input[name="business-type"]:checked').length > 0; message = "Choose a business type."; group = $field.closest("fieldset"); }
+        if (id === "service") { valid = !!value; message = "Choose a required service."; }
+        if (id === "contact-agree") { valid = $field.prop("checked"); message = "Please agree to be contacted."; }
+        if (id === "business-message") { valid = value.length >= 10; message = "Describe your requirements in at least 10 characters."; }
+        FormUI.mark($field, valid, message, group);
+        return valid;
     }
-
-    buttons.forEach(button => {
-        button.style.transition =
-            "transform 0.2s ease, box-shadow 0.2s ease";
-
-        button.addEventListener("mouseenter", () => {
-            if (button.disabled) return;
-
-            button.style.transform = "scale(1.04)";
-            button.style.boxShadow = "0 4px 12px #0002";
-        });
-
-        button.addEventListener("mouseleave", () => {
-            button.style.transform = "scale(1)";
-            button.style.boxShadow = "";
-        });
+    $form.find("input, select, textarea").each(function () {
+        $(this).on("invalid", function (event) { event.preventDefault(); validate($(this)); });
     });
-
- if (form) {
-    form.addEventListener("submit", event => {
-        event.preventDefault();
-
-        if (!form.checkValidity()) {
-            form.reportValidity();
+    $form.on("input change", "input, select, textarea", function () {
+        if ($(this).attr("type") === "radio") {
+            const $firstChoice = $form.find("[name=" + $(this).attr("name") + "]").first();
+            if ($firstChoice.hasClass("is-invalid")) validate($firstChoice);
+        } else if ($(this).hasClass("is-invalid")) validate($(this));
+    });
+    // Replaces getElementById/addEventListener and direct style changes with selectors, .on(), and Bootstrap feedback classes; the jQuery version is shorter and clearer.
+    $form.on("submit", function (event) {
+        event.preventDefault(); // Without this, this demo form would post to the placeholder FormSubmit address.
+        FormUI.hide($result); FormUI.hide($error);
+        let valid = true;
+        $form.find("input[required], select[required], textarea[required]").each(function () {
+            if ($(this).attr("name") === "business-type" && $(this).attr("id") !== "business-cafe") return;
+            valid = validate($(this)) && valid;
+        });
+        if (!valid) {
+            FormUI.show($error, "Please correct the highlighted fields.");
+            $status.text("Please correct the form fields.");
             return;
         }
-
-        const result = document.getElementById(
-            "wholesale-enquiry-form-result"
-        );
-        const error = document.getElementById(
-            "wholesale-enquiry-form-error"
-        );
-
-        if (result) {
-            result.classList.add("d-none");
-        }
-
-        if (error) {
-            error.classList.add("d-none");
-        }
-
-        form.style.transition = "opacity 0.25s ease";
-        form.style.opacity = "0.6";
-
-        setTimeout(() => {
-            form.style.opacity = "1";
-
-            if (result) {
-                result.textContent =
-                    "Form submitted successfully. No data was sent or saved.";
-                result.classList.remove("d-none");
+        const company = $.trim($("#company").val());
+        const service = $("#service option:selected").text().trim();
+        const enquiry = {};
+        $form.find("input, select, textarea").each(function () {
+            const $field = $(this);
+            const name = $field.attr("name");
+            const type = $field.attr("type");
+            if (!name || ["submit", "reset", "button"].includes(type)) return;
+            if ((type === "radio" || type === "checkbox") && !$field.prop("checked")) return;
+            const value = type === "checkbox" ? true : $.trim(String($field.val() || ""));
+            if (Object.prototype.hasOwnProperty.call(enquiry, name)) {
+                enquiry[name] = [].concat(enquiry[name], value);
+            } else {
+                enquiry[name] = value;
             }
+        });
+        enquiry.created = new Date().toISOString();
+        try {
+            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+            if (!Array.isArray(saved)) throw new Error("Invalid saved data");
+            saved.push(enquiry);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+        } catch {
+            FormUI.show($error, "Could not save your enquiry in this browser. Storage may be full or unavailable.");
+            return;
+        }
+        this.reset();
+        FormUI.clearForm($form);
+        FormUI.show($result, "Thank you, " + company + ". Your " + service.toLowerCase() + " enquiry was saved in this browser. It was not sent to a server.", "slide");
+        $status.text("Enquiry saved in this browser. No information was sent to a server.");
+    });
+    $form.on("reset", function () {
+        FormUI.hide($result); FormUI.hide($error);
+        window.setTimeout(function () { FormUI.clearForm($form); }, 0);
+    });
+});
 
-            form.reset();
-        }, 300);
-    });
- }
-    });

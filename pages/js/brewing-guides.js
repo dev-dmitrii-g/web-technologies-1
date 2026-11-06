@@ -1,152 +1,169 @@
-
 "use strict";
 
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("brewing-question-form");
-    const result = document.getElementById("brewing-question-form-result");
-    const error = document.getElementById("brewing-question-form-error");
-    const status = form?.querySelector(".small[aria-live]");
+// jQuery 3.7.1 is loaded by brewing-guides.html before this script.
+$(document).ready(() => {
+    const $form = $("#brewing-question-form");
+    const $result = $("#brewing-question-form-result");
+    const $error = $("#brewing-question-form-error");
+    const $status = $form.find(".small[aria-live]").first();
+    const STORAGE_KEY = "tokyo-coffee-brewing-questions";
 
-    document.querySelectorAll("main > section, main > aside, main .row > section")
-        .forEach(item => {
-            item.style.opacity = "0";
-            item.style.transform = "translateY(20px)";
-            item.style.transition = "all 0.6s ease";
+    $("main > section, main > aside, main .row > section").each(function () {
+        const $item = $(this);
+        $item.css({ opacity: "0", transform: "translateY(20px)", transition: "all 0.6s ease" });
 
-            if ("IntersectionObserver" in window) {
-                const observer = new IntersectionObserver(entries => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.style.opacity = "1";
-                            entry.target.style.transform = "translateY(0)";
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.1 });
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        $(entry.target).css({ opacity: "1", transform: "translateY(0)" });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
 
-                observer.observe(item);
-            } else {
-                item.style.opacity = "1";
-                item.style.transform = "translateY(0)";
-            }
-        });
-
-    document.querySelectorAll("main .card").forEach(card => {
-        card.style.transition = "transform 0.25s ease, box-shadow 0.25s ease";
-        card.addEventListener("mouseenter", () => {
-            card.style.transform = "translateY(-4px)";
-            card.style.boxShadow = "0 8px 20px #0002";
-        });
-        card.addEventListener("mouseleave", () => {
-            card.style.transform = "";
-            card.style.boxShadow = "";
-        });
+            observer.observe(this);
+        } else {
+            $item.css({ opacity: "1", transform: "translateY(0)" });
+        }
     });
 
-    document.querySelectorAll("button, input[type='submit'], input[type='reset']")
-        .forEach(button => {
-            button.style.transition = "transform 0.2s ease";
-            button.addEventListener("mouseenter", () => {
-                if (!button.disabled) button.style.transform = "scale(1.04)";
-            });
-            button.addEventListener("mouseleave", () => {
-                button.style.transform = "";
-            });
+    $("main .card")
+        .css({ transition: "transform 0.25s ease, box-shadow 0.25s ease" })
+        .on("mouseenter", function () {
+            $(this).css({ transform: "translateY(-4px)", boxShadow: "0 8px 20px #0002" });
+        })
+        .on("mouseleave", function () {
+            $(this).css({ transform: "", boxShadow: "" });
+        });
+
+    $("button, input[type='submit'], input[type='reset']")
+        .css("transition", "transform 0.2s ease")
+        .on("mouseenter", function () {
+            if (!$(this).prop("disabled")) $(this).css("transform", "scale(1.04)");
+        })
+        .on("mouseleave", function () {
+            $(this).css("transform", "");
         });
 
     function hideMessages() {
-        [result, error].forEach(el => {
-            if (el) {
-                el.classList.add("d-none");
-                el.style.opacity = "0";
-            }
+        [$result, $error].forEach($element => {
+            if ($element.length) $element.addClass("d-none").css("opacity", "0");
         });
     }
 
-    function showMessage(el) {
-        if (!el) return;
-        el.classList.remove("d-none");
-        el.style.opacity = "1";
-        el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    function showMessage($element) {
+        if (!$element.length) return;
+        $element.removeClass("d-none").css("opacity", "1");
+        $element[0].scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
-    if (!form) return;
+    if (!$form.length) return;
 
-    const dateInput = document.getElementById("brew-date");
+    const $dateInput = $("#brew-date");
 
-    if (dateInput) {
+    if ($dateInput.length) {
         const tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
-        dateInput.min = [
+        $dateInput.attr("min", [
             tomorrow.getFullYear(),
             String(tomorrow.getMonth() + 1).padStart(2, "0"),
             String(tomorrow.getDate()).padStart(2, "0")
-        ].join("-");
+        ].join("-"));
     }
 
-    form.addEventListener("submit", event => {
+    $form.on("submit", event => {
         event.preventDefault();
         hideMessages();
 
+        const form = $form[0];
         if (!form.checkValidity()) {
             form.reportValidity();
-            if (error) {
-                error.textContent = "Please check the information and try again.";
-                showMessage(error);
+            if ($error.length) {
+                $error.text("Please check the information and try again.");
+                showMessage($error);
             }
-            if (status) status.textContent = "Please correct the form fields.";
+            if ($status.length) $status.text("Please correct the form fields.");
             return;
         }
 
-        const name = document.getElementById("visitor-name").value.trim();
-        const email = document.getElementById("visitor-email").value.trim();
-        const phone = document.getElementById("visitor-phone").value.trim();
-        const method = document.getElementById("brewing-method").value;
-        const amount = Number(document.getElementById("coffee-amount").value);
-        const question = document.getElementById("brewing-question").value.trim();
+        const name = $.trim($("#visitor-name").val() || "");
+        const email = $.trim($("#visitor-email").val() || "");
+        const phone = $.trim($("#visitor-phone").val() || "");
+        const method = $("#brewing-method").val();
+        const amount = Number($("#coffee-amount").val());
+        const question = $.trim($("#brewing-question").val() || "");
 
         if (name.length < 2 || !email.includes("@") || phone.length < 7 ||
             amount <= 0 || question.length < 5) {
-            if (error) {
-                error.textContent = "Please enter valid contact details and brewing information.";
-                showMessage(error);
+            if ($error.length) {
+                $error.text("Please enter valid contact details and brewing information.");
+                showMessage($error);
             }
-            if (status) status.textContent = "Please correct the form fields.";
+            if ($status.length) $status.text("Please correct the form fields.");
             return;
         }
 
-        if (result) {
-            result.textContent = `Thank you, ${name}! Your ${method} brewing question has been recorded. No email has been sent.`;
-            showMessage(result);
+        const enquiry = {
+            name,
+            email,
+            phone,
+            method,
+            amount,
+            date: $dateInput.val() || "",
+            question,
+            created: new Date().toISOString()
+        };
+        try {
+            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+            if (!Array.isArray(saved)) throw new Error("Invalid saved data");
+            saved.push(enquiry);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+        } catch {
+            if ($error.length) {
+                $error.text("Could not save your question in this browser. Storage may be full or unavailable.");
+                showMessage($error);
+            }
+            if ($status.length) $status.text("Question could not be saved.");
+            return;
         }
 
-        if (status) status.textContent = "Form validation completed successfully.";
+        if ($result.length) {
+            $result.text(`Thank you, ${name}! Your ${method} brewing question was saved in this browser. No email has been sent.`);
+            showMessage($result);
+        }
+
+        if ($status.length) $status.text("Form validation completed successfully.");
         form.reset();
     });
 
-    form.addEventListener("reset", () => {
+    $form.on("reset", () => {
         hideMessages();
-        if (status) status.textContent = "Form cleared.";
+        if ($status.length) $status.text("Form cleared.");
     });
 
-    const saveButton = [...form.querySelectorAll("button")]
-        .find(button => button.textContent.trim() === "Save Draft");
+    const $saveButton = $form.find("button").filter(function () {
+        return $(this).text().trim() === "Save Draft";
+    }).first();
 
-    if (saveButton) {
-        saveButton.addEventListener("click", () => {
+    if ($saveButton.length) {
+        $saveButton.on("click", () => {
             const draft = {};
 
-            form.querySelectorAll("input, select, textarea").forEach(field => {
-                if (!field.name || ["submit", "reset", "button"].includes(field.type)) return;
-                if (field.type === "radio" && !field.checked) return;
-                draft[field.name] = field.type === "checkbox" ? field.checked : field.value;
+            $form.find("input, select, textarea").each(function () {
+                const $field = $(this);
+                const name = $field.attr("name");
+                const type = $field.attr("type");
+                if (!name || ["submit", "reset", "button"].includes(type)) return;
+                if (type === "radio" && !$field.prop("checked")) return;
+                draft[name] = type === "checkbox" ? $field.prop("checked") : $field.val();
             });
 
             try {
                 localStorage.setItem("brewing-question-draft", JSON.stringify(draft));
-                if (status) status.textContent = "Draft saved in this browser.";
+                if ($status.length) $status.text("Draft saved in this browser.");
             } catch {
-                if (status) status.textContent = "Unable to save the draft.";
+                if ($status.length) $status.text("Unable to save the draft.");
             }
         });
     }

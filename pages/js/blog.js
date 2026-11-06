@@ -1,4 +1,3 @@
-
 "use strict";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -11,7 +10,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!form || !list || !sort) return;
 
-    const reviews = [];
+    const STORAGE_KEY = "tokyo-coffee-reviews";
+
+    function loadReviews() {
+        try {
+            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+            return Array.isArray(saved)
+                ? saved
+                    .filter(review =>
+                        review &&
+                        typeof review.name === "string" &&
+                        Number.isInteger(Number(review.rating)) &&
+                        typeof review.comment === "string"
+                    )
+                    .map(review => ({
+                        ...review,
+                        rating: Number(review.rating),
+                        created: new Date(review.created)
+                    }))
+                : [];
+        } catch {
+            return [];
+        }
+    }
+
+    const reviews = loadReviews();
 
     const name = document.getElementById("review-name");
     const email = document.getElementById("review-email");
@@ -48,6 +72,15 @@ document.addEventListener("DOMContentLoaded", function () {
         [result, error].forEach(function (element) {
             if (element) element.classList.add("d-none");
         });
+    }
+
+    function saveReviews() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+            return true;
+        } catch {
+            return false;
+        }
     }
 
     function renderReviews() {
@@ -94,12 +127,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const details = document.createElement("p");
             details.className = "small text-muted";
-            details.textContent =
-                new Date(review.created).toLocaleString();
+            details.textContent = new Date(review.created).toLocaleString();
 
             const info = document.createElement("p");
             info.className = "small text-muted";
-            info.textContent = "Visit date: " + review.visitDate +
+            info.textContent =
+                "Visit date: " + review.visitDate +
                 " · Drink: " + review.drink +
                 " · Visits: " + review.visits +
                 " · Experience: " + review.experience;
@@ -107,13 +140,45 @@ document.addEventListener("DOMContentLoaded", function () {
             const text = document.createElement("p");
             text.textContent = review.comment;
 
-            body.append(title, reviewStars, details, info, text);
+            const deleteButton = document.createElement("button");
+            deleteButton.type = "button";
+            deleteButton.className = "btn btn-outline-danger btn-sm";
+            deleteButton.textContent = "Delete review";
+            deleteButton.setAttribute(
+                "aria-label",
+                "Delete review by " + review.name
+            );
+
+            deleteButton.addEventListener("click", function () {
+                const index = reviews.indexOf(review);
+                if (index === -1) return;
+
+                const [removed] = reviews.splice(index, 1);
+
+                if (!saveReviews()) {
+                    reviews.splice(index, 0, removed);
+                    showMessage(
+                        error,
+                        "Could not delete the review. Browser storage may be unavailable."
+                    );
+                    return;
+                }
+
+                renderReviews();
+
+                if (status) {
+                    status.textContent = "Review deleted from this browser.";
+                }
+            });
+
+            body.append(title, reviewStars, details, info, text, deleteButton);
             card.appendChild(body);
             list.appendChild(card);
         });
 
         const total = reviews.reduce(
-            (sum, review) => sum + review.rating, 0
+            (sum, review) => sum + review.rating,
+            0
         );
         const avg = reviews.length ? total / reviews.length : 0;
 
@@ -168,8 +233,11 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        if (digits < 7 || digits > 15 ||
-            !/^\+?[0-9 ()-]{7,20}$/.test(phone.value.trim())) {
+        if (
+            digits < 7 ||
+            digits > 15 ||
+            !/^\+?[0-9 ()-]{7,20}$/.test(phone.value.trim())
+        ) {
             showMessage(error, "Please enter a valid phone number.");
             return;
         }
@@ -194,8 +262,10 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        if (experience.value === "excellent" && score <= 2 ||
-            experience.value === "okay" && score === 5) {
+        if (
+            (experience.value === "excellent" && score <= 2) ||
+            (experience.value === "okay" && score === 5)
+        ) {
             showMessage(error, "Make your rating match your experience.");
             return;
         }
@@ -210,16 +280,27 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        reviews.push({
+        const review = {
             name: name.value.trim(),
             rating: score,
             comment: comment.value.trim(),
-            created: new Date(),
+            created: new Date().toISOString(),
             visitDate: date.value,
             drink: drink.options[drink.selectedIndex].textContent.trim(),
             visits: visitNumber,
             experience: experience.labels[0].textContent.trim()
-        });
+        };
+
+        reviews.push(review);
+
+        if (!saveReviews()) {
+            reviews.pop();
+            showMessage(
+                error,
+                "Could not save the review in this browser. Storage may be full or unavailable."
+            );
+            return;
+        }
 
         sort.value = "newest";
         renderReviews();
@@ -229,8 +310,7 @@ document.addEventListener("DOMContentLoaded", function () {
         showMessage(result, "Your review was added successfully!");
 
         if (status) {
-            status.textContent =
-                "Your review is displayed on this page only.";
+            status.textContent = "Your review is saved in this browser only.";
         }
     });
 
