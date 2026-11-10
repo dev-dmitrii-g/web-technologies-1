@@ -1,4 +1,3 @@
-
 "use strict";
 
 (() => {
@@ -6,40 +5,100 @@
     let theme = localStorage.getItem(KEY) || "light";
 
     const darkCSS = `
-        body { background:#171412 !important; color:#F3E6D0 !important; }
-        header, nav, footer, .navbar, .navbar-collapse { background:#211A16 !important; }
+        :root {
+            color-scheme: dark;
+            --bs-body-bg: #171412;
+            --bs-body-bg-rgb: 23, 20, 18;
+            --bs-body-color: #F3E6D0;
+            --bs-body-color-rgb: 243, 230, 208;
+            --bs-tertiary-bg: #26201B;
+            --bs-secondary-bg: #26201B;
+        }
+        body, body.bg-body {
+            background: #171412 !important;
+            color: #F3E6D0 !important;
+        }
+        .bg-body, .bg-light, .bg-white {
+            background-color: #171412 !important;
+            color: #F3E6D0 !important;
+        }
+        header, nav, footer, .navbar, .navbar-collapse {
+            background: #211A16 !important;
+        }
         .card, .card-body, .modal-content, .list-group-item, .alert,
         .accordion-item, .dropdown-menu, .bg-light, .bg-white {
-            background:#26201B !important; color:#F3E6D0 !important;
-            border-color:#514033 !important;
+            background: #26201B !important;
+            color: #F3E6D0 !important;
+            border-color: #514033 !important;
         }
-        h1,h2,h3,h4,h5,h6,p,li,label,legend,td,th,small,span,strong,em,
-        blockquote,figcaption,caption,.text-dark,.text-body,.text-black,
-        .link-dark,.nav-link,.navbar-brand { color:#F3E6D0 !important; }
-        .text-muted,.text-secondary,.text-body-secondary { color:#C7B49B !important; }
-        a:not(.btn) { color:#D5AD80; }
-        input:not([type=checkbox]):not([type=radio]),textarea,select {
-            background:#302720 !important; color:#F3E6D0 !important;
-            border-color:#514033 !important;
+        h1, h2, h3, h4, h5, h6, p, li, label, legend, td, th,
+        small, span, strong, em, blockquote, figcaption, caption,
+        .text-dark, .text-body, .text-black, .link-dark, .nav-link,
+        .navbar-brand {
+            color: #F3E6D0 !important;
         }
-        input::placeholder,textarea::placeholder { color:#C7B49B !important; }
+        .text-muted, .text-secondary, .text-body-secondary {
+            color: #C7B49B !important;
+        }
+        a:not(.btn) {
+            color: #D5AD80;
+        }
+        input:not([type=checkbox]):not([type=radio]), textarea, select {
+            background: #302720 !important;
+            color: #F3E6D0 !important;
+            border-color: #514033 !important;
+        }
+        input::placeholder, textarea::placeholder {
+            color: #C7B49B !important;
+        }
         .table {
-            --bs-table-bg:#26201B; --bs-table-color:#F3E6D0;
-            --bs-table-border-color:#514033; --bs-table-striped-bg:#302720;
-            --bs-table-striped-color:#F3E6D0; --bs-table-hover-bg:#3A2D23;
-            --bs-table-hover-color:#F3E6D0;
+            --bs-table-bg: #26201B;
+            --bs-table-color: #F3E6D0;
+            --bs-table-border-color: #514033;
+            --bs-table-striped-bg: #302720;
+            --bs-table-striped-color: #F3E6D0;
+            --bs-table-hover-bg: #3A2D23;
+            --bs-table-hover-color: #F3E6D0;
         }
-        .btn-primary { background:#B78656 !important; color:#171412 !important; }
-        .btn-secondary,.btn-dark { background:#49382A !important; color:#F3E6D0 !important; }
-        .btn-success { background:#426B4A !important; color:white !important; }
-        .btn-danger { background:#943F45 !important; color:white !important; }
-        .btn-warning,.btn-info { background:#D5AD80 !important; color:#211A16 !important; }
-        .btn-outline-primary,.btn-outline-secondary,.btn-outline-dark {
-            color:#E5C39D !important; border-color:#B78656 !important;
+        .btn-primary {
+            background: #B78656 !important;
+            color: #171412 !important;
         }
-        .btn:hover { filter:brightness(1.1); }
-        #theme-toggle { background:#F3E6D0 !important; color:#211A16 !important; }
-        ::selection { background:#B78656; color:#171412; }
+        .btn-secondary, .btn-dark {
+            background: #49382A !important;
+            color: #F3E6D0 !important;
+        }
+        .btn-success {
+            background: #426B4A !important;
+            color: white !important;
+        }
+        .btn-danger {
+            background: #943F45 !important;
+            color: white !important;
+        }
+        .btn-warning, .btn-info {
+            background: #D5AD80 !important;
+            color: #211A16 !important;
+        }
+        .btn-outline-primary, .btn-outline-secondary, .btn-outline-dark {
+            color: #E5C39D !important;
+            border-color: #B78656 !important;
+        }
+        .btn:hover {
+            filter: brightness(1.1);
+        }
+        #theme-toggle {
+            background: #F3E6D0 !important;
+            color: #211A16 !important;
+        }
+        ::selection {
+            background: #B78656;
+            color: #171412;
+        }
+  #theme-cat[src*="cat-dark"] {
+    transform: translateX(-16px) scale(1.12, 0.92);
+    transform-origin: center top;
+}
     `;
 
     function applyTheme() {
@@ -52,6 +111,15 @@
             style.textContent = darkCSS;
             document.head.appendChild(style);
         }
+    }
+
+    function updateThemeImage() {
+        const image = document.getElementById("theme-cat");
+        if (!image) return;
+
+        image.src = theme === "dark"
+            ? "images/cat-dark.png"
+            : "images/cat.png";
     }
 
     function init() {
@@ -69,10 +137,17 @@
         }
 
         function update() {
-            button.textContent = theme === "dark" ? "☀ Light Mode" : "🌙 Dark Mode";
-            button.setAttribute("aria-label",
-                theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+            button.textContent =
+                theme === "dark" ? "☀ Light Mode" : "🌙 Dark Mode";
+            button.setAttribute(
+                "aria-label",
+                theme === "dark"
+                    ? "Switch to light mode"
+                    : "Switch to dark mode"
+            );
+
             applyTheme();
+            updateThemeImage();
         }
 
         button.addEventListener("click", () => {
