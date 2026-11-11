@@ -31,3 +31,7 @@
     opacity: 0;
     pointer-events: none;
 }
+
+#locations-title,#contacts-title {
+    scroll-margin-top: 79px;
+}
