@@ -1,4 +1,5 @@
 const navLinks = [
+    { name: "Home", href: "index.html" },
     { name: "Menu", href: "menu.html" },
     { name: "Brewing Guides", href: "brewing-guides.html" },
     { name: "Events", href: "events.html" },
