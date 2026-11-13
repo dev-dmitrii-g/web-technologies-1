@@ -341,27 +341,37 @@
                     class="card p-4 col-lg-7 d-flex flex-column justify-content-center"
                 >
                     <h2 class="h3 pb-2 card-title">Send us a Message</h2>
-                    <form class="card-body">
+                    <form class="card-body needs-validation" novalidate>
                         <div class="mb-3">
                             <label
                                 for="contact-name"
                                 class="form-label font-monospace"
-                                >Full Name</label
                             >
+                                Full Name
+                            </label>
                             <input
                                 type="text"
                                 class="form-control bg-white font-monospace"
                                 id="contact-name"
+                                name="contact-name"
                                 placeholder="Enter your full name"
                                 required
                             />
+                            <div class="invalid-feedback font-monospace">
+                                Please enter your full name.
+                            </div>
+                            <div class="valid-feedback font-monospace">
+                                Looks good!
+                            </div>
                         </div>
+
                         <div class="mb-3">
                             <label
                                 for="contact-email"
                                 class="form-label font-monospace"
-                                >Email</label
                             >
+                                Email
+                            </label>
                             <input
                                 type="email"
                                 class="form-control bg-white font-monospace"
@@ -370,13 +380,21 @@
                                 placeholder="you@example.com"
                                 required
                             />
+                            <div class="invalid-feedback font-monospace">
+                                Please enter a valid email address.
+                            </div>
+                            <div class="valid-feedback font-monospace">
+                                Looks good!
+                            </div>
                         </div>
+
                         <div class="mb-3">
                             <label
                                 for="inquiry-type"
                                 class="form-label font-monospace"
-                                >Nature of Inquiry</label
                             >
+                                Nature of Inquiry
+                            </label>
                             <select
                                 id="inquiry-type"
                                 class="form-select bg-white font-monospace"
@@ -396,13 +414,21 @@
                                     Wholesale / B2B
                                 </option>
                             </select>
+                            <div class="invalid-feedback font-monospace">
+                                Please select an inquiry type.
+                            </div>
+                            <div class="valid-feedback font-monospace">
+                                Looks good!
+                            </div>
                         </div>
+
                         <div class="mb-3">
                             <label
                                 for="contact-message"
                                 class="form-label font-monospace"
-                                >Your Message</label
                             >
+                                Your Message
+                            </label>
                             <textarea
                                 id="contact-message"
                                 class="form-control bg-white font-monospace"
@@ -411,7 +437,14 @@
                                 placeholder="How can we assist you today?"
                                 required
                             ></textarea>
+                            <div class="invalid-feedback font-monospace">
+                                Please enter your message.
+                            </div>
+                            <div class="valid-feedback font-monospace">
+                                Looks good!
+                            </div>
                         </div>
+
                         <div class="mb-3">
                             <button
                                 class="btn btn-primary font-monospace d-inline-flex align-items-center gap-2 p-2 px-3"
@@ -503,6 +536,7 @@
         crossorigin="anonymous"
     ></script>
     <script src="js/theme.js" defer></script>
+    <script src="js/forms/contact.js" defer></script>
     <script src="js/shared/header.js"></script>
     <script src="js/shared/footer.js"></script>
 </html>
