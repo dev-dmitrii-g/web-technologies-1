@@ -1,16 +1,10 @@
 "use strict";
 
-// jQuery 3.7.1 is loaded by brewing-guides.html before this script.
-$(document).ready(() => {
-    const $form = $("#brewing-question-form");
-    const $result = $("#brewing-question-form-result");
-    const $error = $("#brewing-question-form-error");
-    const $status = $form.find(".small[aria-live]").first();
-    const STORAGE_KEY = "tokyo-coffee-brewing-questions";
-
+// jQuery is loaded by brewing-guides.html before this script.
+$(function () {
     $("main > section, main > aside, main .row > section").each(function () {
-        const $item = $(this);
-        $item.css({ opacity: "0", transform: "translateY(20px)", transition: "all 0.6s ease" });
+        const $section = $(this);
+        $section.css({ opacity: "0", transform: "translateY(20px)", transition: "all 0.6s ease" });
 
         if ("IntersectionObserver" in window) {
             const observer = new IntersectionObserver(entries => {
@@ -21,10 +15,9 @@ $(document).ready(() => {
                     }
                 });
             }, { threshold: 0.1 });
-
             observer.observe(this);
         } else {
-            $item.css({ opacity: "1", transform: "translateY(0)" });
+            $section.css({ opacity: "1", transform: "translateY(0)" });
         }
     });
 
@@ -46,125 +39,117 @@ $(document).ready(() => {
             $(this).css("transform", "");
         });
 
-    function hideMessages() {
-        [$result, $error].forEach($element => {
-            if ($element.length) $element.addClass("d-none").css("opacity", "0");
-        });
-    }
+    const notesForm = document.getElementById("brewing-notes-form");
+    const $notesList = $("#brewing-notes-list");
+    const $notesStatus = $("#brewing-notes-status");
+    const storageKey = "tokyo-coffee-brewing-notes";
+    if (!notesForm || !$notesList.length) return;
 
-    function showMessage($element) {
-        if (!$element.length) return;
-        $element.removeClass("d-none").css("opacity", "1");
-        $element[0].scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-
-    if (!$form.length) return;
-
-    const $dateInput = $("#brew-date");
-
-    if ($dateInput.length) {
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        $dateInput.attr("min", [
-            tomorrow.getFullYear(),
-            String(tomorrow.getMonth() + 1).padStart(2, "0"),
-            String(tomorrow.getDate()).padStart(2, "0")
-        ].join("-"));
-    }
-
-    $form.on("submit", event => {
-        event.preventDefault();
-        hideMessages();
-
-        const form = $form[0];
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            if ($error.length) {
-                $error.text("Please check the information and try again.");
-                showMessage($error);
-            }
-            if ($status.length) $status.text("Please correct the form fields.");
-            return;
-        }
-
-        const name = $.trim($("#visitor-name").val() || "");
-        const email = $.trim($("#visitor-email").val() || "");
-        const phone = $.trim($("#visitor-phone").val() || "");
-        const method = $("#brewing-method").val();
-        const amount = Number($("#coffee-amount").val());
-        const question = $.trim($("#brewing-question").val() || "");
-
-        if (name.length < 2 || !email.includes("@") || phone.length < 7 ||
-            amount <= 0 || question.length < 5) {
-            if ($error.length) {
-                $error.text("Please enter valid contact details and brewing information.");
-                showMessage($error);
-            }
-            if ($status.length) $status.text("Please correct the form fields.");
-            return;
-        }
-
-        const enquiry = {
-            name,
-            email,
-            phone,
-            method,
-            amount,
-            date: $dateInput.val() || "",
-            question,
-            created: new Date().toISOString()
-        };
+    function loadNotes() {
         try {
-            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-            if (!Array.isArray(saved)) throw new Error("Invalid saved data");
-            saved.push(enquiry);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+            const stored = JSON.parse(localStorage.getItem(storageKey) || "[]");
+            return Array.isArray(stored)
+                ? stored.filter(note => note && typeof note.id === "string" && typeof note.method === "string")
+                : [];
         } catch {
-            if ($error.length) {
-                $error.text("Could not save your question in this browser. Storage may be full or unavailable.");
-                showMessage($error);
-            }
-            if ($status.length) $status.text("Question could not be saved.");
+            return [];
+        }
+    }
+
+    function saveNotes(notes) {
+        try {
+            localStorage.setItem(storageKey, JSON.stringify(notes));
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    let notes = loadNotes();
+
+    function renderNotes() {
+        $notesList.empty();
+
+        if (notes.length === 0) {
+            $notesList.append($("<p>", {
+                class: "text-muted mb-0",
+                text: "No brewing notes saved yet. Add your first brew above."
+            }));
             return;
         }
 
-        if ($result.length) {
-            $result.text(`Thank you, ${name}! Your ${method} brewing question was saved in this browser. No email has been sent.`);
-            showMessage($result);
-        }
-
-        if ($status.length) $status.text("Form validation completed successfully.");
-        form.reset();
-    });
-
-    $form.on("reset", () => {
-        hideMessages();
-        if ($status.length) $status.text("Form cleared.");
-    });
-
-    const $saveButton = $form.find("button").filter(function () {
-        return $(this).text().trim() === "Save Draft";
-    }).first();
-
-    if ($saveButton.length) {
-        $saveButton.on("click", () => {
-            const draft = {};
-
-            $form.find("input, select, textarea").each(function () {
-                const $field = $(this);
-                const name = $field.attr("name");
-                const type = $field.attr("type");
-                if (!name || ["submit", "reset", "button"].includes(type)) return;
-                if (type === "radio" && !$field.prop("checked")) return;
-                draft[name] = type === "checkbox" ? $field.prop("checked") : $field.val();
-            });
-
-            try {
-                localStorage.setItem("brewing-question-draft", JSON.stringify(draft));
-                if ($status.length) $status.text("Draft saved in this browser.");
-            } catch {
-                if ($status.length) $status.text("Unable to save the draft.");
+        [...notes].reverse().forEach(note => {
+            const date = new Date(note.createdAt);
+            const dateLabel = Number.isNaN(date.getTime()) ? "Saved brew" : date.toLocaleString();
+            const $card = $("<article>", { class: "card shadow-sm mb-3" });
+            const $body = $("<div>", { class: "card-body" });
+            $body.append($("<h3>", {
+                class: "h5 card-title",
+                text: `${note.method} · ${dateLabel}`
+            }));
+            $body.append($("<p>", {
+                class: "small text-muted mb-2",
+                text: `Coffee: ${note.coffeeGrams} g · Water: ${note.waterMl} ml · Grind: ${note.grind} · Brew time: ${note.brewTime}`
+            }));
+            if (note.result) {
+                $body.append($("<p>", { class: "mb-3", text: note.result }));
             }
+            $body.append($("<button>", {
+                type: "button",
+                class: "btn btn-outline-danger btn-sm",
+                text: "Delete note",
+                "data-note-id": note.id,
+                "aria-label": `Delete ${note.method} brewing note`
+            }));
+            $card.append($body);
+            $notesList.append($card);
         });
     }
+
+    $(notesForm).on("submit", event => {
+        event.preventDefault();
+
+        if (!notesForm.checkValidity()) {
+            notesForm.reportValidity();
+            $notesStatus.text("Please complete the required brewing details.");
+            return;
+        }
+
+        const note = {
+            id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+            method: $("#notes-method").val(),
+            grind: $("#notes-grind").val(),
+            coffeeGrams: Number($("#notes-coffee").val()),
+            waterMl: Number($("#notes-water").val()),
+            brewTime: $.trim($("#notes-time").val()),
+            result: $.trim($("#notes-result").val() || ""),
+            createdAt: new Date().toISOString()
+        };
+        const updatedNotes = [...notes, note];
+
+        if (!saveNotes(updatedNotes)) {
+            $notesStatus.text("Could not save the note. Browser storage may be full or unavailable.");
+            return;
+        }
+
+        notes = updatedNotes;
+        notesForm.reset();
+        renderNotes();
+        $notesStatus.text("Brewing note saved in this browser.");
+    });
+
+    $notesList.on("click", "[data-note-id]", function () {
+        const noteId = $(this).attr("data-note-id");
+        const updatedNotes = notes.filter(note => note.id !== noteId);
+        if (!saveNotes(updatedNotes)) {
+            $notesStatus.text("Could not delete the note. Browser storage may be unavailable.");
+            return;
+        }
+
+        notes = updatedNotes;
+        renderNotes();
+        $notesStatus.text("Brewing note deleted from this browser.");
+    });
+
+    renderNotes();
 });

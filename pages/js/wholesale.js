@@ -1,86 +1,236 @@
 "use strict";
 
-$(document).ready(function () {
-    // jQuery 3.7.1 is loaded from the official CDN; ready() waits until this page's enquiry form exists.
-    const $form = $("#wholesale-enquiry-form");
-    if (!$form.length) return;
-    const $result = $("#wholesale-enquiry-form-result"), $error = $("#wholesale-enquiry-form-error");
-    const $status = $form.find("[aria-live]").first();
-    const STORAGE_KEY = "tokyo-coffee-wholesale-enquiries";
-    function validate($field) {
-        const value = $.trim(String($field.val() || ""));
-        const id = $field.attr("id");
-        let valid = !!value, message = "This field is required.", group;
-        if (id === "company") { valid = value.length >= 2; message = "Enter your company name."; }
-        if (id === "contact-name") { valid = value.length >= 2; message = "Enter at least two characters for your name."; }
-        if (id === "business-email") { valid = FormUI.emailValid(value); message = "Enter a valid business email."; }
-        if (id === "business-phone") { valid = FormUI.phoneValid(value); message = "Enter a valid phone number with 7 to 15 digits."; }
-        if (id === "volume") { valid = Number(value) > 0; message = "Enter an expected volume greater than zero."; }
-        if (id === "preferred-date") { valid = !!value && value >= FormUI.today(); message = "Choose today or a future contact date."; }
-        if (id === "business-cafe") { valid = $form.find('input[name="business-type"]:checked').length > 0; message = "Choose a business type."; group = $field.closest("fieldset"); }
-        if (id === "service") { valid = !!value; message = "Choose a required service."; }
-        if (id === "contact-agree") { valid = $field.prop("checked"); message = "Please agree to be contacted."; }
-        if (id === "business-message") { valid = value.length >= 10; message = "Describe your requirements in at least 10 characters."; }
-        FormUI.mark($field, valid, message, group);
-        return valid;
+$(function () {
+    $("main > section, main > aside, main .row > section").each(function () {
+        const $item = $(this);
+        $item.css({ opacity: "0", transform: "translateY(20px)", transition: "all 0.6s ease" });
+
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        $(entry.target).css({ opacity: "1", transform: "translateY(0)" });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            observer.observe(this);
+        } else {
+            $item.css({ opacity: "1", transform: "translateY(0)" });
+        }
+    });
+
+    $("main .card")
+        .css({ transition: "transform 0.25s ease, box-shadow 0.25s ease" })
+        .on("mouseenter", function () {
+            $(this).css({ transform: "translateY(-4px)", boxShadow: "0 8px 20px #0002" });
+        })
+        .on("mouseleave", function () {
+            $(this).css({ transform: "", boxShadow: "" });
+        });
+
+    $("button, input[type='submit'], input[type='reset']")
+        .css("transition", "transform 0.2s ease")
+        .on("mouseenter", function () {
+            if (!$(this).prop("disabled")) $(this).css("transform", "scale(1.04)");
+        })
+        .on("mouseleave", function () {
+            $(this).css("transform", "");
+        });
+
+    const form = document.getElementById("wholesale-enquiry-form");
+    if (!form) return;
+
+    const $form = $(form);
+    const $result = $("#wholesale-enquiry-form-result");
+    const $error = $("#wholesale-enquiry-form-error");
+    const $status = $("#wholesale-form-status");
+    const storageKey = "tokyo-coffee-wholesale-enquiries";
+    let submittedOnce = false;
+    let savingSuccessfulSubmission = false;
+
+    const phonePattern = /^\+77\d{9}$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    function localDateString() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, "0");
+        const day = String(today.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
     }
-    $form.find("input, select, textarea").each(function () {
-        $(this).on("invalid", function (event) { event.preventDefault(); validate($(this)); });
-    });
+
+    const dateInput = document.getElementById("preferred-date");
+    if (dateInput) dateInput.min = localDateString();
+
+    function setFieldError($field, message, $container) {
+        const id = $field.attr("id");
+        const feedbackId = `${id}-feedback`;
+        let $feedback = $form.find(`[data-feedback-for="${id}"]`);
+
+        if (!$feedback.length) {
+            $feedback = $("<div>", {
+                id: feedbackId,
+                class: "invalid-feedback d-block",
+                "data-feedback-for": id,
+                role: "alert"
+            });
+            ($container || $field.parent()).append($feedback);
+        }
+
+        $feedback.text(message).toggleClass("d-none", !message);
+        $field.attr("aria-invalid", message ? "true" : "false");
+        if (message) {
+            $field.addClass("is-invalid").attr("aria-describedby", feedbackId);
+        } else {
+            $field.removeClass("is-invalid").removeAttr("aria-describedby");
+        }
+    }
+
+    function validateField(field) {
+        const $field = $(field);
+        const id = $field.attr("id");
+        const value = $.trim(String($field.val() || ""));
+        let message = "";
+        let $container;
+
+        switch (id) {
+            case "company":
+                if (value.length < 2) message = "Enter a company name with at least 2 characters.";
+                break;
+            case "contact-name":
+                if (value.length < 2) message = "Enter a contact name with at least 2 characters.";
+                break;
+            case "business-email":
+                if (!emailPattern.test(value) || !$field[0].validity.valid) {
+                    message = "Enter a valid email, for example company@email.com.";
+                }
+                break;
+            case "business-phone":
+                if (!phonePattern.test(value.replace(/[\s-]/g, ""))) {
+                    message = "Enter a Kazakhstan mobile number starting with +7 7 and 10 digits after +7. Spaces or hyphens are optional.";
+                }
+                break;
+            case "volume":
+                if (!Number.isFinite(Number(value)) || Number(value) <= 0 || !Number.isInteger(Number(value))) {
+                    message = "Enter a whole number of kilograms greater than zero.";
+                }
+                break;
+            case "preferred-date":
+                if (!value || value < localDateString()) {
+                    message = "Choose today or a future contact date.";
+                }
+                break;
+            case "business-cafe": {
+                const $choices = $form.find('input[name="business-type"]');
+                const selected = $choices.is(":checked");
+                $container = $field.closest(".col-12");
+                message = selected ? "" : "Choose a business type.";
+                $choices.each(function () {
+                    $(this).toggleClass("is-invalid", !selected)
+                        .attr("aria-invalid", selected ? "false" : "true");
+                });
+                break;
+            }
+            case "service":
+                if (!value) message = "Choose the service you need.";
+                break;
+            case "contact-agree":
+                if (!$field.prop("checked")) message = "Please agree to be contacted about this enquiry.";
+                break;
+            case "business-message":
+                if (value.length < 10) message = "Describe your requirements in at least 10 characters.";
+                break;
+            default:
+                if (!value) message = "This field is required.";
+        }
+
+        setFieldError($field, message, $container);
+        return !message;
+    }
+
+    function clearMessages() {
+        $result.addClass("d-none");
+        $error.addClass("d-none");
+    }
+
+    function clearValidation() {
+        $form.find(".is-invalid").removeClass("is-invalid").removeAttr("aria-invalid aria-describedby");
+        $form.find("[data-feedback-for]").remove();
+    }
+
     $form.on("input change", "input, select, textarea", function () {
-        if ($(this).attr("type") === "radio") {
-            const $firstChoice = $form.find("[name=" + $(this).attr("name") + "]").first();
-            if ($firstChoice.hasClass("is-invalid")) validate($firstChoice);
-        } else if ($(this).hasClass("is-invalid")) validate($(this));
+        if (submittedOnce || $(this).hasClass("is-invalid")) {
+            if (this.name === "business-type") {
+                validateField($form.find("input[name='business-type'][required]")[0]);
+            } else {
+                validateField(this);
+            }
+        }
+        clearMessages();
     });
-    // Replaces getElementById/addEventListener and direct style changes with selectors, .on(), and Bootstrap feedback classes; the jQuery version is shorter and clearer.
+
     $form.on("submit", function (event) {
-        event.preventDefault(); // Without this, this demo form would post to the placeholder FormSubmit address.
-        FormUI.hide($result); FormUI.hide($error);
+        event.preventDefault();
+        submittedOnce = true;
+        clearMessages();
+
         let valid = true;
         $form.find("input[required], select[required], textarea[required]").each(function () {
-            if ($(this).attr("name") === "business-type" && $(this).attr("id") !== "business-cafe") return;
-            valid = validate($(this)) && valid;
+            if (!validateField(this)) valid = false;
         });
+
         if (!valid) {
-            FormUI.show($error, "Please correct the highlighted fields.");
-            $status.text("Please correct the form fields.");
+            $error.text("Please correct the highlighted fields and submit again.").removeClass("d-none");
+            $status.text("Some fields need your attention.");
             return;
         }
-        const company = $.trim($("#company").val());
-        const service = $("#service option:selected").text().trim();
-        const enquiry = {};
-        $form.find("input, select, textarea").each(function () {
-            const $field = $(this);
-            const name = $field.attr("name");
-            const type = $field.attr("type");
-            if (!name || ["submit", "reset", "button"].includes(type)) return;
-            if ((type === "radio" || type === "checkbox") && !$field.prop("checked")) return;
-            const value = type === "checkbox" ? true : $.trim(String($field.val() || ""));
-            if (Object.prototype.hasOwnProperty.call(enquiry, name)) {
-                enquiry[name] = [].concat(enquiry[name], value);
-            } else {
-                enquiry[name] = value;
-            }
-        });
-        enquiry.created = new Date().toISOString();
+
+        const selectedBusinessType = $form.find('input[name="business-type"]:checked').val();
+        const enquiry = {
+            company: $.trim($("#company").val()),
+            contactName: $.trim($("#contact-name").val()),
+            businessEmail: $.trim($("#business-email").val()),
+            businessPhone: $.trim($("#business-phone").val()),
+            expectedVolumeKg: Number($("#volume").val()),
+            preferredContactDate: $("#preferred-date").val(),
+            businessType: selectedBusinessType,
+            service: $("#service").val(),
+            contactPermission: $("#contact-agree").prop("checked"),
+            requirements: $.trim($("#business-message").val()),
+            createdAt: new Date().toISOString()
+        };
+
         try {
-            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-            if (!Array.isArray(saved)) throw new Error("Invalid saved data");
+            const saved = JSON.parse(localStorage.getItem(storageKey) || "[]");
+            if (!Array.isArray(saved)) throw new Error("Saved enquiries are not an array.");
             saved.push(enquiry);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+            localStorage.setItem(storageKey, JSON.stringify(saved));
         } catch {
-            FormUI.show($error, "Could not save your enquiry in this browser. Storage may be full or unavailable.");
+            $error.text("The enquiry could not be saved in this browser. Check available storage and try again.").removeClass("d-none");
+            $status.text("The enquiry was not saved.");
             return;
         }
-        this.reset();
-        FormUI.clearForm($form);
-        FormUI.show($result, "Thank you, " + company + ". Your " + service.toLowerCase() + " enquiry was saved in this browser. It was not sent to a server.", "slide");
-        $status.text("Enquiry saved in this browser. No information was sent to a server.");
+
+        savingSuccessfulSubmission = true;
+        form.reset();
+        savingSuccessfulSubmission = false;
+        clearValidation();
+        submittedOnce = false;
+        $result.text(
+            `Thank you, ${enquiry.contactName}. Your enquiry has been submitted and saved locally. We will contact you soon.`
+        ).removeClass("d-none");
+        $status.text("Enquiry saved locally as JSON. ");
     });
+
     $form.on("reset", function () {
-        FormUI.hide($result); FormUI.hide($error);
-        window.setTimeout(function () { FormUI.clearForm($form); }, 0);
+        if (savingSuccessfulSubmission) return;
+        window.setTimeout(function () {
+            clearValidation();
+            clearMessages();
+            submittedOnce = false;
+            if ($status.length) $status.text("Form cleared.");
+        }, 0);
     });
 });
-
