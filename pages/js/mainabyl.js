@@ -1,6 +1,6 @@
 'use strict';
 
-// Shared data and helpers for menu.html, order.html and subscriptions.html.
+// Shared data and plain helpers (no DOM) for menu.html, order.html and subscriptions.html.
 
 const CAFE_HOURS = { open: '09:00', close: '21:00' };
 
@@ -16,7 +16,7 @@ const MENU_CATEGORIES = [
     { id: 'salad', label: 'Salads & Bowls' }
 ];
 
-// Size keys match the option values of #size on order.html; '' means one standard portion.
+// Size keys are the keys of each item's prices; '' means one standard portion.
 const SIZE_LABELS = {
     '': 'Standard portion',
     s: 'Small',
@@ -26,7 +26,7 @@ const SIZE_LABELS = {
     '900': '900 ml'
 };
 
-// Item ids match the option values of #item on order.html.
+// order.js builds the item list of order.html from this array; menu.js builds the menu cards from it.
 const MENU_ITEMS = [
     { id: 'espresso', name: 'Espresso', category: 'coffee', prices: { s: 990, m: 1090 } },
     { id: 'americano', name: 'Americano', category: 'coffee', prices: { s: 990, m: 1090, l: 1290 } },
@@ -95,7 +95,7 @@ const MENU_ITEMS = [
     { id: 'fitness-salad', name: 'Fitness Salad', category: 'salad', prices: { '': 1790 } }
 ];
 
-// Extra ids match the checkbox values on order.html.
+// order.js builds the extras checkboxes of order.html from this array.
 const EXTRAS = [
     { id: 'syrup', name: 'Syrup', price: 100, categories: ['coffee', 'non-coffee', 'tea', 'milkshake', 'lemonade'] },
     { id: 'lemon', name: 'Lemon', price: 200, categories: ['tea', 'lemonade'] },
@@ -153,17 +153,6 @@ function createReference(prefix) {
     return `${prefix}-${number}`;
 }
 
-function makeElement(tagName, className, text) {
-    const element = document.createElement(tagName);
-    if (className) {
-        element.className = className;
-    }
-    if (text !== undefined) {
-        element.textContent = text;
-    }
-    return element;
-}
-
 function timeToMinutes(time) {
     const [hours, minutes] = time.split(':').map(Number);
     return hours * 60 + minutes;
@@ -199,57 +188,4 @@ function validatePhone(value) {
         return 'Enter a Kazakhstan number, for example +7 701 234 56 78 or 8 701 234 56 78.';
     }
     return '';
-}
-
-// Error and success states use Bootstrap classes; a fieldset stands for a radio group.
-function getStateTargets(control) {
-    if (control.tagName === 'FIELDSET') {
-        return Array.from(control.querySelectorAll('.form-check-input'));
-    }
-    return [control];
-}
-
-function clearFieldState(control) {
-    const feedback = document.getElementById(`${control.id}-feedback`);
-    if (feedback !== null) {
-        feedback.remove();
-    }
-    control.removeAttribute('aria-invalid');
-    control.removeAttribute('aria-describedby');
-    getStateTargets(control).forEach((target) => target.classList.remove('is-invalid', 'is-valid'));
-}
-
-function setFieldError(control, message) {
-    clearFieldState(control);
-    const feedback = makeElement('div', 'invalid-feedback d-block', `Error: ${message}`);
-    feedback.id = `${control.id}-feedback`;
-    if (control.tagName === 'FIELDSET') {
-        control.append(feedback);
-    } else {
-        control.after(feedback);
-    }
-    control.setAttribute('aria-invalid', 'true');
-    control.setAttribute('aria-describedby', feedback.id);
-    getStateTargets(control).forEach((target) => target.classList.add('is-invalid'));
-}
-
-function setFieldValid(control) {
-    clearFieldState(control);
-    if (control.tagName !== 'FIELDSET') {
-        control.setAttribute('aria-invalid', 'false');
-        control.classList.add('is-valid');
-    }
-}
-
-function applyValidation(control, message) {
-    if (message === '') {
-        setFieldValid(control);
-        return true;
-    }
-    setFieldError(control, message);
-    return false;
-}
-
-function hasFieldError(control) {
-    return document.getElementById(`${control.id}-feedback`) !== null;
 }

@@ -1,5 +1,70 @@
 'use strict';
 
+// DOM helpers for this page, plain JavaScript.
+function makeElement(tagName, className, text) {
+    const element = document.createElement(tagName);
+    if (className) {
+        element.className = className;
+    }
+    if (text !== undefined) {
+        element.textContent = text;
+    }
+    return element;
+}
+
+// Error and success states use Bootstrap classes; a fieldset stands for a radio group.
+function getStateTargets(control) {
+    if (control.tagName === 'FIELDSET') {
+        return Array.from(control.querySelectorAll('.form-check-input'));
+    }
+    return [control];
+}
+
+function clearFieldState(control) {
+    const feedback = document.getElementById(`${control.id}-feedback`);
+    if (feedback !== null) {
+        feedback.remove();
+    }
+    control.removeAttribute('aria-invalid');
+    control.removeAttribute('aria-describedby');
+    getStateTargets(control).forEach((target) => target.classList.remove('is-invalid', 'is-valid'));
+}
+
+function setFieldError(control, message) {
+    clearFieldState(control);
+    const feedback = makeElement('div', 'invalid-feedback d-block', `Error: ${message}`);
+    feedback.id = `${control.id}-feedback`;
+    if (control.tagName === 'FIELDSET') {
+        control.append(feedback);
+    } else {
+        control.after(feedback);
+    }
+    control.setAttribute('aria-invalid', 'true');
+    control.setAttribute('aria-describedby', feedback.id);
+    getStateTargets(control).forEach((target) => target.classList.add('is-invalid'));
+}
+
+function setFieldValid(control) {
+    clearFieldState(control);
+    if (control.tagName !== 'FIELDSET') {
+        control.setAttribute('aria-invalid', 'false');
+        control.classList.add('is-valid');
+    }
+}
+
+function applyValidation(control, message) {
+    if (message === '') {
+        setFieldValid(control);
+        return true;
+    }
+    setFieldError(control, message);
+    return false;
+}
+
+function hasFieldError(control) {
+    return document.getElementById(`${control.id}-feedback`) !== null;
+}
+
 const MAX_ORDER_ITEMS = 30;
 const LAST_PICKUP_BEFORE_CLOSE = 15;
 const MAX_COMMENT_LENGTH = 200;
@@ -8,14 +73,13 @@ const orderForm = document.getElementById('order-form');
 const itemSelect = document.getElementById('item');
 const sizeSelect = document.getElementById('size');
 const quantityInput = document.getElementById('quantity');
-const extrasCheckboxes = Array.from(document.querySelectorAll('input[name="extras"]'));
 const pickupInput = document.getElementById('pickup-time');
 const nameInput = document.getElementById('name');
 const phoneInput = document.getElementById('phone');
 const commentInput = document.getElementById('comment');
 const placeOrderButton = document.getElementById('order-submit');
 const prepOutput = orderForm.querySelector('p > output');
-const extrasFieldset = extrasCheckboxes[0].closest('fieldset');
+const extrasFieldset = document.getElementById('order-extras');
 const quantityFieldset = quantityInput.closest('fieldset');
 const pickupFieldset = pickupInput.closest('fieldset');
 
@@ -38,15 +102,26 @@ const cartTotals = makeElement('p', 'font-monospace fw-bold mb-3');
 const cartStatus = makeElement('p', 'small mb-3');
 const clearCartButton = makeElement('button', 'btn btn-sm btn-outline-secondary', 'Clear Cart');
 const commentCounter = makeElement('p', 'small mt-1 mb-0');
+const addButton = makeElement('button', 'btn btn-primary', 'Add to Cart');
+const cancelEditButton = makeElement('button', 'btn btn-outline-secondary d-none', 'Cancel Editing');
+const pickupStatus = makeElement('p', 'small mt-2 mb-2');
+const earliestPickupButton = makeElement('button', 'btn btn-sm btn-outline-primary', 'Use the earliest time');
 
 let cart = [];
+// Key of the cart line that is loaded back into the form, '' when nothing is being edited.
+let editingKey = '';
 
 function getSelectedItem() {
     return findMenuItem(itemSelect.value);
 }
 
+// The checkboxes are created by renderExtras(), so they are looked up each time instead of once at load.
+function getExtrasCheckboxes() {
+    return Array.from(extrasFieldset.querySelectorAll('input[name="extras"]'));
+}
+
 function getSelectedExtras() {
-    return extrasCheckboxes
+    return getExtrasCheckboxes()
         .filter((checkbox) => checkbox.checked && !checkbox.disabled)
         .map((checkbox) => findExtra(checkbox.value));
 }
@@ -85,12 +160,63 @@ function getPreparationRange(itemCount) {
     return { min: 25, max: 30 };
 }
 
+function roundUpToFive(minutes) {
+    return Math.ceil(minutes / 5) * 5;
+}
+
+// The pickup window for today: the cafe hours shortened by the preparation time and the last-pickup margin.
+function getPickupWindow(itemCount) {
+    const preparation = getPreparationRange(itemCount);
+    const now = new Date();
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+    const first = timeToMinutes(CAFE_HOURS.open) + preparation.max;
+    const last = timeToMinutes(CAFE_HOURS.close) - LAST_PICKUP_BEFORE_CLOSE;
+    const earliestToday = nowMinutes + preparation.max;
+    return {
+        preparation,
+        nowMinutes,
+        first,
+        last,
+        earliestToday,
+        earliestChoice: roundUpToFive(Math.max(first, earliestToday)),
+        isClosedToday: earliestToday > last
+    };
+}
+
 function getExtrasText(extras) {
     return extras.length === 0 ? 'no extras' : extras.map((extra) => extra.name).join(', ');
 }
 
 function describeLine(line) {
     return `${SIZE_LABELS[line.sizeKey]} · ${getExtrasText(line.extras)} · ${formatPrice(line.unitPrice)} each`;
+}
+
+// The item list is built from MENU_ITEMS, one <optgroup> per category; none of it is written in order.html.
+function renderItemOptions() {
+    MENU_CATEGORIES.forEach((category) => {
+        const group = makeElement('optgroup');
+        group.label = category.label;
+        MENU_ITEMS
+            .filter((item) => item.category === category.id)
+            .forEach((item) => group.append(new Option(item.name, item.id)));
+        itemSelect.append(group);
+    });
+}
+
+// One checkbox with its label for every extra in EXTRAS; the price in the label comes from the data.
+function renderExtras() {
+    EXTRAS.forEach((extra) => {
+        const wrapper = makeElement('div', 'form-check mb-2');
+        const checkbox = makeElement('input', 'form-check-input');
+        const label = makeElement('label', 'form-check-label', `${extra.name} +${formatPrice(extra.price)}`);
+        checkbox.type = 'checkbox';
+        checkbox.name = 'extras';
+        checkbox.id = `extra-${extra.id}`;
+        checkbox.value = extra.id;
+        label.htmlFor = checkbox.id;
+        wrapper.append(checkbox, label);
+        extrasFieldset.append(wrapper);
+    });
 }
 
 function renderSizeOptions(item, preferredSize) {
@@ -117,7 +243,7 @@ function renderSizeOptions(item, preferredSize) {
 
 function updateExtrasAvailability(item) {
     const allowedIds = item === null ? [] : getExtrasForCategory(item.category).map((extra) => extra.id);
-    extrasCheckboxes.forEach((checkbox) => {
+    getExtrasCheckboxes().forEach((checkbox) => {
         const isAllowed = allowedIds.includes(checkbox.value);
         checkbox.disabled = !isAllowed;
         if (!isAllowed) {
@@ -186,7 +312,8 @@ function focusCartControl(lineKey, action) {
 }
 
 function renderCartLine(line) {
-    const listItem = makeElement('li', 'list-group-item');
+    const isEditing = line.key === editingKey;
+    const listItem = makeElement('li', isEditing ? 'list-group-item list-group-item-primary' : 'list-group-item');
     const row = makeElement('div', 'd-flex flex-wrap justify-content-between align-items-center gap-2');
     const info = makeElement('div');
     const controls = makeElement('div', 'd-flex flex-wrap align-items-center gap-2');
@@ -195,6 +322,7 @@ function renderCartLine(line) {
     const quantityText = makeElement('span', 'font-monospace fw-bold px-2', String(line.quantity));
     const increaseButton = makeElement('button', 'btn btn-sm btn-outline-secondary', '+');
     const subtotal = makeElement('span', 'font-monospace fw-bold', formatPrice(calculateLineSubtotal(line.unitPrice, line.quantity)));
+    const editButton = makeElement('button', 'btn btn-sm btn-outline-primary', isEditing ? 'Editing' : 'Edit');
     const removeButton = makeElement('button', 'btn btn-sm btn-outline-danger', 'Remove');
 
     info.append(makeElement('strong', '', line.name), makeElement('div', 'small', describeLine(line)));
@@ -203,25 +331,26 @@ function renderCartLine(line) {
     stepper.setAttribute('aria-label', `Quantity of ${line.name}`);
     quantityText.setAttribute('aria-label', `Quantity: ${line.quantity}`);
 
-    [decreaseButton, increaseButton, removeButton].forEach((button) => {
+    // No listener per button: one delegated click handler on cartList reads data-action and data-key.
+    [decreaseButton, increaseButton, editButton, removeButton].forEach((button) => {
         button.type = 'button';
         button.dataset.key = line.key;
     });
     decreaseButton.dataset.action = 'decrease';
     increaseButton.dataset.action = 'increase';
+    editButton.dataset.action = 'edit';
     removeButton.dataset.action = 'remove';
     decreaseButton.setAttribute('aria-label', `Decrease quantity of ${line.name}`);
     increaseButton.setAttribute('aria-label', `Increase quantity of ${line.name}`);
+    editButton.setAttribute('aria-label', `Change size, extras or quantity of ${line.name}`);
     removeButton.setAttribute('aria-label', `Remove ${line.name} from the cart`);
-    decreaseButton.disabled = line.quantity <= 1;
-    increaseButton.disabled = getCartCount(cart) >= MAX_ORDER_ITEMS;
-
-    decreaseButton.addEventListener('click', () => changeLineQuantity(line.key, -1));
-    increaseButton.addEventListener('click', () => changeLineQuantity(line.key, 1));
-    removeButton.addEventListener('click', () => removeCartLine(line.key));
+    // While a line is in the form, its quantity is changed there, so its own stepper is locked.
+    decreaseButton.disabled = isEditing || line.quantity <= 1;
+    increaseButton.disabled = isEditing || getCartCount(cart) >= MAX_ORDER_ITEMS;
+    editButton.disabled = isEditing;
 
     stepper.append(decreaseButton, quantityText, increaseButton);
-    controls.append(stepper, subtotal, removeButton);
+    controls.append(stepper, subtotal, editButton, removeButton);
     row.append(info, controls);
     listItem.append(row);
     return listItem;
@@ -239,15 +368,17 @@ function renderCart() {
     placeOrderButton.disabled = cart.length === 0;
     prepOutput.textContent = `${preparation.min}–${preparation.max} minutes`;
     updateOrderSummary();
+    updatePickupStatus();
 
     if (cart.length !== 0 && hasFieldError(cartFieldset)) {
         clearFieldState(cartFieldset);
     }
 }
 
-function validateNewLine(item, quantity) {
+// otherLines: the cart without the line being edited, so its old quantity does not count twice.
+function validateNewLine(item, quantity, otherLines) {
     let quantityMessage = '';
-    const freePlaces = MAX_ORDER_ITEMS - getCartCount(cart);
+    const freePlaces = MAX_ORDER_ITEMS - getCartCount(otherLines);
     if (quantity === null) {
         quantityMessage = `Enter a whole number from 1 to ${MAX_ORDER_ITEMS}.`;
     } else if (quantity > freePlaces) {
@@ -264,10 +395,14 @@ function validateNewLine(item, quantity) {
 function addToCart() {
     const item = getSelectedItem();
     const quantity = readQuantity();
-    const invalid = validateNewLine(item, quantity).filter((result) => !applyValidation(result.control, result.message));
+    const isEditing = editingKey !== '';
+    const otherLines = cart.filter((line) => line.key !== editingKey);
+    const invalid = validateNewLine(item, quantity, otherLines).filter((result) => !applyValidation(result.control, result.message));
 
     if (invalid.length !== 0) {
-        addStatus.textContent = 'The item was not added. Please fix the highlighted fields.';
+        addStatus.textContent = isEditing
+            ? 'The item was not updated. Please fix the highlighted fields.'
+            : 'The item was not added. Please fix the highlighted fields.';
         invalid[0].control.focus();
         return;
     }
@@ -275,27 +410,109 @@ function addToCart() {
     const sizeKey = sizeSelect.value;
     const extras = getSelectedExtras();
     const key = `${item.id}|${sizeKey}|${extras.map((extra) => extra.id).sort().join(',')}`;
-    const existingLine = cart.find((line) => line.key === key);
+    const sameLine = otherLines.find((line) => line.key === key);
+    const newLine = {
+        key,
+        itemId: item.id,
+        name: item.name,
+        sizeKey,
+        extras: extras.map((extra) => ({ id: extra.id, name: extra.name, price: extra.price })),
+        unitPrice: getUnitPrice(item, sizeKey) + getExtrasTotal(extras),
+        quantity
+    };
 
-    if (existingLine !== undefined) {
-        existingLine.quantity += quantity;
+    if (sameLine !== undefined) {
+        // The same item with the same size and extras is already in the cart: the quantities are added up.
+        sameLine.quantity += quantity;
+        cart = otherLines;
+    } else if (isEditing) {
+        // The edited line keeps its place in the cart.
+        cart = cart.map((line) => (line.key === editingKey ? newLine : line));
     } else {
-        cart.push({
-            key,
-            name: item.name,
-            sizeKey,
-            extras: extras.map((extra) => ({ id: extra.id, name: extra.name, price: extra.price })),
-            unitPrice: getUnitPrice(item, sizeKey) + getExtrasTotal(extras),
-            quantity
-        });
+        cart.push(newLine);
     }
 
+    editingKey = '';
+    updateEditMode();
     renderCart();
     [itemSelect, quantityInput].forEach(clearFieldState);
     orderError.classList.add('d-none');
-    addStatus.textContent = `Added ${quantity} × ${item.name} (${SIZE_LABELS[sizeKey]}) to your cart.`;
+    const lineText = `${item.name} (${SIZE_LABELS[sizeKey]})`;
+    if (sameLine !== undefined) {
+        addStatus.textContent = `${lineText} is already in your cart, so the quantities were added up: now ${sameLine.quantity}.`;
+    } else if (isEditing) {
+        addStatus.textContent = `Updated: ${quantity} × ${lineText}.`;
+    } else {
+        addStatus.textContent = `Added ${quantity} × ${lineText} to your cart.`;
+    }
     quantityInput.value = '1';
     updateLinePreview();
+}
+
+// Loads a cart line back into the item fields, so the visitor can change its size, extras or quantity.
+function startEditingLine(lineKey) {
+    const line = cart.find((entry) => entry.key === lineKey);
+    if (line === undefined) {
+        return;
+    }
+    editingKey = line.key;
+    itemSelect.value = line.itemId;
+    refreshItemFields(line.sizeKey);
+    const extraIds = line.extras.map((extra) => extra.id);
+    getExtrasCheckboxes().forEach((checkbox) => {
+        checkbox.checked = !checkbox.disabled && extraIds.includes(checkbox.value);
+    });
+    quantityInput.value = String(line.quantity);
+    [itemSelect, quantityInput].forEach(clearFieldState);
+    updateLinePreview();
+    updateEditMode();
+    renderCart();
+    addStatus.textContent = `Editing ${line.quantity} × ${line.name}. Change it above and press "Update Item".`;
+    itemSelect.focus();
+}
+
+function stopEditing(message) {
+    editingKey = '';
+    updateEditMode();
+    renderCart();
+    addStatus.textContent = message;
+}
+
+function updateEditMode() {
+    const isEditing = editingKey !== '';
+    addButton.textContent = isEditing ? 'Update Item' : 'Add to Cart';
+    cancelEditButton.classList.toggle('d-none', !isEditing);
+}
+
+function cancelEditing() {
+    stopEditing('Editing was cancelled. The cart line was not changed.');
+    itemSelect.value = '';
+    quantityInput.value = '1';
+    refreshItemFields('');
+}
+
+// One delegated handler for every button inside the cart: the lines are rebuilt on each change,
+// so listeners on the buttons themselves would be lost; cartList itself stays on the page.
+function handleCartClick(event) {
+    const button = event.target.closest('button[data-action]');
+    if (button === null || button.disabled) {
+        return;
+    }
+    const lineKey = button.dataset.key;
+    switch (button.dataset.action) {
+        case 'decrease':
+            changeLineQuantity(lineKey, -1);
+            break;
+        case 'increase':
+            changeLineQuantity(lineKey, 1);
+            break;
+        case 'edit':
+            startEditingLine(lineKey);
+            break;
+        case 'remove':
+            removeCartLine(lineKey);
+            break;
+    }
 }
 
 function changeLineQuantity(lineKey, step) {
@@ -323,6 +540,9 @@ function removeCartLine(lineKey) {
         return;
     }
     cart = cart.filter((entry) => entry.key !== lineKey);
+    if (lineKey === editingKey) {
+        stopEditing('');
+    }
     renderCart();
     cartStatus.textContent = `${line.name} was removed from your cart.`;
     cartStatus.focus();
@@ -330,6 +550,8 @@ function removeCartLine(lineKey) {
 
 function clearCart() {
     cart = [];
+    editingKey = '';
+    updateEditMode();
     renderCart();
     cartStatus.textContent = 'Your cart was cleared.';
     cartStatus.focus();
@@ -340,22 +562,45 @@ function validatePickupTime() {
         return 'Choose a pickup time.';
     }
     const pickup = timeToMinutes(pickupInput.value);
-    const preparation = getPreparationRange(getCartCount(cart));
-    const firstPickup = timeToMinutes(CAFE_HOURS.open) + preparation.max;
-    const lastPickup = timeToMinutes(CAFE_HOURS.close) - LAST_PICKUP_BEFORE_CLOSE;
-    const now = new Date();
-    const earliestToday = now.getHours() * 60 + now.getMinutes() + preparation.max;
+    const pickupWindow = getPickupWindow(getCartCount(cart));
 
-    if (earliestToday > lastPickup) {
-        return `Online pickup for today is closed (last pickup ${minutesToTime(lastPickup)}). Please order tomorrow after ${CAFE_HOURS.open}.`;
+    if (pickupWindow.isClosedToday) {
+        return getClosedTodayText(pickupWindow);
     }
-    if (pickup < firstPickup || pickup > lastPickup) {
-        return `Pickup is available between ${minutesToTime(firstPickup)} and ${minutesToTime(lastPickup)}.`;
+    if (pickup < pickupWindow.first || pickup > pickupWindow.last) {
+        return `Pickup is available between ${minutesToTime(pickupWindow.first)} and ${minutesToTime(pickupWindow.last)}.`;
     }
-    if (pickup < earliestToday) {
-        return `Your order needs up to ${preparation.max} minutes. Choose ${minutesToTime(earliestToday)} or later.`;
+    if (pickup < pickupWindow.earliestToday) {
+        return `Your order needs up to ${pickupWindow.preparation.max} minutes. Choose ${minutesToTime(pickupWindow.earliestToday)} or later.`;
     }
     return '';
+}
+
+function getClosedTodayText(pickupWindow) {
+    return `Online pickup for today is closed (last pickup ${minutesToTime(pickupWindow.last)}). Please order tomorrow after ${CAFE_HOURS.open}.`;
+}
+
+// Tells the visitor before the submit whether the cafe takes pickups now and which time is the earliest.
+function updatePickupStatus() {
+    const pickupWindow = getPickupWindow(getCartCount(cart));
+    const earliestText = minutesToTime(pickupWindow.earliestChoice);
+    const preparationText = `your order needs up to ${pickupWindow.preparation.max} minutes`;
+
+    if (pickupWindow.isClosedToday) {
+        pickupStatus.textContent = getClosedTodayText(pickupWindow);
+    } else if (pickupWindow.nowMinutes < timeToMinutes(CAFE_HOURS.open)) {
+        pickupStatus.textContent = `The cafe opens at ${CAFE_HOURS.open}. Earliest pickup today: ${earliestText} (${preparationText}).`;
+    } else {
+        pickupStatus.textContent = `Open now until ${CAFE_HOURS.close}. Earliest pickup: ${earliestText} (${preparationText}).`;
+    }
+    earliestPickupButton.classList.toggle('d-none', pickupWindow.isClosedToday);
+    earliestPickupButton.setAttribute('aria-label', `Use the earliest time, ${earliestText}`);
+}
+
+function useEarliestPickup() {
+    pickupInput.value = minutesToTime(getPickupWindow(getCartCount(cart)).earliestChoice);
+    applyValidation(pickupInput, validatePickupTime());
+    pickupInput.focus();
 }
 
 function validateComment() {
@@ -399,7 +644,7 @@ function showOrderConfirmation(order) {
     confirmationDetails.replaceChildren(
         makeElement('h3', 'h5', 'Your order details'),
         list,
-        makeElement('p', 'fw-bold mb-1', `Total: ${formatPrice(order.total)} for ${order.itemCount} item(s)`),
+        makeElement('p', 'fw-bold mb-1', `Total: ${formatPrice(order.total)} for ${order.itemCount} ${order.itemCount === 1 ? 'item' : 'items'}`),
         makeElement('p', 'mb-1', `Pickup: today at ${order.pickupTime} (preparation ${order.preparation})`),
         makeElement('p', 'mb-1', `Name: ${order.name}`),
         makeElement('p', 'mb-1', `Phone: ${order.phone}`),
@@ -448,6 +693,8 @@ function handleOrderSubmit(event) {
 
 function handleOrderReset() {
     cart = [];
+    editingKey = '';
+    updateEditMode();
     [itemSelect, quantityInput, cartFieldset, ...orderValidators.map((validator) => validator.control)].forEach(clearFieldState);
     hideOrderResult();
     addStatus.textContent = '';
@@ -473,17 +720,20 @@ function applyMenuSelection() {
 }
 
 function buildOrderInterface() {
-    const addButton = makeElement('button', 'btn btn-primary', 'Add to Cart');
     const cartLegend = makeElement('legend', 'h5 mb-3', 'Your Cart');
     const cartActions = makeElement('div', 'd-flex flex-wrap gap-2');
+    const itemActions = makeElement('div', 'd-flex flex-wrap gap-2');
 
     extrasFieldset.querySelector('legend').after(extrasNote);
 
     addButton.type = 'button';
     addButton.addEventListener('click', addToCart);
+    cancelEditButton.type = 'button';
+    cancelEditButton.addEventListener('click', cancelEditing);
+    itemActions.append(addButton, cancelEditButton);
     linePreview.setAttribute('aria-live', 'polite');
     addStatus.setAttribute('role', 'status');
-    quantityFieldset.append(linePreview, addButton, addStatus);
+    quantityFieldset.append(linePreview, itemActions, addStatus);
 
     cartFieldset.id = 'order-cart';
     cartStatus.setAttribute('role', 'status');
@@ -491,8 +741,14 @@ function buildOrderInterface() {
     clearCartButton.type = 'button';
     clearCartButton.addEventListener('click', clearCart);
     cartActions.append(clearCartButton);
+    cartList.addEventListener('click', handleCartClick);
     cartFieldset.append(cartLegend, cartStatus, cartEmpty, cartList, cartTotals, cartActions);
     pickupFieldset.before(cartFieldset);
+
+    pickupStatus.setAttribute('aria-live', 'polite');
+    earliestPickupButton.type = 'button';
+    earliestPickupButton.addEventListener('click', useEarliestPickup);
+    pickupInput.after(pickupStatus, earliestPickupButton);
 
     phoneInput.placeholder = '+7 701 234 56 78';
     phoneInput.autocomplete = 'tel';
@@ -505,6 +761,8 @@ function buildOrderInterface() {
 
 function initOrderPage() {
     orderForm.noValidate = true;
+    renderItemOptions();
+    renderExtras();
     buildOrderInterface();
 
     itemSelect.addEventListener('change', () => {
@@ -514,7 +772,12 @@ function initOrderPage() {
         }
     });
     sizeSelect.addEventListener('change', updateLinePreview);
-    extrasCheckboxes.forEach((checkbox) => checkbox.addEventListener('change', updateLinePreview));
+    // Delegated: one handler on the fieldset serves every checkbox that renderExtras() created.
+    extrasFieldset.addEventListener('change', (event) => {
+        if (event.target.name === 'extras') {
+            updateLinePreview();
+        }
+    });
     quantityInput.addEventListener('input', () => {
         updateLinePreview();
         if (hasFieldError(quantityInput)) {
@@ -545,6 +808,9 @@ function initOrderPage() {
     renderCart();
     updateCommentCounter();
     applyMenuSelection();
+
+    // The earliest pickup time moves with the clock, so the status is refreshed every minute.
+    setInterval(updatePickupStatus, 60000);
 }
 
 initOrderPage();
