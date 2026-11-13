@@ -102,9 +102,10 @@
                     <hr class="border border-1 border-primary mx-2" />
                     <form
                         id="login-form"
-                        class="card-body d-flex flex-column"
+                        class="card-body d-flex flex-column needs-validation"
                         action="index.html"
                         method="POST"
+                        novalidate
                     >
                         <div class="mb-3">
                             <label
@@ -120,6 +121,9 @@
                                 placeholder="you@example.com"
                                 required
                             />
+                            <div class="invalid-feedback font-monospace">
+                                Please enter a valid email address.
+                            </div>
                         </div>
 
                         <div class="mb-3">
@@ -133,11 +137,16 @@
                                 class="form-control bg-white font-monospace"
                                 id="login-password"
                                 name="password"
+                                minlength="6"
                                 required
                             />
+                            <div class="invalid-feedback font-monospace">
+                                Password must be at least 6 characters long.
+                            </div>
                         </div>
 
                         <a
+                            href="#"
                             id="forgot-password"
                             class="text-decoration-none text-primary font-monospace small align-self-end mb-3"
                         >

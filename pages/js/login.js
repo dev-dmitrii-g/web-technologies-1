@@ -55,6 +55,14 @@ const form = document.getElementById("login-form");
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
+    event.stopPropagation();
+
+    form.classList.add("was-validated");
+
+    if (!form.checkValidity()) {
+        return;
+    }
+
     const data = new FormData(form);
     const email = data.get("email");
     const password = data.get("password");
