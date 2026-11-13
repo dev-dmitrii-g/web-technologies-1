@@ -19,7 +19,13 @@
             integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
             crossorigin="anonymous"
         />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        />
         <link href="css/base.css" rel="stylesheet" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
     <!-- <header class="font-monospace sticky-top">
     <nav class="navbar navbar-expand-lg bg-secondary">
@@ -59,7 +65,8 @@
                 class="d-flex mx-2 gap-4 justify-content-center align-items-center"
             >
                 <article
-                    class="card rounded-4 p-5 d-flex flex-column justify-content-center"
+                    class="card rounded-4 p-5 d-flex flex-column justify-content-center w-100"
+                    style="max-width: 700px"
                 >
                     <h1 class="pb-2 card-title text-center">
                         Welcome to Tokyo Coffee!
@@ -69,6 +76,7 @@
                     <form
                         action="index.html"
                         method="GET"
+                        id="signup-form"
                         class="card-body d-flex flex-column needs-validation"
                         novalidate
                     >
@@ -108,10 +116,12 @@
                                     placeholder="Doe"
                                     required
                                 />
-                                <div class="invalid-feedback font-monospace">
+                                <div
+                                    class="invalid-feedback font-monospace w-50"
+                                >
                                     Please enter your last name
                                 </div>
-                                <div class="valid-feedback font-monospace">
+                                <div class="valid-feedback font-monospace w-50">
                                     Looks good!
                                 </div>
                             </div>
@@ -130,7 +140,7 @@
                                 required
                             />
                             <div class="invalid-feedback font-monospace">
-                                Please enter your last name
+                                Please enter your email
                             </div>
                             <div class="valid-feedback font-monospace">
                                 Looks good!
@@ -143,13 +153,33 @@
                                 class="form-label font-monospace"
                                 >Password</label
                             >
-                            <input
-                                type="password"
-                                class="form-control bg-white font-monospace"
-                                id="password"
-                                name="password"
-                                required
-                            />
+                            <div class="position-relative">
+                                <input
+                                    type="password"
+                                    class="form-control bg-white font-monospace pe-5"
+                                    id="password"
+                                    name="password"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    class="btn border-0 bg-transparent text-secondary position-absolute top-0 end-0 mt-1 me-1 py-1 px-2"
+                                    data-toggle-password="password"
+                                    aria-label="Toggle password visibility"
+                                >
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <div class="valid-feedback font-monospace">
+                                    Strong password!
+                                </div>
+                                <div
+                                    class="invalid-feedback font-monospace"
+                                    id="passwordFeedback"
+                                >
+                                    Password must be at least 8 characters,
+                                    include 1 uppercase letter, and 1 number.
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mb-3">
@@ -158,13 +188,29 @@
                                 class="form-label font-monospace"
                                 >Confirm Password</label
                             >
-                            <input
-                                type="password"
-                                class="form-control bg-white font-monospace"
-                                id="confirm-password"
-                                name="confirm_password"
-                                required
-                            />
+                            <div class="position-relative">
+                                <input
+                                    type="password"
+                                    class="form-control bg-white font-monospace pe-5"
+                                    id="confirm-password"
+                                    name="confirm_password"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    class="btn border-0 bg-transparent text-secondary position-absolute top-0 end-0 mt-1 me-1 py-1 px-2"
+                                    data-toggle-password="confirm-password"
+                                    aria-label="Toggle confirm password visibility"
+                                >
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <div class="valid-feedback font-monospace">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback font-monospace">
+                                    Passwords do not match
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mb-3 form-check">

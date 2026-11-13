@@ -105,3 +105,9 @@ footer a:hover {
     }
 }
 
+#password.form-control,
+#confirm-password.form-control {
+    background-image: none;
+    padding-right: 2.75rem;
+}
+
