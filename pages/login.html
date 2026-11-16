@@ -21,6 +21,10 @@
         />
         <link href="css/base.css" rel="stylesheet" />
         <link href="css/gagarin.css" rel="stylesheet" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
     <!-- <header class="font-monospace sticky-top">
@@ -132,19 +136,28 @@
                                 class="form-label font-monospace"
                                 >Password</label
                             >
-                            <input
-                                type="password"
-                                class="form-control bg-white font-monospace"
-                                id="login-password"
-                                name="password"
-                                minlength="6"
-                                required
-                            />
-                            <div class="invalid-feedback font-monospace">
-                                Password must be at least 6 characters long.
+                            <div class="position-relative">
+                                <input
+                                    type="password"
+                                    class="form-control bg-white font-monospace pe-5"
+                                    id="login-password"
+                                    name="password"
+                                    minlength="6"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    class="btn border-0 bg-transparent text-secondary position-absolute top-0 end-0 mt-1 me-1 py-1 px-2"
+                                    data-toggle-password="login-password"
+                                    aria-label="Toggle password visibility"
+                                >
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <div class="invalid-feedback font-monospace">
+                                    Password must be at least 6 characters long.
+                                </div>
                             </div>
                         </div>
-
                         <a
                             href="#"
                             id="forgot-password"

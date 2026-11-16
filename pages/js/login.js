@@ -77,3 +77,17 @@ form.addEventListener("submit", (event) => {
         window.location.replace("./index.html");
     }, 1000);
 });
+
+document.querySelectorAll("[data-toggle-password]").forEach((button) => {
+    button.addEventListener("click", () => {
+        const input = document.getElementById(button.dataset.togglePassword);
+        if (!input) return;
+
+        const icon = button.querySelector("i");
+        const isPassword = input.type === "password";
+
+        input.type = isPassword ? "text" : "password";
+        icon.classList.toggle("bi-eye", !isPassword);
+        icon.classList.toggle("bi-eye-slash", isPassword);
+    });
+});
