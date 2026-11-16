@@ -107,7 +107,12 @@
                         Four plans are available for different coffee habits and
                         brewing routines.
                     </p>
-                    <div class="table-responsive">
+                    <div
+                        aria-label="Subscription plans"
+                        class="table-responsive"
+                        role="region"
+                        tabindex="0"
+                    >
                         <table class="table table-hover align-middle mb-0">
                             <thead>
                                 <tr>
@@ -409,6 +414,7 @@
                                     >Full Name</label
                                 >
                                 <input
+                                    autocomplete="name"
                                     class="form-control"
                                     id="subscriber-name"
                                     name="subscriber-name"
@@ -421,6 +427,7 @@
                                     >Email Address</label
                                 >
                                 <input
+                                    autocomplete="email"
                                     class="form-control"
                                     id="subscriber-email"
                                     name="subscriber-email"
@@ -433,6 +440,7 @@
                                     >Phone Number</label
                                 >
                                 <input
+                                    autocomplete="tel"
                                     class="form-control"
                                     id="subscriber-phone"
                                     name="subscriber-phone"
@@ -445,6 +453,7 @@
                                     >Delivery Address</label
                                 >
                                 <input
+                                    autocomplete="address-line1"
                                     class="form-control"
                                     id="delivery-address"
                                     name="delivery-address"
