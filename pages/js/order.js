@@ -719,7 +719,7 @@ function buildOrderInterface() {
     earliestPickupButton.addEventListener('click', useEarliestPickup);
     pickupInput.after(pickupStatus, earliestPickupButton);
 
-    phoneInput.placeholder = '+7 701 234 56 78';
+    attachPhoneMask(phoneInput);
     phoneInput.autocomplete = 'tel';
     nameInput.autocomplete = 'name';
     commentCounter.id = 'comment-counter';

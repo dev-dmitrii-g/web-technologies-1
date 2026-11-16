@@ -178,16 +178,71 @@ function validateFullName(value) {
     return '';
 }
 
+// The phone field always starts with the Kazakhstan code, the visitor types only the 10 digits after it.
+const PHONE_PREFIX = '+7 ';
+const PHONE_DIGIT_COUNT = 10;
+
+// A full number (+7 701 234 56 78 or 8 701 234 56 78) loses its own 7 or 8, only the 10 digits stay.
+function getDigitsOfFullNumber(text) {
+    const digits = text.replace(/\D/g, '');
+    return digits.length === PHONE_DIGIT_COUNT + 1 && /^[78]/.test(digits) ? digits.slice(1) : digits;
+}
+
+// The digits after +7. A value without +7 in front was put in whole, for example by browser autofill.
+function getPhoneDigits(value) {
+    const digits = value.startsWith('+7') ? value.slice(2).replace(/\D/g, '') : getDigitsOfFullNumber(value);
+    return digits.slice(0, PHONE_DIGIT_COUNT);
+}
+
 function validatePhone(value) {
-    const phone = value.trim();
-    if (phone === '') {
+    const digits = getPhoneDigits(value);
+    if (digits === '') {
         return 'Enter your phone number.';
     }
-    const digits = phone.replace(/[\s()-]/g, '');
-    if (!/^(\+7|8)\d{10}$/.test(digits)) {
-        return 'Enter a Kazakhstan number, for example +7 701 234 56 78 or 8 701 234 56 78.';
+    if (digits.length !== PHONE_DIGIT_COUNT) {
+        return `Enter all ${PHONE_DIGIT_COUNT} digits after +7, for example +7 7012345678.`;
+    }
+    if (!digits.startsWith('7')) {
+        return 'Kazakhstan numbers start with 7 after +7, for example +7 7012345678.';
     }
     return '';
+}
+
+function keepCaretAfterPrefix(input) {
+    if (input.selectionStart < PHONE_PREFIX.length) {
+        input.setSelectionRange(PHONE_PREFIX.length, Math.max(input.selectionEnd, PHONE_PREFIX.length));
+    }
+}
+
+// Keeps +7 in front, drops everything that is not a digit and stops at 10 digits.
+function attachPhoneMask(input) {
+    input.defaultValue = PHONE_PREFIX;
+    input.value = PHONE_PREFIX;
+    input.inputMode = 'numeric';
+
+    // A pasted full number would bring a second 7 or 8, so only its 10 digits are put in.
+    input.addEventListener('paste', (event) => {
+        event.preventDefault();
+        keepCaretAfterPrefix(input);
+        input.setRangeText(getDigitsOfFullNumber(event.clipboardData.getData('text')), input.selectionStart, input.selectionEnd, 'end');
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+
+    input.addEventListener('input', () => {
+        const value = input.value;
+        const digits = getPhoneDigits(value);
+        const cleanValue = PHONE_PREFIX + digits;
+        if (value === cleanValue) {
+            return;
+        }
+        // The caret stays after the same digit it was after, not at the end of the field.
+        const digitsBeforeCaret = Math.min(getPhoneDigits(value.slice(0, input.selectionStart)).length, digits.length);
+        input.value = cleanValue;
+        input.setSelectionRange(PHONE_PREFIX.length + digitsBeforeCaret, PHONE_PREFIX.length + digitsBeforeCaret);
+    });
+    ['focus', 'click', 'keyup'].forEach((eventName) => {
+        input.addEventListener(eventName, () => keepCaretAfterPrefix(input));
+    });
 }
 
 // The cart is kept in localStorage, so items added on menu.html are waiting on order.html.

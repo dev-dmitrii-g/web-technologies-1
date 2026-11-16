@@ -492,7 +492,7 @@ $(function () {
         $liveSummary.attr('aria-live', 'polite').append(makeElement('h3', 'h5', 'Your Subscription Summary'), $liveSummaryBody);
         radioGroups.frequency.after($liveSummary);
 
-        $subscriberPhone.attr('placeholder', '+7 701 234 56 78');
+        attachPhoneMask($subscriberPhone[0]);
         $subscriptionConfirmation.attr('tabindex', '-1');
 
         bindSubscriptionEvents();
