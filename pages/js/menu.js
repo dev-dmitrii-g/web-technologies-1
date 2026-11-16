@@ -23,20 +23,27 @@ $(function () {
     const $staticMenuSections = $menuPageSections.slice(1, -1);
 
     const $catalogSection = makeElement('section', 'mb-4');
-    const $featuredBody = makeElement('div', 'card-body');
     const $featuredName = makeElement('h2', 'h3 card-title');
+    const $featuredBody = makeElement('div', 'card-body');
     const $featuredDetails = makeElement('p', 'mb-2');
-    const $featuredLink = makeElement('a', 'btn btn-primary', 'Order this drink');
+    const $featuredAddButton = makeElement('button', 'btn btn-primary', 'Add to cart');
     const $searchInput = makeElement('input', 'form-control');
     const $sortSelect = makeElement('select', 'form-select');
     const $categoryGroup = makeElement('div', 'd-flex flex-wrap gap-2 mt-3');
     const $resultCount = makeElement('p', 'font-monospace fw-bold mb-3');
-    const $resultGrid = makeElement('div', 'row g-4');
+    const $resultGrid = makeElement('div');
     const $emptyState = makeElement('div', 'card shadow-sm d-none');
     const $emptyText = makeElement('p', 'mb-3');
+    // 5rem above the window edge: the theme button of the site is fixed in the bottom right corner
+    // and on a phone it would cover "Open cart".
+    const $cartBar = makeElement('div', 'card shadow sticky-bottom d-none mt-4').css('bottom', '5rem');
+    const $cartSummary = makeElement('p', 'fw-bold mb-0');
+    const $cartMessage = makeElement('p', 'small mb-0');
 
     let featuredItemId = '';
     let favoriteIds = readFavorites();
+    // The same cart as on order.html: the cart functions used here are in mainabyl.js.
+    let cartLines = readStoredCart();
 
     // Favorites stay in this browser only. If the storage is blocked or holds something broken,
     // the page starts with an empty list instead of throwing an error.
@@ -67,14 +74,6 @@ $(function () {
             : [...favoriteIds, itemId];
         saveFavorites();
         return isFavorite(itemId);
-    }
-
-    function buildOrderLink(itemId, sizeKey) {
-        const params = new URLSearchParams({ item: itemId });
-        if (sizeKey !== '') {
-            params.set('size', sizeKey);
-        }
-        return `order.html?${params.toString()}`;
     }
 
     function sortMenuItems(items, sortId) {
@@ -125,13 +124,60 @@ $(function () {
         return candidates[Math.floor(Math.random() * candidates.length)];
     }
 
+    // How many of this item are in the cart, in every size and with any extras.
+    function describeInCart(itemId) {
+        const count = getCartCount(cartLines.filter((line) => line.itemId === itemId));
+        return count === 0 ? '' : `In cart: ${count}`;
+    }
+
+    function updateCartBar(message) {
+        const count = getCartCount(cartLines);
+        $cartSummary.text(`Cart: ${count} ${count === 1 ? 'item' : 'items'} · ${formatPrice(getCartTotal(cartLines))}`);
+        $cartMessage.text(message);
+
+        if (count === 0) {
+            $cartBar.stop(true, true).addClass('d-none');
+        } else if ($cartBar.hasClass('d-none')) {
+            revealBlock($cartBar, 'slideDown', 200);
+        }
+    }
+
+    // Adds one piece without extras; the same item and size again raises the quantity of its line.
+    function addToCart(item, sizeKey) {
+        if (getCartCount(cartLines) >= CART_ITEM_LIMIT) {
+            updateCartBar(`One online order is limited to ${CART_ITEM_LIMIT} items. Open the cart to change it.`);
+            return;
+        }
+
+        const newLine = buildCartLine(item, sizeKey, [], 1);
+        const sameLine = cartLines.find((line) => line.key === newLine.key);
+        if (sameLine !== undefined) {
+            sameLine.quantity += 1;
+        } else {
+            cartLines.push(newLine);
+        }
+
+        const lineText = `${item.name} (${SIZE_LABELS[sizeKey]})`;
+        const message = saveStoredCart(cartLines)
+            ? `Added ${lineText}. Extras and quantities can be changed in the cart.`
+            : `Added ${lineText}, but this browser blocks saved data, so the cart cannot be opened on the order page.`;
+        $resultGrid.find(`[data-item="${item.id}"] [data-role="in-cart"]`).text(describeInCart(item.id));
+        updateCartBar(message);
+    }
+
+    // The cart can change outside this page: on order.html before "Back" is pressed, or in another tab.
+    function refreshCart() {
+        cartLines = readStoredCart();
+        $resultGrid.find('[data-item]').each(function () {
+            $(this).find('[data-role="in-cart"]').text(describeInCart($(this).attr('data-item')));
+        });
+        updateCartBar('');
+    }
+
     function updateCardSelection(item, sizeKey, $card) {
         const sizeText = SIZE_LABELS[sizeKey];
         $card.find('[data-role="price"]').text(`${sizeText}: ${formatPrice(getUnitPrice(item, sizeKey))}`);
-        $card.find('[data-role="order"]').attr({
-            href: buildOrderLink(item.id, sizeKey),
-            'aria-label': `Order ${item.name}, ${sizeText}`
-        });
+        $card.find('button[data-action="add"]').attr('aria-label', `Add to cart: ${item.name}, ${sizeText}`);
     }
 
     function setFavoriteButtonState($button, itemName, saved) {
@@ -173,18 +219,47 @@ $(function () {
 
         $body.append(
             makeElement('p', 'font-monospace mb-3').attr('data-role', 'price'),
-            makeElement('a', 'btn btn-primary mt-auto align-self-start', 'Order this').attr('data-role', 'order')
+            makeElement('div', 'd-flex flex-wrap align-items-center gap-2 mt-auto').append(
+                makeElement('button', 'btn btn-primary', 'Add to cart').attr({ type: 'button', 'data-action': 'add' }),
+                makeElement('span', 'small fw-bold', describeInCart(item.id)).attr('data-role', 'in-cart')
+            )
         );
         updateCardSelection(item, sizeKeys[0], $card);
         return $column;
+    }
+
+    // Blocks by category only for the full menu in menu order: a price or name sort, one category
+    // or the favorites stay one flat list, so the chosen order is not broken up.
+    function isGroupedView(filters) {
+        return filters.category === 'all' && filters.sort === 'menu';
+    }
+
+    function renderCardRow(items) {
+        const $row = makeElement('div', 'row g-4');
+        items.forEach((item) => renderMenuCard(item).appendTo($row));
+        return $row;
+    }
+
+    function renderCategoryBlocks(items) {
+        return MENU_CATEGORIES
+            .map((category) => ({ category, items: items.filter((item) => item.category === category.id) }))
+            .filter((group) => group.items.length !== 0)
+            .map((group) => {
+                const headingId = `menu-group-${group.category.id}`;
+                return makeElement('section', 'mb-5').attr('aria-labelledby', headingId).append(
+                    makeElement('h2', 'h4 mb-3', group.category.label).attr('id', headingId),
+                    renderCardRow(group.items)
+                );
+            });
     }
 
     function updateMenuResults() {
         const visibleItems = filterMenuItems(MENU_ITEMS, menuFilters);
         const hasResults = visibleItems.length !== 0;
 
-        $resultGrid.empty();
-        visibleItems.forEach((item) => renderMenuCard(item).appendTo($resultGrid));
+        $resultGrid
+            .empty()
+            .append(isGroupedView(menuFilters) ? renderCategoryBlocks(visibleItems) : renderCardRow(visibleItems));
         $resultGrid.toggleClass('d-none', !hasResults);
         $resultCount.text(describeResults(visibleItems.length, menuFilters));
         $emptyText.text(describeEmptyState(menuFilters));
@@ -236,10 +311,12 @@ $(function () {
         featuredItemId = drink.id;
         $featuredName.text(drink.name);
         $featuredDetails.text(`${getCategoryLabel(drink.category)} · from ${formatPrice(getLowestPrice(drink))}`);
-        $featuredLink.attr({
-            href: buildOrderLink(drink.id, getSizeKeys(drink)[0]),
-            'aria-label': `Order ${drink.name}`
-        });
+        $featuredAddButton.attr('aria-label', `Add to cart: ${drink.name}, ${SIZE_LABELS[getSizeKeys(drink)[0]]}`);
+    }
+
+    function addFeaturedDrink() {
+        const drink = findMenuItem(featuredItemId);
+        addToCart(drink, getSizeKeys(drink)[0]);
     }
 
     function showFeaturedDrink() {
@@ -254,13 +331,14 @@ $(function () {
             .attr('type', 'button')
             .on('click', showFeaturedDrink);
 
+        $featuredAddButton.attr('type', 'button').on('click', addFeaturedDrink);
         $featuredDetails.attr('aria-live', 'polite');
         $featuredBody.append(
             makeElement('p', 'font-monospace small text-uppercase mb-1', 'Need an idea? Barista suggestion'),
             $featuredName,
             $featuredDetails,
             makeElement('p', 'small mb-3', 'A random pick from our drinks at the regular menu price.'),
-            makeElement('div', 'd-flex flex-wrap gap-2').append($featuredLink, $anotherButton)
+            makeElement('div', 'd-flex flex-wrap gap-2').append($featuredAddButton, $anotherButton)
         );
         return makeElement('article', 'card shadow-sm mb-4').append($featuredBody);
     }
@@ -306,6 +384,18 @@ $(function () {
         return $emptyState;
     }
 
+    // Stays at the bottom of the window while the visitor scrolls the menu, so the cart is always one click away.
+    function buildCartBar() {
+        $cartMessage.attr('role', 'status');
+        makeElement('div', 'card-body d-flex flex-wrap justify-content-between align-items-center gap-2')
+            .append(
+                makeElement('div').append($cartSummary, $cartMessage),
+                makeElement('a', 'btn btn-primary', 'Open cart').attr('href', 'order.html')
+            )
+            .appendTo($cartBar);
+        return $cartBar;
+    }
+
     function buildExtrasNote() {
         const extrasText = EXTRAS.map((extra) => `${extra.name} +${formatPrice(extra.price)}`).join(', ');
         return makeElement('p', 'small mt-4 mb-0', `Drink extras (added on the order page): ${extrasText}.`);
@@ -339,6 +429,15 @@ $(function () {
             }
         });
 
+        $resultGrid.on('click', 'button[data-action="add"]', function () {
+            const $card = $(this).closest('[data-item]');
+            const item = findMenuItem($card.attr('data-item'));
+            const $sizeSelect = $card.find('select');
+            addToCart(item, $sizeSelect.length === 0 ? getSizeKeys(item)[0] : $sizeSelect.val());
+        });
+
+        $(window).on('pageshow storage', refreshCart);
+
         $resultGrid.on('change', 'select', function () {
             const $card = $(this).closest('[data-item]');
             updateCardSelection(findMenuItem($card.attr('data-item')), $(this).val(), $card);
@@ -365,7 +464,7 @@ $(function () {
 
     function initMenuPage() {
         $resultCount.attr('role', 'status');
-        $catalogSection.append(buildFeaturedCard(), buildControlsCard(), $resultCount, $resultGrid, buildEmptyState(), buildExtrasNote());
+        $catalogSection.append(buildFeaturedCard(), buildControlsCard(), $resultCount, $resultGrid, buildEmptyState(), buildExtrasNote(), buildCartBar());
 
         $staticMenuSections.addClass('d-none');
         $menuTitleSection.after($catalogSection);
@@ -375,6 +474,7 @@ $(function () {
         updateCategoryButtons();
         updateFavoritesButton();
         updateMenuResults();
+        updateCartBar('');
     }
 
     initMenuPage();

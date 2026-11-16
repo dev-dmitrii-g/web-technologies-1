@@ -189,3 +189,83 @@ function validatePhone(value) {
     }
     return '';
 }
+
+// The cart is kept in localStorage, so items added on menu.html are waiting on order.html.
+const CART_STORAGE_KEY = 'tokyo-coffee-cart';
+const CART_ITEM_LIMIT = 30;
+
+function getExtrasTotal(extras) {
+    return extras.reduce((sum, extra) => sum + extra.price, 0);
+}
+
+function calculateLineSubtotal(unitPrice, quantity) {
+    return unitPrice * quantity;
+}
+
+function getCartCount(lines) {
+    return lines.reduce((count, line) => count + line.quantity, 0);
+}
+
+function getCartTotal(lines) {
+    return lines.reduce((total, line) => total + calculateLineSubtotal(line.unitPrice, line.quantity), 0);
+}
+
+// One cart line. The key joins the item, its size and its extras, so the same choice is one line.
+function buildCartLine(item, sizeKey, extras, quantity) {
+    return {
+        key: `${item.id}|${sizeKey}|${extras.map((extra) => extra.id).sort().join(',')}`,
+        itemId: item.id,
+        name: item.name,
+        sizeKey,
+        extras: extras.map((extra) => ({ id: extra.id, name: extra.name, price: extra.price })),
+        unitPrice: getUnitPrice(item, sizeKey) + getExtrasTotal(extras),
+        quantity
+    };
+}
+
+// A saved line is rebuilt from the menu data: names and prices are never taken from the storage,
+// and a line with an unknown item, size or quantity gives null.
+function restoreCartLine(saved) {
+    if (saved === null || typeof saved !== 'object') {
+        return null;
+    }
+    const item = findMenuItem(saved.itemId);
+    if (item === null || getUnitPrice(item, saved.sizeKey) === null) {
+        return null;
+    }
+    if (!Number.isInteger(saved.quantity) || saved.quantity < 1) {
+        return null;
+    }
+    const savedIds = Array.isArray(saved.extras) ? saved.extras.map((extra) => extra && extra.id) : [];
+    const extras = getExtrasForCategory(item.category).filter((extra) => savedIds.includes(extra.id));
+    return buildCartLine(item, saved.sizeKey, extras, saved.quantity);
+}
+
+// If the storage is blocked or holds something broken, the cart starts empty instead of throwing an error.
+function readStoredCart() {
+    try {
+        const saved = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || '[]');
+        const lines = [];
+        let freePlaces = CART_ITEM_LIMIT;
+        (Array.isArray(saved) ? saved : []).forEach((entry) => {
+            const line = restoreCartLine(entry);
+            if (line !== null && line.quantity <= freePlaces) {
+                lines.push(line);
+                freePlaces -= line.quantity;
+            }
+        });
+        return lines;
+    } catch (error) {
+        return [];
+    }
+}
+
+// Returns false when the browser does not let the page save the cart.
+function saveStoredCart(lines) {
+    try {
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(lines));
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
