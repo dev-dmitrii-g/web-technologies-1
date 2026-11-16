@@ -487,333 +487,79 @@
             <!-- Notes -->
 
             <section class="card shadow-sm mb-4" id="brewing-notes">
-                <div class="card-body">
+                <div class="card-body p-4">
                     <h2>Brewing Notes</h2>
 
                     <p>
-                        You can record your brewing variables so you can compare
-                        different attempts.
+                        Record each brew and compare your method, measurements
+                        and tasting notes. Entries are saved in this browser.
                     </p>
 
-                    <pre class="bg-light text-dark p-3 rounded">
-Method: V60
-Coffee: 15 g
-Water: 250 ml
-Grind: Medium
-Time: Record your brewing time
-Result: Record the taste and strength after brewing.</pre
-                    >
-
-                    <p class="mb-0">
-                        Save your notes with <kbd>Ctrl</kbd> + <kbd>S</kbd>.
-                    </p>
-                </div>
-            </section>
-
-            <!-- Explore More -->
-
-            <section class="card shadow-sm mb-4" id="explore-more">
-                <div class="card-body">
-                    <h2>Explore More</h2>
-
-                    <ul>
-                        <li>
-                            <a href="menu.html">Full Menu</a> — see coffee, tea,
-                            food and other drinks.
-                        </li>
-
-                        <li>
-                            <a href="blog.html">Coffee Blog</a> — read coffee
-                            stories and customer reviews.
-                        </li>
-
-                        <li>
-                            <a href="subscriptions.html">Subscriptions</a> —
-                            explore coffee subscription options.
-                        </li>
-
-                        <li>
-                            <a href="contacts.html">Contact Us</a> — ask Tokyo
-                            Coffee about products and services.
-                        </li>
-                    </ul>
-
-                    <p class="mb-0">
-                        <span class="fw-bold">Tip:</span> Start with the
-                        recommended ratio and change one variable at a time when
-                        experimenting.
-                    </p>
-                </div>
-            </section>
-
-            <!-- Inquiry Form -->
-
-            <section class="card shadow-sm mb-4" id="ask-brewing">
-                <div class="card-body">
-                    <h2>Ask About Brewing</h2>
-
-                    <p>
-                        If you have a question about brewing, use the form below
-                        to describe your method and problem.
-                    </p>
-
-                    <form method="post" id="brewing-question-form">
-                        <fieldset>
-                            <legend class="h5 mb-3">Brewing Question</legend>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="visitor-name"
-                                    >Name:</label
-                                >
-
-                                <input
-                                    class="form-control"
-                                    id="visitor-name"
-                                    name="visitor-name"
-                                    placeholder="Enter your name"
-                                    required
-                                    type="text"
-                                />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="visitor-email"
-                                    >Email:</label
-                                >
-
-                                <input
-                                    class="form-control"
-                                    id="visitor-email"
-                                    name="visitor-email"
-                                    placeholder="you@example.com"
-                                    required
-                                    type="email"
-                                />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="visitor-phone"
-                                    >Phone:</label
-                                >
-
-                                <input
-                                    class="form-control"
-                                    id="visitor-phone"
-                                    name="visitor-phone"
-                                    placeholder="+7 700 000 00 00"
-                                    required
-                                    type="tel"
-                                />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="brew-date"
-                                    >Brewing date:</label
-                                >
-
-                                <input
-                                    class="form-control"
-                                    id="brew-date"
-                                    name="brew-date"
-                                    required
-                                    type="date"
-                                />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="brewing-method"
-                                    >Brewing method:</label
-                                >
-
-                                <select
-                                    class="form-select"
-                                    id="brewing-method"
-                                    name="brewing-method"
-                                    required
-                                >
+                    <form id="brewing-notes-form" novalidate>
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <label for="notes-method" class="form-label">Method</label>
+                                <select id="notes-method" name="method" class="form-select" required>
                                     <option value="">Choose a method</option>
-
-                                    <option value="v60">V60</option>
-
-                                    <option value="french-press">
-                                        French Press
-                                    </option>
-
-                                    <option value="aeropress">AeroPress</option>
-
-                                    <option value="other">Other</option>
+                                    <option value="V60">V60</option>
+                                    <option value="French Press">French Press</option>
+                                    <option value="AeroPress">AeroPress</option>
                                 </select>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label" for="coffee-amount"
-                                    >Coffee amount, grams:</label
-                                >
-
-                                <input
-                                    class="form-control"
-                                    id="coffee-amount"
-                                    min="1"
-                                    name="coffee-amount"
-                                    placeholder="15"
-                                    required
-                                    type="number"
-                                />
+                            <div class="col-12 col-md-6">
+                                <label for="notes-grind" class="form-label">Grind</label>
+                                <select id="notes-grind" name="grind" class="form-select" required>
+                                    <option value="">Choose a grind size</option>
+                                    <option value="Fine">Fine</option>
+                                    <option value="Medium-fine">Medium-fine</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Coarse">Coarse</option>
+                                </select>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label d-block"
-                                    >What would you like to adjust?</label
-                                >
-
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input"
-                                        id="adjust-grind"
-                                        name="adjustment"
-                                        required
-                                        type="radio"
-                                        value="grind"
-                                    />
-
-                                    <label
-                                        class="form-check-label"
-                                        for="adjust-grind"
-                                        >Grind size</label
-                                    >
-                                </div>
-
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input"
-                                        id="adjust-ratio"
-                                        name="adjustment"
-                                        type="radio"
-                                        value="ratio"
-                                    />
-
-                                    <label
-                                        class="form-check-label"
-                                        for="adjust-ratio"
-                                        >Coffee-to-water ratio</label
-                                    >
-                                </div>
-
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input"
-                                        id="adjust-time"
-                                        name="adjustment"
-                                        type="radio"
-                                        value="time"
-                                    />
-
-                                    <label
-                                        class="form-check-label"
-                                        for="adjust-time"
-                                        >Brewing time</label
-                                    >
-                                </div>
+                            <div class="col-12 col-md-4">
+                                <label for="notes-coffee" class="form-label">Coffee (g)</label>
+                                <input id="notes-coffee" name="coffeeGrams" class="form-control" type="number" min="0.1" step="0.1" placeholder="15" required />
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label" for="brewing-question"
-                                    >Brewing question:</label
-                                >
-
-                                <textarea
-                                    class="form-control"
-                                    id="brewing-question"
-                                    name="brewing-question"
-                                    placeholder="Describe your brewing problem or question"
-                                    required
-                                    rows="6"
-                                ></textarea>
+                            <div class="col-12 col-md-4">
+                                <label for="notes-water" class="form-label">Water (ml)</label>
+                                <input id="notes-water" name="waterMl" class="form-control" type="number" min="1" step="1" placeholder="250" required />
                             </div>
 
-                            <div class="form-check mb-3">
-                                <input
-                                    class="form-check-input"
-                                    id="permission"
-                                    name="permission"
-                                    required
-                                    type="checkbox"
-                                    value="yes"
-                                />
-
-                                <label
-                                    class="form-check-label"
-                                    for="permission"
-                                >
-                                    I agree to be contacted about this question.
-                                </label>
+                            <div class="col-12 col-md-4">
+                                <label for="notes-time" class="form-label">Brew time (m:ss)</label>
+                                <input id="notes-time" name="brewTime" class="form-control" type="text" placeholder="2:30" pattern="[0-9]{1,2}:[0-5][0-9]" title="Enter minutes and seconds, for example 2:30." required />
                             </div>
 
-                            <div class="d-flex gap-2 flex-wrap mt-3">
-                                <input
-                                    class="btn btn-primary"
-                                    type="submit"
-                                    value="Send Question"
-                                />
-
-                                <input
-                                    class="btn btn-outline-secondary"
-                                    type="reset"
-                                    value="Clear"
-                                />
-
-                                <button class="btn btn-success" type="button">
-                                    Save Draft
-                                </button>
-
-                                <button
-                                    class="btn btn-secondary"
-                                    disabled
-                                    type="button"
-                                >
-                                    Unavailable
-                                </button>
+                            <div class="col-12">
+                                <label for="notes-result" class="form-label">Taste and strength notes</label>
+                                <textarea id="notes-result" name="result" class="form-control" rows="3" maxlength="500" placeholder="What did it taste like? What would you change next time?"></textarea>
                             </div>
-                        </fieldset>
 
-                        <div class="small text-muted mt-3" aria-live="polite">
-                            Form status will appear here after submission.
-                        </div>
-                        <div
-                            id="brewing-question-form-result"
-                            class="alert alert-success d-none"
-                            role="status"
-                        >
-                            Your request has been submitted successfully.
-                        </div>
-                        <div
-                            id="brewing-question-form-error"
-                            class="alert alert-danger d-none"
-                            role="alert"
-                        >
-                            Please check the information and try again.
+                            <div class="col-12">
+                                <button class="btn btn-primary" type="submit">Save Brewing Note</button>
+                            </div>
                         </div>
                     </form>
-                </div>
-            </section>
 
-            <section class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h2>Brewing Information</h2>
-
-                    <p class="mb-0">
-                        This section uses the normal static positioning mode.
-                        Static positioning is the default document flow and does
-                        not create a special positioning context.
+                    <p id="brewing-notes-status" class="small mt-3 mb-0" aria-live="polite">
+                        Notes stay in this browser and are not sent anywhere.
                     </p>
+
+                    <div id="brewing-notes-list" class="mt-4" aria-live="polite"></div>
                 </div>
             </section>
-
-            <aside class="mb-4">
-                <a class="btn btn-link px-0" href="#ask-brewing"
-                    >Ask about brewing &rarr;</a
-                >
-            </aside>
+            <section id="brewing-contact" class="card shadow-sm mb-4">
+                <div class="card-body p-3 p-md-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                    <div>
+                        <h2 class="h5 mb-1">Questions about brewing?</h2>
+                        <p class="mb-0">Contact Tokyo Coffee and ask us about brewing methods.</p>
+                    </div>
+                    <a href="contacts.html" class="btn btn-outline-primary">Contact Us</a>
+                </div>
+            </section>
         </main>
 
         <!-- Footer -->
@@ -896,7 +642,6 @@ Result: Record the taste and strength after brewing.</pre
 
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-        <script src="js/jquery/jquery-4.0.0.min.js"></script>
         <script src="js/shared/header.js"></script>
         <script src="js/shared/footer.js"></script>
 

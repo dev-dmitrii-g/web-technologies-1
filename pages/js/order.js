@@ -65,7 +65,6 @@ function hasFieldError(control) {
     return document.getElementById(`${control.id}-feedback`) !== null;
 }
 
-const MAX_ORDER_ITEMS = 30;
 const LAST_PICKUP_BEFORE_CLOSE = 15;
 const MAX_COMMENT_LENGTH = 200;
 
@@ -77,17 +76,11 @@ const pickupInput = document.getElementById('pickup-time');
 const nameInput = document.getElementById('name');
 const phoneInput = document.getElementById('phone');
 const commentInput = document.getElementById('comment');
-const placeOrderButton = document.getElementById('order-submit');
 const prepOutput = orderForm.querySelector('p > output');
 const extrasFieldset = document.getElementById('order-extras');
 const quantityFieldset = quantityInput.closest('fieldset');
-const pickupFieldset = pickupInput.closest('fieldset');
+const itemFieldset = itemSelect.closest('fieldset');
 
-const summaryItem = document.getElementById('summary-item');
-const summarySize = document.getElementById('summary-size');
-const summaryExtras = document.getElementById('summary-extras');
-const summaryQuantity = document.getElementById('summary-quantity');
-const summaryTotal = document.getElementById('order-total');
 const orderError = document.getElementById('order-error');
 const orderConfirmation = document.getElementById('order-confirmation');
 const confirmationDetails = document.getElementById('order-confirmation-details');
@@ -97,7 +90,7 @@ const linePreview = makeElement('p', 'font-monospace my-3');
 const addStatus = makeElement('p', 'small mb-0 mt-2');
 const cartFieldset = makeElement('fieldset', 'border rounded p-3 mb-4');
 const cartList = makeElement('ul', 'list-group mb-3');
-const cartEmpty = makeElement('p', 'mb-3', 'Your cart is empty. Choose an item above and press "Add to Cart".');
+const cartEmpty = makeElement('p', 'mb-3', 'Your cart is empty. Add items on the menu page, or choose one below and press "Add to Cart".');
 const cartTotals = makeElement('p', 'font-monospace fw-bold mb-3');
 const cartStatus = makeElement('p', 'small mb-3');
 const clearCartButton = makeElement('button', 'btn btn-sm btn-outline-secondary', 'Clear Cart');
@@ -106,10 +99,14 @@ const addButton = makeElement('button', 'btn btn-primary', 'Add to Cart');
 const cancelEditButton = makeElement('button', 'btn btn-outline-secondary d-none', 'Cancel Editing');
 const pickupStatus = makeElement('p', 'small mt-2 mb-2');
 const earliestPickupButton = makeElement('button', 'btn btn-sm btn-outline-primary', 'Use the earliest time');
+const itemPanel = makeElement('div', 'border rounded p-3 mb-4');
+const addAnotherButton = makeElement('button', 'btn btn-sm btn-primary', 'Add another item');
 
-let cart = [];
+let cart = readStoredCart();
 // Key of the cart line that is loaded back into the form, '' when nothing is being edited.
 let editingKey = '';
+// true after "Add another item", until the item is added or "Cancel" is pressed.
+let isItemPanelOpen = false;
 
 function getSelectedItem() {
     return findMenuItem(itemSelect.value);
@@ -128,26 +125,10 @@ function getSelectedExtras() {
 
 function readQuantity() {
     const quantity = Number(quantityInput.value);
-    if (quantityInput.value.trim() === '' || !Number.isInteger(quantity) || quantity < 1 || quantity > MAX_ORDER_ITEMS) {
+    if (quantityInput.value.trim() === '' || !Number.isInteger(quantity) || quantity < 1 || quantity > CART_ITEM_LIMIT) {
         return null;
     }
     return quantity;
-}
-
-function getExtrasTotal(extras) {
-    return extras.reduce((sum, extra) => sum + extra.price, 0);
-}
-
-function calculateLineSubtotal(unitPrice, quantity) {
-    return unitPrice * quantity;
-}
-
-function getCartCount(lines) {
-    return lines.reduce((count, line) => count + line.quantity, 0);
-}
-
-function getCartTotal(lines) {
-    return lines.reduce((total, line) => total + calculateLineSubtotal(line.unitPrice, line.quantity), 0);
 }
 
 function getPreparationRange(itemCount) {
@@ -268,7 +249,7 @@ function updateLinePreview() {
         return;
     }
     if (quantity === null) {
-        linePreview.textContent = `Enter a quantity from 1 to ${MAX_ORDER_ITEMS}.`;
+        linePreview.textContent = `Enter a quantity from 1 to ${CART_ITEM_LIMIT}.`;
         return;
     }
     const basePrice = getUnitPrice(item, sizeSelect.value);
@@ -284,22 +265,6 @@ function refreshItemFields(preferredSize) {
     renderSizeOptions(item, preferredSize);
     updateExtrasAvailability(item);
     updateLinePreview();
-}
-
-function updateOrderSummary() {
-    if (cart.length === 0) {
-        summaryItem.textContent = 'No item selected';
-        summarySize.textContent = 'Not selected';
-        summaryExtras.textContent = 'None';
-        summaryQuantity.textContent = '0';
-        summaryTotal.textContent = formatPrice(0);
-        return;
-    }
-    summaryItem.textContent = cart.map((line) => `${line.quantity} × ${line.name}`).join(', ');
-    summarySize.textContent = cart.map((line) => `${line.name}: ${SIZE_LABELS[line.sizeKey]}`).join('; ');
-    summaryExtras.textContent = cart.map((line) => `${line.name}: ${getExtrasText(line.extras)}`).join('; ');
-    summaryQuantity.textContent = String(getCartCount(cart));
-    summaryTotal.textContent = formatPrice(getCartTotal(cart));
 }
 
 function focusCartControl(lineKey, action) {
@@ -346,7 +311,7 @@ function renderCartLine(line) {
     removeButton.setAttribute('aria-label', `Remove ${line.name} from the cart`);
     // While a line is in the form, its quantity is changed there, so its own stepper is locked.
     decreaseButton.disabled = isEditing || line.quantity <= 1;
-    increaseButton.disabled = isEditing || getCartCount(cart) >= MAX_ORDER_ITEMS;
+    increaseButton.disabled = isEditing || getCartCount(cart) >= CART_ITEM_LIMIT;
     editButton.disabled = isEditing;
 
     stepper.append(decreaseButton, quantityText, increaseButton);
@@ -363,28 +328,28 @@ function renderCart() {
     cartList.replaceChildren(...cart.map(renderCartLine));
     cartList.classList.toggle('d-none', cart.length === 0);
     cartEmpty.classList.toggle('d-none', cart.length !== 0);
-    cartTotals.textContent = `Items: ${itemCount} of ${MAX_ORDER_ITEMS} · Cart total: ${formatPrice(getCartTotal(cart))}`;
+    cartTotals.textContent = `Items: ${itemCount} of ${CART_ITEM_LIMIT} · Cart total: ${formatPrice(getCartTotal(cart))}`;
     clearCartButton.disabled = cart.length === 0;
-    placeOrderButton.disabled = cart.length === 0;
     prepOutput.textContent = `${preparation.min}–${preparation.max} minutes`;
-    updateOrderSummary();
     updatePickupStatus();
 
     if (cart.length !== 0 && hasFieldError(cartFieldset)) {
         clearFieldState(cartFieldset);
     }
+    updateItemPanel();
+    saveStoredCart(cart);
 }
 
 // otherLines: the cart without the line being edited, so its old quantity does not count twice.
 function validateNewLine(item, quantity, otherLines) {
     let quantityMessage = '';
-    const freePlaces = MAX_ORDER_ITEMS - getCartCount(otherLines);
+    const freePlaces = CART_ITEM_LIMIT - getCartCount(otherLines);
     if (quantity === null) {
-        quantityMessage = `Enter a whole number from 1 to ${MAX_ORDER_ITEMS}.`;
+        quantityMessage = `Enter a whole number from 1 to ${CART_ITEM_LIMIT}.`;
     } else if (quantity > freePlaces) {
         quantityMessage = freePlaces === 0
-            ? `Your cart already has the maximum of ${MAX_ORDER_ITEMS} items for one online order.`
-            : `One online order is limited to ${MAX_ORDER_ITEMS} items. You can add ${freePlaces} more.`;
+            ? `Your cart already has the maximum of ${CART_ITEM_LIMIT} items for one online order.`
+            : `One online order is limited to ${CART_ITEM_LIMIT} items. You can add ${freePlaces} more.`;
     }
     return [
         { control: itemSelect, message: item === null ? 'Choose a menu item.' : '' },
@@ -408,18 +373,8 @@ function addToCart() {
     }
 
     const sizeKey = sizeSelect.value;
-    const extras = getSelectedExtras();
-    const key = `${item.id}|${sizeKey}|${extras.map((extra) => extra.id).sort().join(',')}`;
-    const sameLine = otherLines.find((line) => line.key === key);
-    const newLine = {
-        key,
-        itemId: item.id,
-        name: item.name,
-        sizeKey,
-        extras: extras.map((extra) => ({ id: extra.id, name: extra.name, price: extra.price })),
-        unitPrice: getUnitPrice(item, sizeKey) + getExtrasTotal(extras),
-        quantity
-    };
+    const newLine = buildCartLine(item, sizeKey, getSelectedExtras(), quantity);
+    const sameLine = otherLines.find((line) => line.key === newLine.key);
 
     if (sameLine !== undefined) {
         // The same item with the same size and extras is already in the cart: the quantities are added up.
@@ -432,21 +387,25 @@ function addToCart() {
         cart.push(newLine);
     }
 
+    // The item fields close again, so the result is reported next to the cart and the focus goes there.
     editingKey = '';
-    updateEditMode();
+    isItemPanelOpen = false;
     renderCart();
     [itemSelect, quantityInput].forEach(clearFieldState);
     orderError.classList.add('d-none');
     const lineText = `${item.name} (${SIZE_LABELS[sizeKey]})`;
     if (sameLine !== undefined) {
-        addStatus.textContent = `${lineText} is already in your cart, so the quantities were added up: now ${sameLine.quantity}.`;
+        cartStatus.textContent = `${lineText} is already in your cart, so the quantities were added up: now ${sameLine.quantity}.`;
     } else if (isEditing) {
-        addStatus.textContent = `Updated: ${quantity} × ${lineText}.`;
+        cartStatus.textContent = `Updated: ${quantity} × ${lineText}.`;
     } else {
-        addStatus.textContent = `Added ${quantity} × ${lineText} to your cart.`;
+        cartStatus.textContent = `Added ${quantity} × ${lineText} to your cart.`;
     }
+    addStatus.textContent = '';
+    itemSelect.value = '';
     quantityInput.value = '1';
-    updateLinePreview();
+    refreshItemFields('');
+    cartStatus.focus();
 }
 
 // Loads a cart line back into the item fields, so the visitor can change its size, extras or quantity.
@@ -465,30 +424,47 @@ function startEditingLine(lineKey) {
     quantityInput.value = String(line.quantity);
     [itemSelect, quantityInput].forEach(clearFieldState);
     updateLinePreview();
-    updateEditMode();
     renderCart();
     addStatus.textContent = `Editing ${line.quantity} × ${line.name}. Change it above and press "Update Item".`;
     itemSelect.focus();
 }
 
-function stopEditing(message) {
+function stopEditing() {
     editingKey = '';
-    updateEditMode();
     renderCart();
-    addStatus.textContent = message;
+    addStatus.textContent = '';
 }
 
-function updateEditMode() {
+// The page is a cart first: the item fields are shown only for an empty cart, for the line being edited
+// or after "Add another item". Called from renderCart(), so every cart change keeps it up to date.
+function updateItemPanel() {
     const isEditing = editingKey !== '';
+    const isOpen = cart.length === 0 || isEditing || isItemPanelOpen;
+    itemPanel.classList.toggle('d-none', !isOpen);
+    addAnotherButton.classList.toggle('d-none', isOpen);
     addButton.textContent = isEditing ? 'Update Item' : 'Add to Cart';
-    cancelEditButton.classList.toggle('d-none', !isEditing);
+    cancelEditButton.textContent = isEditing ? 'Cancel Editing' : 'Cancel';
+    cancelEditButton.classList.toggle('d-none', !isOpen || cart.length === 0);
 }
 
+function openItemPanel() {
+    isItemPanelOpen = true;
+    updateItemPanel();
+    addStatus.textContent = '';
+    itemSelect.focus();
+}
+
+// Closes the item fields without changing the cart, both after "Edit" and after "Add another item".
 function cancelEditing() {
-    stopEditing('Editing was cancelled. The cart line was not changed.');
+    const wasEditing = editingKey !== '';
+    isItemPanelOpen = false;
+    stopEditing();
+    cartStatus.textContent = wasEditing ? 'Editing was cancelled. The cart line was not changed.' : '';
     itemSelect.value = '';
     quantityInput.value = '1';
     refreshItemFields('');
+    [itemSelect, quantityInput].forEach(clearFieldState);
+    addAnotherButton.focus();
 }
 
 // One delegated handler for every button inside the cart: the lines are rebuilt on each change,
@@ -524,8 +500,8 @@ function changeLineQuantity(lineKey, step) {
     if (newQuantity < 1) {
         return;
     }
-    if (step > 0 && getCartCount(cart) >= MAX_ORDER_ITEMS) {
-        cartStatus.textContent = `One online order is limited to ${MAX_ORDER_ITEMS} items.`;
+    if (step > 0 && getCartCount(cart) >= CART_ITEM_LIMIT) {
+        cartStatus.textContent = `One online order is limited to ${CART_ITEM_LIMIT} items.`;
         return;
     }
     line.quantity = newQuantity;
@@ -541,7 +517,7 @@ function removeCartLine(lineKey) {
     }
     cart = cart.filter((entry) => entry.key !== lineKey);
     if (lineKey === editingKey) {
-        stopEditing('');
+        stopEditing();
     }
     renderCart();
     cartStatus.textContent = `${line.name} was removed from your cart.`;
@@ -551,7 +527,7 @@ function removeCartLine(lineKey) {
 function clearCart() {
     cart = [];
     editingKey = '';
-    updateEditMode();
+    isItemPanelOpen = false;
     renderCart();
     cartStatus.textContent = 'Your cart was cleared.';
     cartStatus.focus();
@@ -694,7 +670,7 @@ function handleOrderSubmit(event) {
 function handleOrderReset() {
     cart = [];
     editingKey = '';
-    updateEditMode();
+    isItemPanelOpen = false;
     [itemSelect, quantityInput, cartFieldset, ...orderValidators.map((validator) => validator.control)].forEach(clearFieldState);
     hideOrderResult();
     addStatus.textContent = '';
@@ -708,21 +684,11 @@ function handleOrderReset() {
     }, 0);
 }
 
-function applyMenuSelection() {
-    const params = new URLSearchParams(window.location.search);
-    const item = findMenuItem(params.get('item'));
-    if (item === null) {
-        return;
-    }
-    itemSelect.value = item.id;
-    refreshItemFields(params.get('size'));
-    addStatus.textContent = `${item.name} was selected from the menu. Choose extras and press "Add to Cart".`;
-}
-
 function buildOrderInterface() {
     const cartLegend = makeElement('legend', 'h5 mb-3', 'Your Cart');
     const cartActions = makeElement('div', 'd-flex flex-wrap gap-2');
     const itemActions = makeElement('div', 'd-flex flex-wrap gap-2');
+    const menuLink = makeElement('a', 'btn btn-sm btn-outline-primary', 'Back to the menu');
 
     extrasFieldset.querySelector('legend').after(extrasNote);
 
@@ -731,7 +697,6 @@ function buildOrderInterface() {
     cancelEditButton.type = 'button';
     cancelEditButton.addEventListener('click', cancelEditing);
     itemActions.append(addButton, cancelEditButton);
-    linePreview.setAttribute('aria-live', 'polite');
     addStatus.setAttribute('role', 'status');
     quantityFieldset.append(linePreview, itemActions, addStatus);
 
@@ -740,12 +705,16 @@ function buildOrderInterface() {
     cartStatus.tabIndex = -1;
     clearCartButton.type = 'button';
     clearCartButton.addEventListener('click', clearCart);
-    cartActions.append(clearCartButton);
+    addAnotherButton.type = 'button';
+    addAnotherButton.addEventListener('click', openItemPanel);
+    menuLink.href = 'menu.html';
+    cartActions.append(addAnotherButton, menuLink, clearCartButton);
     cartList.addEventListener('click', handleCartClick);
     cartFieldset.append(cartLegend, cartStatus, cartEmpty, cartList, cartTotals, cartActions);
-    pickupFieldset.before(cartFieldset);
+    // The cart comes first; the four item fieldsets move into one panel that updateItemPanel() shows or hides.
+    itemFieldset.before(cartFieldset, itemPanel);
+    itemPanel.append(itemFieldset, sizeSelect.closest('fieldset'), extrasFieldset, quantityFieldset);
 
-    pickupStatus.setAttribute('aria-live', 'polite');
     earliestPickupButton.type = 'button';
     earliestPickupButton.addEventListener('click', useEarliestPickup);
     pickupInput.after(pickupStatus, earliestPickupButton);
@@ -792,8 +761,12 @@ function initOrderPage() {
     });
 
     orderValidators.forEach((validator) => {
-        const eventName = validator.control === pickupInput ? 'change' : 'input';
-        validator.control.addEventListener(eventName, () => {
+        // change fires when the visitor leaves a field after editing it: the field is checked then,
+        // not on every key. While typing, only an error that is already shown is checked again.
+        validator.control.addEventListener('change', () => {
+            applyValidation(validator.control, validator.validate());
+        });
+        validator.control.addEventListener('input', () => {
             if (hasFieldError(validator.control)) {
                 applyValidation(validator.control, validator.validate());
             }
@@ -807,7 +780,6 @@ function initOrderPage() {
     refreshItemFields('');
     renderCart();
     updateCommentCounter();
-    applyMenuSelection();
 
     // The earliest pickup time moves with the clock, so the status is refreshed every minute.
     setInterval(updatePickupStatus, 60000);

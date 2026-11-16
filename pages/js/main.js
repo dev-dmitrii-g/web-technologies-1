@@ -34,6 +34,24 @@ $(document).ready(() => {
     $(window).on("scroll resize", revealVisibleSections);
     revealVisibleSections();
 
+    $("main .card")
+        .css({ transition: "transform 0.25s ease, box-shadow 0.25s ease" })
+        .on("mouseenter", function () {
+            $(this).css({ transform: "translateY(-4px)", boxShadow: "0 8px 20px #0002" });
+        })
+        .on("mouseleave", function () {
+            $(this).css({ transform: "", boxShadow: "" });
+        });
+
+    $("button, input[type='submit'], input[type='reset']")
+        .css("transition", "transform 0.2s ease")
+        .on("mouseenter", function () {
+            if (!$(this).prop("disabled")) $(this).css("transform", "scale(1.04)");
+        })
+        .on("mouseleave", function () {
+            $(this).css("transform", "");
+        });
+
     const $form = $("#events-registration-form");
     if (!$form.length) return;
 

@@ -312,108 +312,59 @@
                 </div>
             </section>
 
-            <section id="menu-highlights" class="card shadow-sm mb-5">
+            <section id="share-thoughts" class="card shadow-sm mb-5">
                 <div class="card-body p-4">
-                    <h2 class="card-title">Menu Highlights</h2>
+                    <h2 class="card-title">Write a Review</h2>
+                    <p class="text-muted">Share your experience with the Tokyo Coffee community.</p>
 
-                    <p>
-                        The following table shows selected Tokyo Coffee drinks
-                        and their listed customer prices.
-                    </p>
-
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-3">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th scope="col">Drink</th>
-
-                                    <th scope="col">Temperature</th>
-
-                                    <th scope="col">Size</th>
-
-                                    <th scope="col">Price</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-                                    <th scope="row">Espresso</th>
-                                    <td>Hot</td>
-                                    <td>S</td>
-                                    <td>990 ₸</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Americano</th>
-                                    <td>Hot / Iced</td>
-                                    <td>S</td>
-                                    <td>990 ₸</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Cappuccino</th>
-                                    <td>Hot / Iced</td>
-                                    <td>M</td>
-                                    <td>1390 ₸</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Latte</th>
-                                    <td>Hot / Iced</td>
-                                    <td>M</td>
-                                    <td>1390 ₸</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Flat White</th>
-                                    <td>Hot</td>
-                                    <td>S</td>
-                                    <td>1590 ₸</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Raf</th>
-                                    <td>Hot</td>
-                                    <td>M</td>
-                                    <td>1790 ₸</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Espresso-tonic</th>
-                                    <td>Iced</td>
-                                    <td>L</td>
-                                    <td>1390 ₸</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Green Matcha</th>
-                                    <td>Hot / Iced</td>
-                                    <td>M</td>
-                                    <td>1790 ₸</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="d-flex flex-wrap gap-2 align-items-center">
-                        <a
-                            href="menu.html"
-                            class="btn btn-outline-primary btn-sm"
-                            >View the Complete Menu</a
-                        >
-
-                        <a href="order.html" class="btn btn-primary"
-                            >Order Online</a
-                        >
-
-                        <button
-                            type="button"
-                            class="btn btn-secondary"
-                            disabled
-                        >
-                            Wholesale Prices Unavailable
-                        </button>
-                    </div>
+                    <form id="blog-review-form" novalidate>
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <label for="review-name" class="form-label">Your name</label>
+                                <input type="text" class="form-control" id="review-name" name="review-name" placeholder="Enter your name" autocomplete="name" required minlength="2" maxlength="60" aria-describedby="review-name-error">
+                                <div class="invalid-feedback" id="review-name-error"></div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="visit-date" class="form-label">Visit date</label>
+                                <input type="date" class="form-control" id="visit-date" name="visit-date" required aria-describedby="visit-date-error">
+                                <div class="invalid-feedback" id="visit-date-error"></div>
+                            </div>
+                            <div class="col-12">
+                                <label for="review-rating" class="form-label">Rating</label>
+                                <select id="review-rating" name="review-rating" class="form-select" required aria-describedby="review-rating-error">
+                                    <option value="">Choose a rating</option>
+                                    <option value="5">★★★★★ — Excellent</option>
+                                    <option value="4">★★★★☆ — Good</option>
+                                    <option value="3">★★★☆☆ — Average</option>
+                                    <option value="2">★★☆☆☆ — Poor</option>
+                                    <option value="1">★☆☆☆☆ — Very poor</option>
+                                </select>
+                                <div class="invalid-feedback" id="review-rating-error"></div>
+                            </div>
+                            <div class="col-12">
+                                <label for="review-text" class="form-label">Your review</label>
+                                <textarea class="form-control" id="review-text" name="review-text" rows="4" minlength="20" maxlength="1000" placeholder="What did you enjoy? What could be better?" required aria-describedby="review-text-help review-text-error"></textarea>
+                                <div class="d-flex justify-content-between gap-3">
+                                    <small id="review-text-help" class="form-text text-muted">Write at least 20 characters.</small>
+                                    <small id="review-text-counter" class="form-text text-muted">0 / 1000</small>
+                                </div>
+                                <div class="invalid-feedback" id="review-text-error"></div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="permission" name="permission" value="yes" required aria-describedby="permission-error">
+                                    <label class="form-check-label" for="permission">I agree that Tokyo Coffee may display this review.</label>
+                                    <div class="invalid-feedback" id="permission-error"></div>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex flex-wrap gap-2">
+                                <button type="submit" class="btn btn-primary">Post review</button>
+                                <button type="reset" class="btn btn-outline-secondary">Clear</button>
+                            </div>
+                        </div>
+                        <p id="blog-review-form-result" class="alert alert-success d-none mt-3 mb-0" role="status" aria-live="polite"></p>
+                        <p id="blog-review-form-error" class="alert alert-danger d-none mt-3 mb-0" role="alert"></p>
+                    </form>
                 </div>
             </section>
 
@@ -465,375 +416,6 @@
                     role="status"
                     aria-live="polite"
                 ></p>
-            </section>
-
-            <section id="explore-journal" class="card shadow-sm mb-5">
-                <div class="card-body p-4">
-                    <h2 class="card-title">Explore More</h2>
-
-                    <p>
-                        Use the links below to explore other Tokyo Coffee pages.
-                    </p>
-
-                    <ul class="row g-3 list-unstyled">
-                        <li class="col-12 col-md-6 col-lg-3">
-                            <a
-                                class="btn btn-outline-dark w-100"
-                                href="brewing-guides.html"
-                                >Brewing Guides</a
-                            >
-                        </li>
-
-                        <li class="col-12 col-md-6 col-lg-3">
-                            <a
-                                class="btn btn-outline-dark w-100"
-                                href="subscriptions.html"
-                                >Subscriptions</a
-                            >
-                        </li>
-
-                        <li class="col-12 col-md-6 col-lg-3">
-                            <a
-                                class="btn btn-outline-dark w-100"
-                                href="events.html"
-                                >Events & Classes</a
-                            >
-                        </li>
-
-                        <li class="col-12 col-md-6 col-lg-3">
-                            <a
-                                class="btn btn-outline-dark w-100"
-                                href="about.html"
-                                >About Us</a
-                            >
-                        </li>
-                    </ul>
-
-                    <p class="mt-4">
-                        You can also visit the
-                        <a href="order.html">Order Online</a> page.
-                    </p>
-
-                    <div class="alert alert-info" role="alert">
-                        Use <kbd>Ctrl</kbd> + <kbd>F</kbd> to search this page.
-                    </div>
-
-                    <pre class="bg-dark text-light p-3 rounded overflow-auto">
-TOKYO COFFEE JOURNAL
-
---------------------
-
-Coffee
-
-Drinks
-
-Stories
-
-Reviews</pre
-                    >
-                </div>
-            </section>
-
-            <section id="share-thoughts" class="card shadow-sm mb-5">
-                <div class="card-body p-4">
-                    <h2 class="card-title">Share Your Thoughts</h2>
-
-                    <p>
-                        Tell us about your coffee, food or overall experience at
-                        Tokyo Coffee.
-                    </p>
-
-                    <form id="blog-review-form">
-                        <fieldset>
-                            <legend class="h4 mb-3">Customer Review</legend>
-
-                            <div class="row g-3">
-                                <div class="col-12 col-md-6">
-                                    <label for="review-name" class="form-label"
-                                        >Full name:</label
-                                    >
-
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="review-name"
-                                        name="review-name"
-                                        placeholder="Enter your name"
-                                        required
-                                    />
-                                </div>
-
-                                <div class="col-12 col-md-6">
-                                    <label for="review-email" class="form-label"
-                                        >Email:</label
-                                    >
-
-                                    <input
-                                        type="email"
-                                        class="form-control"
-                                        id="review-email"
-                                        name="review-email"
-                                        placeholder="you@example.com"
-                                        required
-                                    />
-                                </div>
-
-                                <div class="col-12 col-md-6">
-                                    <label for="review-phone" class="form-label"
-                                        >Phone:</label
-                                    >
-
-                                    <input
-                                        type="tel"
-                                        class="form-control"
-                                        id="review-phone"
-                                        name="review-phone"
-                                        placeholder="+7 700 000 00 00"
-                                        required
-                                    />
-                                </div>
-
-                                <div class="col-12 col-md-6">
-                                    <label for="visit-date" class="form-label"
-                                        >Visit date:</label
-                                    >
-
-                                    <input
-                                        type="date"
-                                        class="form-control"
-                                        id="visit-date"
-                                        name="visit-date"
-                                        required
-                                    />
-                                </div>
-
-                                <div class="col-12 col-md-6">
-                                    <label for="visit-count" class="form-label"
-                                        >Number of visits:</label
-                                    >
-
-                                    <input
-                                        type="number"
-                                        class="form-control"
-                                        id="visit-count"
-                                        name="visit-count"
-                                        min="1"
-                                        placeholder="1"
-                                        required
-                                    />
-                                </div>
-
-                                <div class="col-12 col-md-6">
-                                    <label
-                                        for="favorite-drink"
-                                        class="form-label"
-                                        >Favorite drink:</label
-                                    >
-
-                                    <select
-                                        class="form-select"
-                                        id="favorite-drink"
-                                        name="favorite-drink"
-                                        required
-                                    >
-                                        <option value="">Choose a drink</option>
-
-                                        <option value="espresso">
-                                            Espresso
-                                        </option>
-
-                                        <option value="americano">
-                                            Americano
-                                        </option>
-
-                                        <option value="cappuccino">
-                                            Cappuccino
-                                        </option>
-
-                                        <option value="latte">Latte</option>
-
-                                        <option value="flat-white">
-                                            Flat White
-                                        </option>
-
-                                        <option value="raf">Raf</option>
-
-                                        <option value="espresso-tonic">
-                                            Espresso-tonic
-                                        </option>
-
-                                        <option value="matcha">
-                                            Green Matcha
-                                        </option>
-
-                                        <option value="tea">Tea</option>
-
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-12">
-                                    <p class="form-label mb-2">
-                                        How was your experience?
-                                    </p>
-
-                                    <div class="d-flex flex-wrap gap-3">
-                                        <div class="form-check">
-                                            <input
-                                                class="form-check-input"
-                                                type="radio"
-                                                id="experience-excellent"
-                                                name="experience"
-                                                value="excellent"
-                                                required
-                                            />
-
-                                            <label
-                                                class="form-check-label"
-                                                for="experience-excellent"
-                                                >Excellent</label
-                                            >
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input
-                                                class="form-check-input"
-                                                type="radio"
-                                                id="experience-good"
-                                                name="experience"
-                                                value="good"
-                                            />
-
-                                            <label
-                                                class="form-check-label"
-                                                for="experience-good"
-                                                >Good</label
-                                            >
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input
-                                                class="form-check-input"
-                                                type="radio"
-                                                id="experience-okay"
-                                                name="experience"
-                                                value="okay"
-                                            />
-
-                                            <label
-                                                class="form-check-label"
-                                                for="experience-okay"
-                                                >Okay</label
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <label
-                                        for="review-rating"
-                                        class="form-label"
-                                    >
-                                        Your rating:
-                                    </label>
-                                    <select
-                                        id="review-rating"
-                                        name="review-rating"
-                                        class="form-select"
-                                        required
-                                    >
-                                        <option value="">
-                                            Choose a rating
-                                        </option>
-                                        <option value="5">
-                                            ★★★★★ — Excellent
-                                        </option>
-                                        <option value="4">★★★★☆ — Good</option>
-                                        <option value="3">
-                                            ★★★☆☆ — Average
-                                        </option>
-                                        <option value="2">★★☆☆☆ — Poor</option>
-                                        <option value="1">
-                                            ★☆☆☆☆ — Very poor
-                                        </option>
-                                    </select>
-                                </div>
-
-                                <div class="col-12">
-                                    <label for="review-text" class="form-label"
-                                        >Your review:</label
-                                    >
-
-                                    <textarea
-                                        class="form-control"
-                                        id="review-text"
-                                        name="review-text"
-                                        rows="6"
-                                        placeholder="Tell us about your coffee, food or experience..."
-                                        required
-                                    ></textarea>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="form-check">
-                                        <input
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            id="permission"
-                                            name="permission"
-                                            value="yes"
-                                            required
-                                        />
-
-                                        <label
-                                            class="form-check-label"
-                                            for="permission"
-                                        >
-                                            I agree that Tokyo Coffee may use
-                                            this feedback.
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="col-12 d-flex flex-wrap gap-2 justify-content-center"
-                                >
-                                    <button
-                                        type="submit"
-                                        class="btn btn-success btn-lg"
-                                    >
-                                        Share Review
-                                    </button>
-
-                                    <button
-                                        type="reset"
-                                        class="btn btn-outline-secondary"
-                                    >
-                                        Clear
-                                    </button>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <div class="small text-muted mt-3" aria-live="polite">
-                            Form status will appear here after submission.
-                        </div>
-                        <div
-                            id="blog-review-form-result"
-                            class="alert alert-success d-none"
-                            role="status"
-                        >
-                            Your request has been submitted successfully.
-                        </div>
-                        <div
-                            id="blog-review-form-error"
-                            class="alert alert-danger d-none"
-                            role="alert"
-                        >
-                            Please check the information and try again.
-                        </div>
-                    </form>
-                </div>
             </section>
 
             <aside class="alert alert-light border shadow-sm mb-5">
