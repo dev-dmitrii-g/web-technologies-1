@@ -208,7 +208,7 @@ $(function () {
             });
 
         // Delegated: the "Choose this plan" button is created again with every new recommendation.
-        $recommendation.attr('aria-live', 'polite').on('click', 'button[data-plan]', function () {
+        $recommendation.on('click', 'button[data-plan]', function () {
             applyRecommendation($(this).attr('data-plan'), $(this).attr('data-frequency'));
         });
 
@@ -222,7 +222,8 @@ $(function () {
                 ),
                 makeElement('div', 'col-12 col-md-3').append($findButton)
             ),
-            $recommendation
+            // The live region itself is always on the page; a region that is only shown is not read out reliably.
+            makeElement('div').attr('aria-live', 'polite').append($recommendation)
         );
     }
 
@@ -234,7 +235,7 @@ $(function () {
         const isSelected = plan.id === selectedPlanId;
         const $row = makeElement('tr').toggleClass('table-active', isSelected);
         const $chooseButton = makeElement('button', 'btn btn-sm btn-outline-primary mt-1', isSelected ? 'Selected' : 'Choose')
-            .attr({ type: 'button', 'data-plan': plan.id, 'aria-label': `Choose the ${plan.name} plan` });
+            .attr({ type: 'button', 'data-plan': plan.id, 'aria-label': isSelected ? `${plan.name} plan, selected` : `Choose the ${plan.name} plan` });
 
         if (isSelected) {
             $row.attr('aria-current', 'true');
@@ -464,10 +465,12 @@ $(function () {
             }
         });
 
-        $subscriptionForm.on('input', 'input.form-control', function () {
+        // change fires when the visitor leaves a field after editing it: the field is checked then,
+        // not on every key. While typing (input), only an error that is already shown is checked again.
+        $subscriptionForm.on('input change', 'input.form-control', function (event) {
             const $input = $(this);
             const validator = subscriptionValidators.find((entry) => entry.control.is($input));
-            if (validator !== undefined && hasFieldError($input)) {
+            if (validator !== undefined && (event.type === 'change' || hasFieldError($input))) {
                 applyValidation(validator.control, validator.validate());
             }
         });

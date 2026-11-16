@@ -187,7 +187,7 @@ $(function () {
             .toggleClass('btn-outline-primary', !saved)
             .attr({
                 'aria-pressed': String(saved),
-                'aria-label': saved ? `Remove ${itemName} from favorites` : `Save ${itemName} to favorites`
+                'aria-label': `Save ${itemName} to favorites`
             });
     }
 

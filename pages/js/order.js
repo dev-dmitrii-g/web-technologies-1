@@ -76,7 +76,6 @@ const pickupInput = document.getElementById('pickup-time');
 const nameInput = document.getElementById('name');
 const phoneInput = document.getElementById('phone');
 const commentInput = document.getElementById('comment');
-const placeOrderButton = document.getElementById('order-submit');
 const prepOutput = orderForm.querySelector('p > output');
 const extrasFieldset = document.getElementById('order-extras');
 const quantityFieldset = quantityInput.closest('fieldset');
@@ -331,7 +330,6 @@ function renderCart() {
     cartEmpty.classList.toggle('d-none', cart.length !== 0);
     cartTotals.textContent = `Items: ${itemCount} of ${CART_ITEM_LIMIT} · Cart total: ${formatPrice(getCartTotal(cart))}`;
     clearCartButton.disabled = cart.length === 0;
-    placeOrderButton.disabled = cart.length === 0;
     prepOutput.textContent = `${preparation.min}–${preparation.max} minutes`;
     updatePickupStatus();
 
@@ -699,7 +697,6 @@ function buildOrderInterface() {
     cancelEditButton.type = 'button';
     cancelEditButton.addEventListener('click', cancelEditing);
     itemActions.append(addButton, cancelEditButton);
-    linePreview.setAttribute('aria-live', 'polite');
     addStatus.setAttribute('role', 'status');
     quantityFieldset.append(linePreview, itemActions, addStatus);
 
@@ -718,7 +715,6 @@ function buildOrderInterface() {
     itemFieldset.before(cartFieldset, itemPanel);
     itemPanel.append(itemFieldset, sizeSelect.closest('fieldset'), extrasFieldset, quantityFieldset);
 
-    pickupStatus.setAttribute('aria-live', 'polite');
     earliestPickupButton.type = 'button';
     earliestPickupButton.addEventListener('click', useEarliestPickup);
     pickupInput.after(pickupStatus, earliestPickupButton);
@@ -765,8 +761,12 @@ function initOrderPage() {
     });
 
     orderValidators.forEach((validator) => {
-        const eventName = validator.control === pickupInput ? 'change' : 'input';
-        validator.control.addEventListener(eventName, () => {
+        // change fires when the visitor leaves a field after editing it: the field is checked then,
+        // not on every key. While typing, only an error that is already shown is checked again.
+        validator.control.addEventListener('change', () => {
+            applyValidation(validator.control, validator.validate());
+        });
+        validator.control.addEventListener('input', () => {
             if (hasFieldError(validator.control)) {
                 applyValidation(validator.control, validator.validate());
             }

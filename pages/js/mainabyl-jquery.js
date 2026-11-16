@@ -67,3 +67,6 @@ function applyValidation($control, message) {
 function hasFieldError($control) {
     return $(`#${getFeedbackId($control)}`).length !== 0;
 }
+
+// Visitors who ask their system for less motion get every result at once, without the jQuery effects.
+$.fx.off = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
